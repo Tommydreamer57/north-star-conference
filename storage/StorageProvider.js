@@ -60,6 +60,7 @@ export default class StorageProvider extends Component {
             breakouts,
             keynotes,
             addToSchedule: this.addToSchedule,
+            removeFromSchedule: this.removeFromSchedule,
         });
     }
 
@@ -90,6 +91,28 @@ export default class StorageProvider extends Component {
         const schedule = {
             ...this.state.schedule,
             [sessionName]: session,
+        };
+        try {
+            await AsyncStorage.setItem("schedule", JSON.stringify(schedule));
+            const scheduleArray = this.addScheduleArray(schedule);
+            this.setState({
+                schedule,
+                scheduleArray,
+            });
+            log({
+                schedule,
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    removeFromSchedule = async id => {
+        const session = this.state.allSessions[id];
+        const sessionName = session.sessiontype.toUpperCase();
+        const schedule = {
+            ...this.state.schedule,
+            [sessionName]: {},
         };
         try {
             await AsyncStorage.setItem("schedule", JSON.stringify(schedule));

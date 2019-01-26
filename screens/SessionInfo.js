@@ -45,6 +45,7 @@ export default function SessionInfo({
                     }
                 },
                 addToSchedule,
+                removeFromSchedule,
             }) => (
                     <ScrollView>
                         <Text>

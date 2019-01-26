@@ -4,6 +4,7 @@ import {
     ScrollView,
     View,
     Text,
+    TouchableOpacity,
 } from 'react-native';
 
 import { StorageConsumer } from '../storage/StorageProvider';
@@ -12,22 +13,29 @@ import styles, { createNavigationOptions } from '../styles/styles';
 
 Keynotes.navigationOptions = createNavigationOptions("Keynotes");
 
-export default function Keynotes() {
+export default function Keynotes({
+    navigation: {
+        navigate,
+    },
+}) {
     return (
         <StorageConsumer>
             {({ keynotes }) => (
                 <ScrollView>
                     <Text>
                         KEYNOTES
-                </Text>
+                    </Text>
                     <View>
                         {keynotes.map(({
                             id,
                             title,
                             speakername,
+                            sessiontype,
                         }) => (
-                                <View
+                                <TouchableOpacity
                                     key={id}
+                                    onPress={() => navigate("SessionInfo", { sessionName: sessiontype, id })}
+                                    style={styles.keynoteSession}
                                 >
                                     <Text>
                                         {title}
@@ -35,7 +43,7 @@ export default function Keynotes() {
                                     <Text>
                                         {speakername}
                                     </Text>
-                                </View>
+                                </TouchableOpacity>
                             ))}
                     </View>
                 </ScrollView>

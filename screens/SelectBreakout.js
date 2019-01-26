@@ -11,7 +11,10 @@ import { StorageConsumer } from '../storage/StorageProvider';
 
 import styles, { createNavigationOptions } from '../styles/styles';
 
-SelectBreakout.navigationOptions = createNavigationOptions("Select Breakout");
+SelectBreakout.navigationOptions = ({ navigation: { state: { params: { sessionName } } } }) => ({
+    ...createNavigationOptions("Select Breakout"),
+    title: sessionName,
+});
 
 export default function SelectBreakout({
     navigation: {

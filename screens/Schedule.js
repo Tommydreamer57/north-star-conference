@@ -9,7 +9,7 @@ import {
 
 import styles, { createNavigationOptions } from '../styles/styles';
 
-import {StorageConsumer} from '../storage/StorageProvider';
+import { StorageConsumer } from '../storage/StorageProvider';
 
 Schedule.navigationOptions = createNavigationOptions("Schedule");
 
@@ -31,9 +31,10 @@ export default function Schedule({
                                 speakername,
                             }
                         }) => sessionName.match(/keynote/i) ? (
-                            <View
-                                style={styles.keynoteSession}
+                            <TouchableOpacity
                                 key={sessionName}
+                                style={styles.keynoteSession}
+                                onPress={() => navigate('SessionInfo', { sessionName, id })}
                             >
                                 <Text>
                                     {`${
@@ -45,10 +46,14 @@ export default function Schedule({
                                 <Text>
                                     {speakername}
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
                         ) : (
                                     <TouchableOpacity
-                                        onPress={() => navigate('SelectBreakout', { sessionName, id })}
+                                        key={sessionName}
+                                        onPress={id ?
+                                            () => navigate('SessionInfo', { sessionName, id })
+                                            :
+                                            () => navigate('SelectBreakout', { sessionName, id })}
                                         style={id ?
                                             styles.selectedSession
                                             :

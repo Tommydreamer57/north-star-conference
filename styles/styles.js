@@ -8,6 +8,7 @@ export const createNavigationOptions = title => ({
         backgroundColor: Colors.blue,
     },
     headerTintColor: 'white',
+    headerLeft: null,
 });
 
 export const Colors = {

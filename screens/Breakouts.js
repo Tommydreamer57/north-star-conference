@@ -41,7 +41,7 @@ export default function Breakouts({
                                     }) => (
                                             <TouchableOpacity
                                                 key={id}
-                                                style={Object.keys(schedule[sessionName] || {}).length ?
+                                                style={id === schedule[sessionName].id ?
                                                     styles.selectedSession
                                                     :
                                                     styles.session

@@ -14,6 +14,12 @@ import SelectBreakout from '../screens/SelectBreakout';
 import SessionInfo from '../screens/SessionInfo';
 import SpeakerInfo from '../screens/SpeakerInfo';
 
+const config = {
+    defaultNavigationOptions: ({ navigation }) => ({
+        
+    }),
+};
+
 export default createStackNavigator({
     Home,
     Keynotes: createStackNavigator({
@@ -21,20 +27,20 @@ export default createStackNavigator({
         SessionInfo,
         SpeakerInfo,
         Map,
-    }),
+    }, config),
     Breakouts: createStackNavigator({
         Breakouts,
         SessionInfo,
         SpeakerInfo,
         Map,
-    }),
+    }, config),
     Schedule: createStackNavigator({
         Schedule,
         SelectBreakout,
         SessionInfo,
         SpeakerInfo,
         Map,
-    }),
+    }, config),
     Map,
     Mentors,
     Notifications,

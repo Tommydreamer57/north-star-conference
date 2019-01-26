@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     Button,
     Text,
-    Alert,
+    // Alert,
 } from 'react-native';
 
 import { createNavigationOptions } from '../styles/styles';
@@ -22,6 +22,8 @@ export default function SessionInfo({
                 id,
             },
         },
+        goBack,
+        navigate,
     },
 }) {
     return (
@@ -60,23 +62,35 @@ export default function SessionInfo({
                         <Text>
                             {demographic}
                         </Text>
-                        {id === selectedSessionId ? (
-                            <Button
-                                title="Remove From Schedule"
-                                onPress={async () => {
-                                    await removeFromSchedule(id);
-                                    Alert.alert(`Removed ${title} from schedule.`)
-                                }}
-                            />
-                        ) : (
+                        <Button
+                            title={speakername}
+                            onPress={() => navigate('SpeakerInfo', {
+                                speakername,
+                                speakerbio,
+                                speakerphoto,
+                            })}
+                        />
+                        {sessionName.match(/breakout/i) ? (
+                            id === selectedSessionId ? (
                                 <Button
-                                    title="Add To Schedule"
+                                    title="Remove From Schedule"
                                     onPress={async () => {
-                                        await addToSchedule(id);
-                                        Alert.alert(`Added ${title} to schedule.`)
+                                        await removeFromSchedule(id);
+                                        // Alert.alert(`Removed ${title} from schedule.`);
+                                        goBack();
                                     }}
                                 />
-                            )}
+                            ) : (
+                                    <Button
+                                        title="Add To Schedule"
+                                        onPress={async () => {
+                                            await addToSchedule(id);
+                                            // Alert.alert(`Added ${title} to schedule.`);
+                                            goBack();
+                                        }}
+                                    />
+                                )
+                        ) : null}
                     </ScrollView>
                 )}
         </StorageConsumer>

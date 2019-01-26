@@ -24,6 +24,8 @@ export default class StorageProvider extends Component {
         schedule: {},
         breakouts: {},
         keynotes: [],
+        addToSchedule() { },
+        removeFromSchedule() { },
     };
 
     componentDidMount = async () => {

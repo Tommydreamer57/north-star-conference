@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
     ScrollView,
@@ -6,51 +6,40 @@ import {
     Text,
 } from 'react-native';
 
-import {
-    getItem,
-} from '../service/storage-service';
+import { StorageConsumer } from '../storage/StorageProvider';
 
-export default class Keynotes extends Component {
+import styles, { createNavigationOptions } from '../styles/styles';
 
-    state = {
-        keynotes: [],
-    };
+Keynotes.navigationOptions = createNavigationOptions("Keynotes");
 
-    componentDidMount = async () => {
-        const keynotes = await getItem("keynotes");
-        this.setState({ keynotes });
-    }
-
-    render = () => {
-        const {
-            state: {
-                keynotes,
-            },
-        } = this;
-        return (
-            <ScrollView>
-                <Text>
-                    KEYNOTES
+export default function Keynotes() {
+    return (
+        <StorageConsumer>
+            {({ keynotes }) => (
+                <ScrollView>
+                    <Text>
+                        KEYNOTES
                 </Text>
-                <View>
-                    {keynotes.map(({
-                        id,
-                        title,
-                        speakername,
-                    }) => (
-                            <View
-                                key={id}
-                            >
-                                <Text>
-                                    {title}
-                                </Text>
-                                <Text>
-                                    {speakername}
-                                </Text>
-                            </View>
-                        ))}
-                </View>
-            </ScrollView>
-        );
-    }
+                    <View>
+                        {keynotes.map(({
+                            id,
+                            title,
+                            speakername,
+                        }) => (
+                                <View
+                                    key={id}
+                                >
+                                    <Text>
+                                        {title}
+                                    </Text>
+                                    <Text>
+                                        {speakername}
+                                    </Text>
+                                </View>
+                            ))}
+                    </View>
+                </ScrollView>
+            )}
+        </StorageConsumer>
+    );
 }

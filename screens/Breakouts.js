@@ -1,112 +1,68 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
     ScrollView,
     View,
+    TouchableOpacity,
     Text,
-    StyleSheet,
 } from 'react-native';
 
-import {
-    getItems,
-} from '../service/storage-service';
+import { StorageConsumer } from '../storage/StorageProvider';
 
-import Colors from '../constants/Colors';
+import styles, { createNavigationOptions } from '../styles/styles';
 
-export default class Breakouts extends Component {
+Breakouts.navigationOptions = createNavigationOptions("Breakouts");
 
-    static navigationOptions = {
-        title: "Breakouts",
-        headerStyle: {
-            backgroundColor: Colors.blue,
-        },
-        headerTintColor: 'white',
-    }
-
-    state = {
-        breakouts: [],
-        schedule: {},
-    };
-
-    componentDidMount = async () => {
-        const [breakouts, schedule] = await getItems("breakouts", "schedule");
-        this.setState({
-            breakouts,
-            schedule,
-        });
-    }
-
-    render = () => {
-        const {
-            state: {
-                breakouts,
-                schedule,
-            },
-        } = this;
-        return (
-            <ScrollView
-                style={styles.view}
-            >
-                <View>
+export default function Breakouts({
+    navigation: {
+        navigate,
+    },
+}) {
+    return (
+        <StorageConsumer>
+            {({ breakouts, schedule }) => (
+                <ScrollView>
                     {Object.keys(breakouts)
-                        .map(key => (
+                        .map(sessionName => (
                             <View
-                                key={key}
-                                style={styles.breakout}
+                                key={sessionName}
+                                style={styles.breakoutGroup}
                             >
                                 <Text
-                                    style={styles.title}
+                                    style={styles.breakoutTitle}
                                 >
-                                    {key}
+                                    {sessionName}
                                 </Text>
-                                {breakouts[key]
+                                {breakouts[sessionName]
                                     .map(({
                                         id,
                                         title,
                                         speakername,
                                     }) => (
-                                            <View
+                                            <TouchableOpacity
                                                 key={id}
-                                                style={styles.session}
+                                                style={Object.keys(schedule[sessionName] || {}).length ?
+                                                    styles.selectedSession
+                                                    :
+                                                    styles.session
+                                                }
+                                                onPress={() => navigate("SessionInfo", { sessionName, id })}
                                             >
                                                 <Text
-                                                    style={styles.breakoutTitle}
+                                                    style={styles.sessionTitle}
                                                 >
                                                     {title}
                                                 </Text>
                                                 <Text>
                                                     &nbsp;--&nbsp;{speakername}
                                                 </Text>
-                                            </View>
+                                            </TouchableOpacity>
                                         ))
                                 }
                             </View>
                         ))}
-                </View>
-            </ScrollView>
-        );
-    }
+                </ScrollView>
+            )}
+        </StorageConsumer>
+    );
 }
-
-const styles = StyleSheet.create({
-    header: {
-        backgroundColor: Colors.blue,
-    },
-    view: {
-
-    },
-    breakout: {
-        margin: 5,
-        backgroundColor: Colors.blue,
-    },
-    title: {
-
-    },
-    breakoutTitle: {
-        fontWeight: 'bold',
-    },
-    session: {
-        margin: 5,
-        backgroundColor: Colors.green,
-    },
-});

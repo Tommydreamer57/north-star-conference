@@ -1,122 +1,75 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import {
     ScrollView,
     View,
     Text,
     TouchableOpacity,
-    StyleSheet,
 } from 'react-native';
 
-import {
-    getItem,
-} from '../service/storage-service';
+import styles, { createNavigationOptions } from '../styles/styles';
 
-import Colors from '../constants/Colors';
+import {StorageConsumer} from '../storage/StorageProvider';
 
-export default class Schedule extends Component {
+Schedule.navigationOptions = createNavigationOptions("Schedule");
 
-    state = {
-        scheduleArray: [],
-    };
-
-    componentDidMount = async () => {
-        const schedule = await getItem("schedule");
-        const orderedKeys = [
-            "KEYNOTE 1",
-            "BREAKOUT 1",
-            "BREAKOUT 2",
-            "BREAKOUT 3",
-            "KEYNOTE 2",
-            "KEYNOTE 3",
-            "BREAKOUT 4",
-            "BREAKOUT 5",
-            "BREAKOUT 6",
-            "KEYNOTE 4",
-        ];
-        const scheduleArray = orderedKeys
-            .map(key => ({
-                breakoutName: key,
-                selectedSession: schedule[key],
-            }));
-        this.setState({ scheduleArray });
-    }
-
-    render = () => {
-        const {
-            state: {
-                scheduleArray,
-            },
-            props: {
-                navigation: {
-                    navigate,
-                },
-            },
-        } = this;
-        return (
-            <ScrollView>
-                <Text>
-                    SCHEDULE
-                </Text>
-                {scheduleArray
-                    .map(({
-                        breakoutName,
-                        selectedSession: {
-                            id,
-                            title,
-                            speakername,
-                        }
-                    }) => (
-                            <TouchableOpacity
-                                onPress={() => breakoutName.match(/breakout/i) && navigate('SelectBreakout', { id })}
-                                style={styles.session}
-                                key={breakoutName}
+export default function Schedule({
+    navigation: {
+        navigate,
+    },
+}) {
+    return (
+        <StorageConsumer>
+            {({ scheduleArray }) => (
+                <ScrollView>
+                    {scheduleArray
+                        .map(({
+                            sessionName,
+                            selectedSession: {
+                                id,
+                                title,
+                                speakername,
+                            }
+                        }) => sessionName.match(/keynote/i) ? (
+                            <View
+                                style={styles.keynoteSession}
+                                key={sessionName}
                             >
-                                {id ? (
-                                    <>
+                                <Text>
+                                    {`${
+                                        sessionName
+                                        }: ${
+                                        title
+                                        }`}
+                                </Text>
+                                <Text>
+                                    {speakername}
+                                </Text>
+                            </View>
+                        ) : (
+                                    <TouchableOpacity
+                                        onPress={() => navigate('SelectBreakout', { sessionName, id })}
+                                        style={id ?
+                                            styles.selectedSession
+                                            :
+                                            styles.emptySession}
+                                        key={sessionName}
+                                    >
                                         <Text>
-                                            {breakoutName}: {title}
+                                            {`${
+                                                sessionName
+                                                }: ${
+                                                title
+                                                }`}
                                         </Text>
                                         <Text>
                                             {speakername}
                                         </Text>
-                                    </>
-                                ) : (
-                                        <>
-                                            <Text>
-                                                {breakoutName}
-                                            </Text>
-                                            <Text>
-                                                ADD SESSION
-                                            </Text>
-                                        </>
-                                    )}
-                            </TouchableOpacity>
-                        ))}
-            </ScrollView>
-        );
-    }
+                                    </TouchableOpacity>
+                                )
+                        )}
+                </ScrollView>
+            )}
+        </StorageConsumer>
+    );
 }
-
-const styles = StyleSheet.create({
-    header: {
-        backgroundColor: Colors.blue,
-    },
-    view: {
-
-    },
-    keynote: {
-        margin: 5,
-        backgroundColor: Colors.blue,
-    },
-    title: {
-
-    },
-    breakoutTitle: {
-        fontWeight: 'bold',
-    },
-    session: {
-        margin: 5,
-        backgroundColor: Colors.green,
-    },
-});

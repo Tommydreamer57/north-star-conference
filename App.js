@@ -15,6 +15,8 @@ import axios from 'axios';
 
 import AppNavigator from './navigation/AppNavigator';
 
+import StorageProvider from './storage/StorageProvider';
+
 export default class App extends Component {
 
     state = {
@@ -94,7 +96,9 @@ export default class App extends Component {
             //         </Text>
             //     </TouchableOpacity>
             // </View>
-            <AppNavigator />
+            <StorageProvider>
+                <AppNavigator />
+            </StorageProvider>
         );
     }
 }

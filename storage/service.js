@@ -5,44 +5,44 @@ import {
 import axios from 'axios';
 
 // REMOVE THIS LINE
+// (async () => {
+//     try {
+//         // await AsyncStorage.clear();
+//         const keys = await AsyncStorage.getAllKeys();
+//         console.log("Removing all keys");
+//         console.log(keys);
+//         await AsyncStorage.multiRemove(keys);
+//         console.log("Done removing keys");
+//     } catch (err) {
+//         console.error(err);
+//     }
+// })();
+
 (async () => {
     try {
-        // await AsyncStorage.clear();
-        const keys = await AsyncStorage.getAllKeys();
-        console.log("Removing all keys");
-        console.log(keys);
-        await AsyncStorage.multiRemove(keys);
-        console.log("Done removing keys");
+        await axios.delete('http://192.168.0.43:4321/log');
     } catch (err) {
         console.error(err);
     }
 })();
 
+export const log = async body => {
+    try {
+        await axios.post('http://192.168.0.43:4321/log', body);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
+
 const allKeys = [
     "breakouts",
     "keynotes",
     "schedule",
-];
+];    
 
 const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
-
-const log = async body => {
-    try {
-        await axios.post('http://localhost:4321/log', body);
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-(async () => {
-    try {
-        await axios.delete('http://localhost:4321/log');
-    } catch (err) {
-        console.log(err);
-    }
-})();
-
-
 
 export const fetchSessions = async () => {
     try {
@@ -61,7 +61,7 @@ export const fetchSessions = async () => {
                 sessiontype: sessiontype.toUpperCase()
             }));
 
-        log({ keynotes })
+        // log({ keynotes })
         // console.log({ keynotes });
 
         const breakouts = (data || [])
@@ -74,7 +74,7 @@ export const fetchSessions = async () => {
                 };
             }, {});
 
-        log({ breakouts });
+        // log({ breakouts });
         // console.log({ breakouts });
 
         const schedule = {
@@ -90,7 +90,7 @@ export const fetchSessions = async () => {
                 }), {}),
         };
 
-        log({ schedule });
+        // log({ schedule });
         // console.log({ schedule });
 
         await AsyncStorage.multiSet([

@@ -2,21 +2,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export const createNavigationOptions = title => ({
-    title,
-    headerStyle: {
-        backgroundColor: Colors.blue,
-    },
-    headerTintColor: 'white',
-    headerLeft: null,
-});
-
-export const Colors = {
-    green: "#C8C751",
-    blueGreen: "#60A471",
-    blue: "#00849B",
-    yellow: "#44CC22",
-};
+import Colors from './Colors';
 
 export default StyleSheet.create({
     header: {

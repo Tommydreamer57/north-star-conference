@@ -7,7 +7,9 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import styles, { createNavigationOptions } from '../styles/styles';
+import styles from '../styles/styles';
+
+import createNavigationOptions from '../navigation/navigation-options';
 
 import { StorageConsumer } from '../storage/StorageProvider';
 

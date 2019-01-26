@@ -9,7 +9,8 @@ import {
     // Alert,
 } from 'react-native';
 
-import { createNavigationOptions } from '../styles/styles';
+import createNavigationOptions from '../navigation/navigation-options';
+
 import { StorageConsumer } from '../storage/StorageProvider';
 
 SessionInfo.navigationOptions = createNavigationOptions("Session Info");

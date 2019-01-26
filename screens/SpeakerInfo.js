@@ -6,7 +6,9 @@ import {
     Image,
 } from 'react-native';
 
-import styles, { createNavigationOptions } from '../styles/styles';
+import styles from '../styles/styles';
+
+import createNavigationOptions from '../navigation/navigation-options';
 
 SpeakerInfo.navigationOptions = createNavigationOptions("Speaker Info");
 

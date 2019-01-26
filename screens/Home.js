@@ -17,19 +17,29 @@ const links = [
     [
         {
 
-            name: "KEYNOTES",
+            name: [
+                "KEYNOTE",
+                "SESSIONS",
+            ],
             to: "Keynotes",
-            icon: "ios-contact"
+            // icon: "ios-contact"
+            icon: "ios-person"
         },
         {
 
-            name: "BREAKOUTS",
+            name: [
+                "BREAKOUT",
+                "SESSIONS",
+            ],
             to: "Breakouts",
             icon: "ios-microphone"
         },
         {
 
-            name: "SCHEDULE",
+            name: [
+                "BUILD YOUR",
+                "SCHEDULE",
+            ],
             to: "Schedule",
             icon: "ios-calendar"
         },
@@ -37,19 +47,29 @@ const links = [
     [
         {
 
-            name: "MAP",
+            name: [
+                "MEETING",
+                "ROOM MAP",
+            ],
             to: "Map",
             icon: "ios-map"
         },
         {
 
-            name: "MENTORS",
+            name: [
+                "MENTOR",
+                "CENTER",
+            ],
             to: "Mentors",
-            icon: "ios-contacts"
+            // icon: "ios-contacts"
+            icon: "ios-people"
         },
         {
 
-            name: "AUDIO",
+            name: [
+                "CONFERENCE",
+                "AUDIO",
+            ],
             url: "https://vimeo.com/ondemand/northstar2018/256616872",
             icon: "ios-play-circle"
         },
@@ -57,19 +77,28 @@ const links = [
     [
         {
 
-            name: "NOTIFICATIONS",
+            name: [
+                "RECEIVE",
+                "NOTIFICATIONS",
+            ],
             to: "Notifications",
             icon: "ios-notifications"
         },
         {
-            
-            name: "CONTACT",
+
+            name: [
+                "CONTACT",
+                "COMMITTEE",
+            ],
             url: "sms:770-530-1892",
             icon: "ios-text"
         },
         {
-            
-            name: "DONATE",
+
+            name: [
+                "DONATE TO",
+                "NORTH STAR",
+            ],
             url: "https://northstarlds.org/give/donate/",
             icon: "ios-cash"
         },
@@ -77,17 +106,14 @@ const links = [
 ];
 
 export default ({
-    navigation,
     navigation: {
         navigate,
     },
-    ...props
 }) => (
         <ImageBackground
             source={require('../assets/home-background.png')}
             style={styles.background}
         >
-            {console.log(navigation)}
             <View
                 style={styles.topPadding}
             />
@@ -102,7 +128,10 @@ export default ({
                         {row.map(({
                             to,
                             icon,
-                            name,
+                            name: [
+                                lineOne,
+                                lineTwo
+                            ],
                             url,
                         }, j) => (
                                 <TouchableOpacity
@@ -114,7 +143,7 @@ export default ({
                                         () => Linking.canOpenURL(url) ?
                                             Linking.openURL(url)
                                             :
-                                            null}
+                                            console.log(`Cannot open url: ${url}`)}
                                 >
                                     <Icon.Ionicons
                                         name={icon}
@@ -125,7 +154,12 @@ export default ({
                                     <Text
                                         style={styles.text}
                                     >
-                                        {name}
+                                        {lineOne}
+                                    </Text>
+                                    <Text
+                                        style={styles.text}
+                                    >
+                                        {lineTwo}
                                     </Text>
                                 </TouchableOpacity>
                             ))}
@@ -163,14 +197,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    icon: {
-        color: 'white',
-        height: 50,
-        width: 50,
-    },
     text: {
         color: 'white',
         fontSize: 9,
+        textAlign: 'center',
     },
     // bottomPadding: {
     //     height: '17%',

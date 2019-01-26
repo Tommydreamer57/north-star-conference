@@ -1,17 +1,6 @@
-import React from 'react';
-
-import {
-    ScrollView,
-    Text,
-    Platform,
-} from 'react-native';
-
 import {
     createStackNavigator,
-    createBottomTabNavigator,
 } from 'react-navigation';
-
-import TabBarIcon from '../components/TabBarIcon';
 
 import Home from '../screens/Home';
 import Keynotes from '../screens/Keynotes';
@@ -21,40 +10,34 @@ import Mentors from '../screens/Mentors';
 import Map from '../screens/Map';
 import Notifications from '../screens/Notifications';
 
+import SelectBreakout from '../screens/SelectBreakout';
+import SessionInfo from '../screens/SessionInfo';
+import SpeakerInfo from '../screens/SpeakerInfo';
+
 export default createStackNavigator({
     Home,
-    Keynotes,
-    Breakouts,
-    Schedule,
+    Keynotes: createStackNavigator({
+        Keynotes,
+        SessionInfo,
+        SpeakerInfo,
+        Map,
+    }),
+    Breakouts: createStackNavigator({
+        Breakouts,
+        SessionInfo,
+        SpeakerInfo,
+        Map,
+    }),
+    Schedule: createStackNavigator({
+        Schedule,
+        SelectBreakout,
+        SessionInfo,
+        SpeakerInfo,
+        Map,
+    }),
     Map,
     Mentors,
-    // Audio,
     Notifications,
-    // Contact,
-    // Donate,
 }, {
         headerMode: 'none',
     });
-
-// HomeStack.navigationOptions = {
-//     tabBarLabel: "Home",
-//     TabBarIcon: ({ focused }) => (
-//         <TabBarIcon
-//             focused={focused}
-//             name={Platform.OS === 'ios' ?
-//                 `ios-information-circle${
-//                 focused ?
-//                     ''
-//                     :
-//                     '-outline'
-//                 }`
-//                 :
-//                 'md-information-circle'
-//             }
-//         />
-//     )
-// }
-
-// export default createBottomTabNavigator({
-//     HomeStack,
-// });

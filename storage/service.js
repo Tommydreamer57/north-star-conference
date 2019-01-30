@@ -1,5 +1,6 @@
 import {
     AsyncStorage,
+    Alert,
 } from 'react-native';
 
 import axios from 'axios';
@@ -40,7 +41,7 @@ const allKeys = [
     "breakouts",
     "keynotes",
     "schedule",
-];    
+];
 
 const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
 
@@ -137,5 +138,18 @@ export const getItems = async (...keys) => {
         } catch (err) {
             console.error(err);
         }
+    }
+}
+
+
+export const submitReview = async review => {
+    try {
+        const { data } = await axios.post('https://northstarconferenceadmin.herokuapp.com/api/review', review);
+        Alert.alert("Submitted review" + JSON.stringify(data));
+        return true;
+    } catch (err) {
+        console.error(err);
+        Alert.alert("Something went wrong");
+        return false;
     }
 }

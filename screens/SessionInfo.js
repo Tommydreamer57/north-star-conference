@@ -32,7 +32,6 @@ export default function SessionInfo({
             {({
                 allSessions: {
                     [id]: {
-                        sessiontype,
                         sessiontime,
                         title,
                         description,
@@ -73,14 +72,20 @@ export default function SessionInfo({
                         />
                         {sessionName.match(/breakout/i) ? (
                             id === selectedSessionId ? (
-                                <Button
-                                    title="Remove From Schedule"
-                                    onPress={async () => {
-                                        await removeFromSchedule(id);
-                                        // Alert.alert(`Removed ${title} from schedule.`);
-                                        goBack();
-                                    }}
-                                />
+                                <>
+                                    <Button
+                                        title="Remove From Schedule"
+                                        onPress={async () => {
+                                            await removeFromSchedule(id);
+                                            // Alert.alert(`Removed ${title} from schedule.`);
+                                            goBack();
+                                        }}
+                                    />
+                                    <Button
+                                        title="Provide Feedback"
+                                        onPress={() => navigate("Feedback", { id, sessionName })}
+                                    />
+                                </>
                             ) : (
                                     <Button
                                         title="Add To Schedule"

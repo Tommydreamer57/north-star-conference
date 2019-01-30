@@ -6,6 +6,7 @@ import React, {
 import {
     log,
     getItems,
+    submitReview,
 } from './service';
 
 import {
@@ -26,6 +27,7 @@ export default class StorageProvider extends Component {
         keynotes: [],
         addToSchedule() { },
         removeFromSchedule() { },
+        submitReview() { },
     };
 
     componentDidMount = async () => {
@@ -63,6 +65,7 @@ export default class StorageProvider extends Component {
             keynotes,
             addToSchedule: this.addToSchedule,
             removeFromSchedule: this.removeFromSchedule,
+            submitReview,
         });
     }
 

@@ -36,5 +36,11 @@ export default StyleSheet.create({
     selectedSession: {
         margin: 5,
         backgroundColor: Colors.yellow,
-    }
+    },
+    input: {
+        margin: 5,
+        padding: 5,
+        borderColor: "black",
+        borderWidth: 1,
+    },
 });

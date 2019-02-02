@@ -41,11 +41,7 @@ export default function SessionInfo({
                         speakerphoto,
                     } = {},
                 },
-                schedule: {
-                    [sessionName]: {
-                        id: selectedSessionId,
-                    }
-                },
+                scheduleArray,
                 addToSchedule,
                 removeFromSchedule,
             }) => (
@@ -71,7 +67,7 @@ export default function SessionInfo({
                             })}
                         />
                         {sessionName.match(/breakout/i) ? (
-                            id === selectedSessionId ? (
+                            scheduleArray.some(({ selectedSession: { id: selectedId } }) => selectedId === id) ? (
                                 <>
                                     <Button
                                         title="Remove From Schedule"

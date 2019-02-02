@@ -32,7 +32,7 @@ export default function SessionTile({
                     styles.selectedSession
                     :
                     styles.session}
-            onPress={() => navigate("SessionInfo", { sessionName: sessiontype, id })}
+            onPress={() => navigate("SessionInfo", { sessionName: sessiontype.toUpperCase(), id })}
         >
             <Text>
                 {title}

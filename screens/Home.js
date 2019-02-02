@@ -18,20 +18,20 @@ const links = [
         {
 
             name: [
-                "SESSIONS",
-            ],
-            to: "AllSessions",
-            icon: "ios-microphone",
-        },
-        {
-
-            name: [
                 "BUILD YOUR",
                 "SCHEDULE",
             ],
             to: "Schedule",
             // icon: "ios-calendar",
             icon: "ios-add-circle",
+        },
+        {
+
+            name: [
+                "SESSIONS",
+            ],
+            to: "AllSessions",
+            icon: "ios-microphone",
         },
         {
             name: [
@@ -65,23 +65,14 @@ const links = [
         {
 
             name: [
-                "CONFERENCE",
-                "AUDIO",
-            ],
-            url: "https://vimeo.com/ondemand/northstar2018/256616872",
-            icon: "ios-play-circle",
-        },
-    ],
-    [
-        {
-
-            name: [
                 "RECEIVE",
                 "NOTIFICATIONS",
             ],
             to: "Notifications",
             icon: "ios-notifications",
         },
+    ],
+    [
         {
 
             name: [
@@ -99,6 +90,15 @@ const links = [
             ],
             url: "https://northstarlds.org/give/donate/",
             icon: "ios-cash",
+        },
+        {
+
+            name: [
+                "CONFERENCE",
+                "AUDIO",
+            ],
+            url: "https://vimeo.com/ondemand/northstar2018/256616872",
+            icon: "ios-play-circle",
         },
     ],
 ];

@@ -1,12 +1,12 @@
 import React, {
     Component,
-    // createRef,
 } from 'react';
 
 import {
     ScrollView,
     KeyboardAvoidingView,
     View,
+    Alert,
     Text,
     TextInput,
     Slider,
@@ -31,24 +31,39 @@ export default class Feedback extends Component {
     static navigationOptions = createNavigationOptions("Feedback");
 
     state = {
-        sessionId: undefined,
+        sessionId: 0,
         sessionName: "",
         likeFeedback: "",
         dislikeFeedback: "",
         rating: 0,
         generalFeedback: "",
         email: "",
-        usename: "",
+        username: "",
     };
 
     // refs = {
-    //     likeFeedback: createRef(),
-    //     dislikeFeedback: createRef(),
-    //     rating: createRef(),
-    //     generalFeedback: createRef(),
-    //     email: createRef(),
-    //     usename: createRef(),
+    //     likeFeedback: element => "likeFeedback" = element,
+    //     dislikeFeedback: element => "dislikeFeedback" = element,
+    //     rating: element => "rating" = element,
+    //     generalFeedback: element => "generalFeedback" = element,
+    //     email: element => "email" = element,
+    //     username: element => "username" = element,
     // };
+
+    // refsArray = [
+    //     "likeFeedback",
+    //     "dislikeFeedback",
+    //     "rating",
+    //     "generalFeedback",
+    //     "email",
+    //     "username",
+    // ];
+
+    onSubmitEditing = ref => () => {
+        const nextRef = this[ref];
+        // Alert.alert(Object.keys(nextRef).join(" - "));
+        nextRef.focus();
+    }
 
     componentDidMount = () => {
         const {
@@ -81,6 +96,12 @@ export default class Feedback extends Component {
                 email,
                 username,
             },
+            props: {
+                navigation: {
+                    goBack,
+                },
+            },
+            onSubmitEditing,
         } = this;
         return (
             <StorageConsumer>
@@ -92,11 +113,6 @@ export default class Feedback extends Component {
                             sessiontime,
                         } = {},
                     },
-                    schedule: {
-                        [sessionName]: {
-                            id: selectedSessionId,
-                        } = {},
-                    },
                     scheduleArray,
                     submitReview,
                 }) => (
@@ -105,6 +121,10 @@ export default class Feedback extends Component {
                                 selectedValue={sessionId}
                                 onValueChange={sessionId => this.setState({ sessionId })}
                             >
+                                <Picker.Item
+                                    value={0}
+                                    label="Select A Session"
+                                />
                                 {scheduleArray
                                     .filter(({ selectedSession: { id } }) => id)
                                     .map(({ sessionName, selectedSession: { id, title } }) => (
@@ -115,66 +135,75 @@ export default class Feedback extends Component {
                                         />
                                     ))}
                             </Picker>
-                            <Text>{sessionName}</Text>
-                            <Text>{title}</Text>
-                            <Text>{speakername}</Text>
-                            <Text>{sessiontime}</Text>
+                            {sessionId ? (
+                                <>
+                                    <Text>{sessionName}</Text>
+                                    <Text>{title}</Text>
+                                    <Text>{speakername}</Text>
+                                    <Text>{sessiontime}</Text>
 
-                            <Text>How would you rate this session overall?</Text>
-                            <Slider
-                                // ref={this.refs.rating}
-                                value={rating}
-                                minimumValue={0}
-                                maximumValue={10}
-                                onValueChange={rating => this.setState({ rating })}
-                            />
-                            <Text>What did you like about this session?</Text>
-                            <TextInput
-                                // ref={this.refs.likeFeedback}
-                                style={styles.input}
-                                value={likeFeedback}
-                                onChangeText={likeFeedback => this.setState({ likeFeedback })}
-                            />
-                            <Text>What didn't you like about this session?</Text>
-                            <TextInput
-                                // ref={this.refs.dislikeFeedback}
-                                style={styles.input}
-                                value={dislikeFeedback}
-                                onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
-                            />
-                            <Text>What general feedback do you have?</Text>
-                            <TextInput
-                                // ref={this.refs.generalFeedback}
-                                style={styles.input}
-                                value={generalFeedback}
-                                onChangeText={generalFeedback => this.setState({ generalFeedback })}
-                            />
-                            <Text>What is your name?</Text>
-                            <TextInput
-                                // ref={this.refs.username}
-                                style={styles.input}
-                                value={username}
-                                onChangeText={username => this.setState({ username })}
-                            />
-                            <Text>What is your email?</Text>
-                            <TextInput
-                                // ref={this.refs.email}
-                                style={styles.input}
-                                value={email}
-                                onChangeText={email => this.setState({ email })}
-                            />
-                            <Button
-                                title="Submit Review"
-                                onPress={async () => {
-                                    if (await submitReview({
-                                        ...this.state,
-                                        sessionTitle: title,
-                                        sessionSpeaker: speakername,
-                                    }))
-                                        goBack();
-                                }}
-                            />
-                            <Text>bottom</Text>
+                                    <Text>How would you rate this session overall?</Text>
+                                    <Slider
+                                        ref={el => this.rating = el}
+                                        value={rating}
+                                        minimumValue={0}
+                                        maximumValue={10}
+                                        onSlidingComplete={rating => this.setState({ rating })}
+                                    />
+                                    <Text>What did you like about this session?</Text>
+                                    <TextInput
+                                        ref={el => this.likeFeedback = el}
+                                        style={styles.input}
+                                        value={likeFeedback}
+                                        onChangeText={likeFeedback => this.setState({ likeFeedback })}
+                                        onSubmitEditing={onSubmitEditing("dislikeFeedback")}
+                                    />
+                                    <Text>What didn't you like about this session?</Text>
+                                    <TextInput
+                                        ref={el => this.dislikeFeedback = el}
+                                        style={styles.input}
+                                        value={dislikeFeedback}
+                                        onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
+                                        onSubmitEditing={onSubmitEditing("generalFeedback")}
+                                    />
+                                    <Text>What general feedback do you have?</Text>
+                                    <TextInput
+                                        ref={el => this.generalFeedback = el}
+                                        style={styles.input}
+                                        value={generalFeedback}
+                                        onChangeText={generalFeedback => this.setState({ generalFeedback })}
+                                        onSubmitEditing={onSubmitEditing("username")}
+                                    />
+                                    <Text>What is your name?</Text>
+                                    <TextInput
+                                        ref={el => this.username = el}
+                                        style={styles.input}
+                                        value={username}
+                                        onChangeText={username => this.setState({ username })}
+                                        onSubmitEditing={onSubmitEditing("email")}
+                                    />
+                                    <Text>What is your email?</Text>
+                                    <TextInput
+                                        ref={el => this.email = el}
+                                        style={styles.input}
+                                        value={email}
+                                        onChangeText={email => this.setState({ email })}
+                                    />
+                                    <Button
+                                        title="Submit Review"
+                                        onPress={async () => {
+                                            if (await submitReview({
+                                                ...this.state,
+                                                sessionTitle: title,
+                                                sessionSpeaker: speakername,
+                                            }))
+                                                goBack();
+                                        }}
+                                    />
+                                </>
+                            ) : (
+                                    <Text>Please Select A Session</Text>
+                                )}
                         </KeyboardView>
                     )}
             </StorageConsumer>

@@ -31,7 +31,7 @@ export const log = async body => {
     try {
         await axios.post('http://192.168.0.43:4321/log', body);
     } catch (err) {
-        console.error(err);
+        console.log(err);
     }
 }
 
@@ -60,8 +60,8 @@ export const fetchSessions = async () => {
             }) => ({
                 ...item,
                 sessiontype: sessiontype.toUpperCase()
-            }));
-
+                }));
+        
         // log({ keynotes })
         // console.log({ keynotes });
 
@@ -74,7 +74,7 @@ export const fetchSessions = async () => {
                     [key]: [...(all[key] || []), breakout]
                 };
             }, {});
-
+        
         // log({ breakouts });
         // console.log({ breakouts });
 

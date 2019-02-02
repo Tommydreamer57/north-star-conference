@@ -1,6 +1,6 @@
 import React, {
     Component,
-    createRef,
+    // createRef,
 } from 'react';
 
 import {
@@ -11,6 +11,7 @@ import {
     TextInput,
     Slider,
     Button,
+    Picker,
 } from 'react-native';
 
 import {
@@ -23,11 +24,15 @@ import { StorageConsumer } from '../storage/StorageProvider';
 
 import styles from '../styles/styles';
 
+import KeyboardView from '../components/KeyboardView';
+
 export default class Feedback extends Component {
-    
+
     static navigationOptions = createNavigationOptions("Feedback");
 
     state = {
+        sessionId: undefined,
+        sessionName: "",
         likeFeedback: "",
         dislikeFeedback: "",
         rating: 0,
@@ -36,18 +41,39 @@ export default class Feedback extends Component {
         usename: "",
     };
 
-    refs = {
-        likeFeedback: createRef(),
-        dislikeFeedback: createRef(),
-        rating: createRef(),
-        generalFeedback: createRef(),
-        email: createRef(),
-        usename: createRef(),
-    };
+    // refs = {
+    //     likeFeedback: createRef(),
+    //     dislikeFeedback: createRef(),
+    //     rating: createRef(),
+    //     generalFeedback: createRef(),
+    //     email: createRef(),
+    //     usename: createRef(),
+    // };
+
+    componentDidMount = () => {
+        const {
+            props: {
+                navigation: {
+                    state: {
+                        params: {
+                            sessionName,
+                            id: sessionId,
+                        } = {},
+                    },
+                },
+            },
+        } = this;
+        this.setState({
+            sessionName,
+            sessionId,
+        });
+    }
 
     render = () => {
         const {
             state: {
+                sessionId,
+                sessionName,
                 likeFeedback,
                 dislikeFeedback,
                 rating,
@@ -55,84 +81,84 @@ export default class Feedback extends Component {
                 email,
                 username,
             },
-            props: {
-                navigation: {
-                    goBack,
-                    state: {
-                        params: {
-                            sessionName,
-                            id,
-                        },
-                    },
-                },
-            },
         } = this;
         return (
             <StorageConsumer>
                 {({
                     allSessions: {
-                        [id]: {
+                        [sessionId]: {
                             title,
                             speakername,
                             sessiontime,
-                        },
+                        } = {},
                     },
                     schedule: {
                         [sessionName]: {
                             id: selectedSessionId,
-                        }
+                        } = {},
                     },
+                    scheduleArray,
                     submitReview,
                 }) => (
-                        <ScrollView>
-                            {/* <KeyboardAvoidingView
-                                keyboardVerticalOffset={Header.HEIGHT + 20}
-                                style={{ flex: 1 }}
-                                behavior="height"
-                            > */}
+                        <KeyboardView>
+                            <Picker
+                                selectedValue={sessionId}
+                                onValueChange={sessionId => this.setState({ sessionId })}
+                            >
+                                {scheduleArray
+                                    .filter(({ selectedSession: { id } }) => id)
+                                    .map(({ sessionName, selectedSession: { id, title } }) => (
+                                        <Picker.Item
+                                            key={sessionName}
+                                            value={id}
+                                            label={title}
+                                        />
+                                    ))}
+                            </Picker>
                             <Text>{sessionName}</Text>
                             <Text>{title}</Text>
                             <Text>{speakername}</Text>
                             <Text>{sessiontime}</Text>
+
                             <Text>How would you rate this session overall?</Text>
                             <Slider
-                                ref={this.refs.rating}
-                                value={0}
+                                // ref={this.refs.rating}
+                                value={rating}
                                 minimumValue={0}
                                 maximumValue={10}
                                 onValueChange={rating => this.setState({ rating })}
                             />
-                            <Text>What did you likeFeedback about this session?</Text>
+                            <Text>What did you like about this session?</Text>
                             <TextInput
-                                ref={this.refs.likeFeedback}
+                                // ref={this.refs.likeFeedback}
                                 style={styles.input}
                                 value={likeFeedback}
                                 onChangeText={likeFeedback => this.setState({ likeFeedback })}
                             />
-                            <Text>What didn't you likeFeedback about this session?</Text>
+                            <Text>What didn't you like about this session?</Text>
                             <TextInput
-                                ref={this.refs.dislikeFeedback}
+                                // ref={this.refs.dislikeFeedback}
                                 style={styles.input}
                                 value={dislikeFeedback}
                                 onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
                             />
-                            <Text>What generalFeedback feedback do you have?</Text>
+                            <Text>What general feedback do you have?</Text>
                             <TextInput
-                                ref={this.refs.generalFeedback}
+                                // ref={this.refs.generalFeedback}
                                 style={styles.input}
                                 value={generalFeedback}
                                 onChangeText={generalFeedback => this.setState({ generalFeedback })}
                             />
                             <Text>What is your name?</Text>
                             <TextInput
-                                ref={this.refs.username}
+                                // ref={this.refs.username}
                                 style={styles.input}
                                 value={username}
                                 onChangeText={username => this.setState({ username })}
                             />
                             <Text>What is your email?</Text>
                             <TextInput
-                                ref={this.refs.email}
+                                // ref={this.refs.email}
                                 style={styles.input}
                                 value={email}
                                 onChangeText={email => this.setState({ email })}
@@ -142,24 +168,14 @@ export default class Feedback extends Component {
                                 onPress={async () => {
                                     if (await submitReview({
                                         ...this.state,
-                                        sessionId: id,
                                         sessionTitle: title,
                                         sessionSpeaker: speakername,
                                     }))
                                         goBack();
                                 }}
                             />
-                            <View
-                                style={{
-                                    margin: 10,
-                                    paddingTop: 10,
-                                    paddingBottom: 250,
-                                }}
-                            >
-                                <Text>bottom</Text>
-                            </View>
-                            {/* </KeyboardAvoidingView> */}
-                        </ScrollView>
+                            <Text>bottom</Text>
+                        </KeyboardView>
                     )}
             </StorageConsumer>
         )

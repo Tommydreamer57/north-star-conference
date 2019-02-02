@@ -3,8 +3,7 @@ import {
 } from 'react-navigation';
 
 import Home from '../screens/Home';
-import Keynotes from '../screens/Keynotes';
-import Breakouts from '../screens/Breakouts';
+import AllSessions from '../screens/AllSessions';
 import Schedule from '../screens/Schedule';
 import Mentors from '../screens/Mentors';
 import Map from '../screens/Map';
@@ -23,15 +22,8 @@ const config = {
 
 export default createStackNavigator({
     Home,
-    Keynotes: createStackNavigator({
-        Keynotes,
-        SessionInfo,
-        SpeakerInfo,
-        Map,
-        Feedback,
-    }, config),
-    Breakouts: createStackNavigator({
-        Breakouts,
+    AllSessions: createStackNavigator({
+        AllSessions,
         SessionInfo,
         SpeakerInfo,
         Map,
@@ -45,6 +37,7 @@ export default createStackNavigator({
         Map,
         Feedback,
     }, config),
+    Feedback,
     Map,
     Mentors,
     Notifications,

@@ -18,21 +18,10 @@ const links = [
         {
 
             name: [
-                "KEYNOTE",
                 "SESSIONS",
             ],
-            to: "Keynotes",
-            // icon: "ios-contact"
-            icon: "ios-person"
-        },
-        {
-
-            name: [
-                "BREAKOUT",
-                "SESSIONS",
-            ],
-            to: "Breakouts",
-            icon: "ios-microphone"
+            to: "AllSessions",
+            icon: "ios-microphone",
         },
         {
 
@@ -41,7 +30,16 @@ const links = [
                 "SCHEDULE",
             ],
             to: "Schedule",
-            icon: "ios-calendar"
+            // icon: "ios-calendar",
+            icon: "ios-add-circle",
+        },
+        {
+            name: [
+                "PROVIDE",
+                "FEEDBACK",
+            ],
+            to: "Feedback",
+            icon: "ios-paper",
         },
     ],
     [
@@ -52,7 +50,7 @@ const links = [
                 "ROOM MAP",
             ],
             to: "Map",
-            icon: "ios-map"
+            icon: "ios-map",
         },
         {
 
@@ -62,7 +60,7 @@ const links = [
             ],
             to: "Mentors",
             // icon: "ios-contacts"
-            icon: "ios-people"
+            icon: "ios-people",
         },
         {
 
@@ -71,7 +69,7 @@ const links = [
                 "AUDIO",
             ],
             url: "https://vimeo.com/ondemand/northstar2018/256616872",
-            icon: "ios-play-circle"
+            icon: "ios-play-circle",
         },
     ],
     [
@@ -82,7 +80,7 @@ const links = [
                 "NOTIFICATIONS",
             ],
             to: "Notifications",
-            icon: "ios-notifications"
+            icon: "ios-notifications",
         },
         {
 
@@ -91,7 +89,7 @@ const links = [
                 "COMMITTEE",
             ],
             url: "sms:770-530-1892",
-            icon: "ios-text"
+            icon: "ios-text",
         },
         {
 
@@ -100,7 +98,7 @@ const links = [
                 "NORTH STAR",
             ],
             url: "https://northstarlds.org/give/donate/",
-            icon: "ios-cash"
+            icon: "ios-cash",
         },
     ],
 ];

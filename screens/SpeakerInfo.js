@@ -19,6 +19,9 @@ export default function SpeakerInfo({
                 speakername,
                 speakerbio,
                 speakerphoto,
+                name,
+                bio,
+                photo,
             },
         },
     },
@@ -31,14 +34,14 @@ export default function SpeakerInfo({
                     width: 250,
                 }}
                 source={{
-                    uri: speakerphoto
+                    uri: speakerphoto || photo
                 }}
             />
             <Text>
-                {speakername}
+                {speakername || name}
             </Text>
             <Text>
-                {speakerbio}
+                {speakerbio || bio}
             </Text>
         </ScrollView>
     );

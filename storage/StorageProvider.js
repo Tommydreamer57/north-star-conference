@@ -17,6 +17,22 @@ const { Provider, Consumer } = createContext();
 
 export const StorageConsumer = Consumer;
 
+const transformSchedule = schedule => [
+    "KEYNOTE 1",
+    "BREAKOUT 1",
+    "BREAKOUT 2",
+    "BREAKOUT 3",
+    "KEYNOTE 2",
+    "KEYNOTE 3",
+    "BREAKOUT 4",
+    "BREAKOUT 5",
+    "BREAKOUT 6",
+    "KEYNOTE 4",
+].map(key => ({
+    sessionName: key,
+    selectedSession: schedule[key],
+}));
+
 export default class StorageProvider extends Component {
 
     state = {
@@ -25,15 +41,16 @@ export default class StorageProvider extends Component {
         schedule: {},
         breakouts: {},
         keynotes: [],
+        speakers: {},
         addToSchedule() { },
         removeFromSchedule() { },
         submitReview() { },
     };
 
     componentDidMount = async () => {
-        const [schedule, breakouts, keynotes] = await getItems("schedule", "breakouts", "keynotes");
+        const [schedule, breakouts, keynotes, speakers] = await getItems("schedule", "breakouts", "keynotes","speakers");
 
-        const scheduleArray = this.addScheduleArray(schedule);
+        const scheduleArray = transformSchedule(schedule);
 
         const allSessions = {
             ...Object.values(breakouts)
@@ -45,17 +62,9 @@ export default class StorageProvider extends Component {
                 }), {}),
         };
 
-        try {
-            log({
-                allSessions,
-                // scheduleArray,
-                // schedule,
-                // breakouts,
-                // keynotes,
-            });
-        } catch (err) {
-            console.error(err);
-        }
+        log({
+            allSessions,
+        });
 
         this.setState({
             allSessions,
@@ -63,31 +72,11 @@ export default class StorageProvider extends Component {
             schedule,
             breakouts,
             keynotes,
+            speakers,
             addToSchedule: this.addToSchedule,
             removeFromSchedule: this.removeFromSchedule,
             submitReview,
         });
-    }
-
-    addScheduleArray = schedule => {
-        const orderedScheduleKeys = [
-            "KEYNOTE 1",
-            "BREAKOUT 1",
-            "BREAKOUT 2",
-            "BREAKOUT 3",
-            "KEYNOTE 2",
-            "KEYNOTE 3",
-            "BREAKOUT 4",
-            "BREAKOUT 5",
-            "BREAKOUT 6",
-            "KEYNOTE 4",
-        ];
-
-        return orderedScheduleKeys
-            .map(key => ({
-                sessionName: key,
-                selectedSession: schedule[key],
-            }));
     }
 
     addToSchedule = async id => {
@@ -99,7 +88,7 @@ export default class StorageProvider extends Component {
         };
         try {
             await AsyncStorage.setItem("schedule", JSON.stringify(schedule));
-            const scheduleArray = this.addScheduleArray(schedule);
+            const scheduleArray = this.transformSchedule(schedule);
             this.setState({
                 schedule,
                 scheduleArray,
@@ -121,7 +110,7 @@ export default class StorageProvider extends Component {
         };
         try {
             await AsyncStorage.setItem("schedule", JSON.stringify(schedule));
-            const scheduleArray = this.addScheduleArray(schedule);
+            const scheduleArray = this.transformSchedule(schedule);
             this.setState({
                 schedule,
                 scheduleArray,

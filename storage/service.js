@@ -41,6 +41,7 @@ const allKeys = [
     "breakouts",
     "keynotes",
     "schedule",
+    "speakers",
 ];
 
 const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
@@ -60,8 +61,8 @@ export const fetchSessions = async () => {
             }) => ({
                 ...item,
                 sessiontype: sessiontype.toUpperCase()
-                }));
-        
+            }));
+
         // log({ keynotes })
         // console.log({ keynotes });
 
@@ -74,7 +75,7 @@ export const fetchSessions = async () => {
                     [key]: [...(all[key] || []), breakout]
                 };
             }, {});
-        
+
         // log({ breakouts });
         // console.log({ breakouts });
 
@@ -94,10 +95,22 @@ export const fetchSessions = async () => {
         // log({ schedule });
         // console.log({ schedule });
 
+        const speakers = data.reduce((all, { id, speakername, speakerbio, speakerphoto }) => ({
+            ...all,
+            [speakername]: {
+                ...all[speakername],
+                name: speakername,
+                bio: speakerbio,
+                photo: speakerphoto,
+                sessions: ((all[speakername] || {}).sessions || []).concat(id)
+            },
+        }), {});
+
         await AsyncStorage.multiSet([
             [validKeys.breakouts, JSON.stringify(breakouts)],
             [validKeys.keynotes, JSON.stringify(keynotes)],
-            [validKeys.schedule, JSON.stringify(schedule)]
+            [validKeys.schedule, JSON.stringify(schedule)],
+            [validKeys.speakers, JSON.stringify(speakers)],
         ]);
 
         return {

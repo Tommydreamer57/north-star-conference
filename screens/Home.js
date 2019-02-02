@@ -45,10 +45,10 @@ const links = [
     [
         {
             name: [
-                "AUCTION"
+                "SPEAKERS"
             ],
-            to: "Auction",
-            icon: "ios-pricetags",
+            to: "AllSpeakers",
+            icon: "ios-people",
         },
         {
 

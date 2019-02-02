@@ -4,6 +4,7 @@ import {
 
 import Home from '../screens/Home';
 import AllSessions from '../screens/AllSessions';
+import AllSpeakers from '../screens/AllSpeakers';
 import Schedule from '../screens/Schedule';
 import Map from '../screens/Map';
 import Notifications from '../screens/Notifications';
@@ -16,6 +17,7 @@ import Feedback from '../screens/Feedback';
 export default createStackNavigator({
     Home,
     AllSessions,
+    AllSpeakers,
     Schedule,
     SelectBreakout,
     SessionInfo,

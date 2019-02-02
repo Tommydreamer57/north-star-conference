@@ -66,7 +66,7 @@ function Day({
                             style={styles.breakoutGroup}
                             key={breakoutName}
                         >
-                            <Text>{breakoutName}</Text>
+                            <Text>{breakoutName}: {breakouts[breakoutName][0].sessiontime}</Text>
                             <View>
                                 {breakouts[breakoutName].map(session => (
                                     <SessionTile

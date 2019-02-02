@@ -44,6 +44,13 @@ const links = [
     ],
     [
         {
+            name: [
+                "AUCTION"
+            ],
+            to: "Auction",
+            icon: "ios-pricetags",
+        },
+        {
 
             name: [
                 "MEETING",
@@ -51,16 +58,6 @@ const links = [
             ],
             to: "Map",
             icon: "ios-map",
-        },
-        {
-
-            name: [
-                "MENTOR",
-                "CENTER",
-            ],
-            to: "Mentors",
-            // icon: "ios-contacts"
-            icon: "ios-people",
         },
         {
 
@@ -73,6 +70,15 @@ const links = [
         },
     ],
     [
+        {
+
+            name: [
+                "CONFERENCE",
+                "AUDIO",
+            ],
+            url: "https://vimeo.com/ondemand/northstar2018/256616872",
+            icon: "ios-play-circle",
+        },
         {
 
             name: [
@@ -90,15 +96,6 @@ const links = [
             ],
             url: "https://northstarlds.org/give/donate/",
             icon: "ios-cash",
-        },
-        {
-
-            name: [
-                "CONFERENCE",
-                "AUDIO",
-            ],
-            url: "https://vimeo.com/ondemand/northstar2018/256616872",
-            icon: "ios-play-circle",
         },
     ],
 ];

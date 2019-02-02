@@ -5,7 +5,6 @@ import {
 import Home from '../screens/Home';
 import AllSessions from '../screens/AllSessions';
 import Schedule from '../screens/Schedule';
-import Mentors from '../screens/Mentors';
 import Map from '../screens/Map';
 import Notifications from '../screens/Notifications';
 
@@ -39,7 +38,6 @@ export default createStackNavigator({
     }, config),
     Feedback,
     Map,
-    Mentors,
     Notifications,
 }, {
         headerMode: 'none',

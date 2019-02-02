@@ -3,20 +3,12 @@ import React, {
 } from 'react';
 
 import {
-    ScrollView,
-    KeyboardAvoidingView,
-    View,
-    Alert,
     Text,
     TextInput,
     Slider,
     Button,
     Picker,
 } from 'react-native';
-
-import {
-    Header,
-} from 'react-navigation';
 
 import createNavigationOptions from '../navigation/navigation-options';
 
@@ -41,27 +33,8 @@ export default class Feedback extends Component {
         username: "",
     };
 
-    // refs = {
-    //     likeFeedback: element => "likeFeedback" = element,
-    //     dislikeFeedback: element => "dislikeFeedback" = element,
-    //     rating: element => "rating" = element,
-    //     generalFeedback: element => "generalFeedback" = element,
-    //     email: element => "email" = element,
-    //     username: element => "username" = element,
-    // };
-
-    // refsArray = [
-    //     "likeFeedback",
-    //     "dislikeFeedback",
-    //     "rating",
-    //     "generalFeedback",
-    //     "email",
-    //     "username",
-    // ];
-
     onSubmitEditing = ref => () => {
         const nextRef = this[ref];
-        // Alert.alert(Object.keys(nextRef).join(" - "));
         nextRef.focus();
     }
 

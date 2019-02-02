@@ -18,14 +18,17 @@ export default function SessionTile({
         title,
         speakername,
         sessiontype,
+        sessiontime,
     },
     addedToSchedule,
 
 }) {
 
+    const isKeynote = sessiontype.match(/keynote/i);
+
     return (
         <TouchableOpacity
-            style={sessiontype.match(/keynote/i) ?
+            style={isKeynote ?
                 styles.keynoteSession
                 :
                 addedToSchedule ?
@@ -34,12 +37,11 @@ export default function SessionTile({
                     styles.session}
             onPress={() => navigate("SessionInfo", { sessionName: sessiontype.toUpperCase(), id })}
         >
-            <Text>
-                {title}
-            </Text>
-            <Text>
-                {speakername}
-            </Text>
+            <Text>{title}</Text>
+            {isKeynote ? (
+                <Text>{sessiontime}</Text>
+            ) : null}
+            <Text>{speakername}</Text>
         </TouchableOpacity>
     );
 }

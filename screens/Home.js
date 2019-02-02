@@ -100,11 +100,16 @@ const links = [
     ],
 ];
 
-export default ({
+Home.navigationOptions = {
+    header: null,
+};
+
+export default function Home({
     navigation: {
         navigate,
     },
-}) => (
+}) {
+    return (
         <ImageBackground
             source={require('../assets/home-background.png')}
             style={styles.background}
@@ -166,6 +171,7 @@ export default ({
             />
         </ImageBackground>
     );
+}
 
 const styles = StyleSheet.create({
     background: {

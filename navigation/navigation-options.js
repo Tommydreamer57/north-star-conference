@@ -6,5 +6,5 @@ export default title => ({
         backgroundColor: Colors.blue,
     },
     headerTintColor: 'white',
-    headerLeft: null,
+    // headerLeft: null,
 });

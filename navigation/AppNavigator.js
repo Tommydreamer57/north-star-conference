@@ -13,32 +13,14 @@ import SessionInfo from '../screens/SessionInfo';
 import SpeakerInfo from '../screens/SpeakerInfo';
 import Feedback from '../screens/Feedback';
 
-const config = {
-    defaultNavigationOptions: ({ navigation }) => ({
-        
-    }),
-};
-
 export default createStackNavigator({
     Home,
-    AllSessions: createStackNavigator({
-        AllSessions,
-        SessionInfo,
-        SpeakerInfo,
-        Map,
-        Feedback,
-    }, config),
-    Schedule: createStackNavigator({
-        Schedule,
-        SelectBreakout,
-        SessionInfo,
-        SpeakerInfo,
-        Map,
-        Feedback,
-    }, config),
+    AllSessions,
+    Schedule,
+    SelectBreakout,
+    SessionInfo,
+    SpeakerInfo,
     Feedback,
     Map,
     Notifications,
-}, {
-        headerMode: 'none',
-    });
+});

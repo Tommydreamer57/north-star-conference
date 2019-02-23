@@ -7,95 +7,76 @@ import {
     View,
     TouchableOpacity,
     StyleSheet,
+    Platform,
 } from 'react-native';
 
 import {
     Icon,
 } from 'expo';
 
+const iconPrefix = Platform.OS !== "ios" ?
+    "md-"
+    :
+    "ios-";
+
 const links = [
     [
         {
 
-            name: [
-                "BUILD YOUR",
-                "SCHEDULE",
-            ],
+            name: "SCHEDULE",
             to: "Schedule",
-            // icon: "ios-calendar",
-            icon: "ios-add-circle",
+            // icon: "calendar",
+            icon: "add-circle",
         },
         {
 
-            name: [
-                "SESSIONS",
-            ],
+            name: "SESSIONS",
             to: "AllSessions",
-            icon: "ios-microphone",
+            icon: "microphone",
         },
         {
-            name: [
-                "PROVIDE",
-                "FEEDBACK",
-            ],
+            name: "FEEDBACK",
             to: "Feedback",
-            icon: "ios-paper",
+            icon: "paper",
         },
     ],
     [
         {
-            name: [
-                "SPEAKERS"
-            ],
+            name: "SPEAKERS",
             to: "AllSpeakers",
-            icon: "ios-people",
+            icon: "people",
         },
         {
 
-            name: [
-                "MEETING",
-                "ROOM MAP",
-            ],
+            name: "MAP",
             to: "Map",
-            icon: "ios-map",
+            icon: "map",
         },
         {
 
-            name: [
-                "RECEIVE",
-                "NOTIFICATIONS",
-            ],
+            name: "NOTIFICATIONS",
             to: "Notifications",
-            icon: "ios-notifications",
+            icon: "notifications",
         },
     ],
     [
         {
 
-            name: [
-                "CONFERENCE",
-                "AUDIO",
-            ],
+            name: "CONTACT",
             url: "https://vimeo.com/ondemand/northstar2018/256616872",
-            icon: "ios-play-circle",
+            icon: "play-circle",
         },
         {
 
-            name: [
-                "CONTACT",
-                "COMMITTEE",
-            ],
+            name: "CONTACT",
             url: "sms:770-530-1892",
-            icon: "ios-text",
+            icon: "text",
         },
         {
 
-            name: [
-                "DONATE TO",
-                "NORTH STAR",
-            ],
+            name: "DONATE",
             url: "https://northstarlds.org/give/donate/",
-            icon: "ios-cash",
+            icon: "cash",
         },
     ],
 ];
@@ -128,10 +109,7 @@ export default function Home({
                         {row.map(({
                             to,
                             icon,
-                            name: [
-                                lineOne,
-                                lineTwo
-                            ],
+                            name,
                             url,
                         }, j) => (
                                 <TouchableOpacity
@@ -146,7 +124,7 @@ export default function Home({
                                             console.log(`Cannot open url: ${url}`)}
                                 >
                                     <Icon.Ionicons
-                                        name={icon}
+                                        name={iconPrefix + icon}
                                         size={50}
                                         color='white'
                                     // style={styles.icon}
@@ -154,12 +132,17 @@ export default function Home({
                                     <Text
                                         style={styles.text}
                                     >
-                                        {lineOne}
-                                    </Text>
-                                    <Text
-                                        style={styles.text}
-                                    >
-                                        {lineTwo}
+                                        {name}
+                                        {!to && url && Linking.canOpenURL(url) ? (
+                                            <>
+                                                &nbsp;
+                                                <Icon.Ionicons
+                                                    name={iconPrefix + "open"}
+                                                    size={10}
+                                                    color="white"
+                                                />
+                                            </>
+                                        ) : null}
                                     </Text>
                                 </TouchableOpacity>
                             ))}

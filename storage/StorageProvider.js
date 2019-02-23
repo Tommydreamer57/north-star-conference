@@ -7,6 +7,7 @@ import {
     log,
     getItems,
     submitReview,
+    refetchSessionsEachDay,
 } from './service';
 
 import {
@@ -48,6 +49,9 @@ export default class StorageProvider extends Component {
     };
 
     componentDidMount = async () => {
+        
+        await refetchSessionsEachDay();
+
         const [schedule, breakouts, keynotes, speakers] = await getItems("schedule", "breakouts", "keynotes","speakers");
 
         const scheduleArray = transformSchedule(schedule);
@@ -88,7 +92,7 @@ export default class StorageProvider extends Component {
         };
         try {
             await AsyncStorage.setItem("schedule", JSON.stringify(schedule));
-            const scheduleArray = this.transformSchedule(schedule);
+            const scheduleArray = transformSchedule(schedule);
             this.setState({
                 schedule,
                 scheduleArray,
@@ -110,7 +114,7 @@ export default class StorageProvider extends Component {
         };
         try {
             await AsyncStorage.setItem("schedule", JSON.stringify(schedule));
-            const scheduleArray = this.transformSchedule(schedule);
+            const scheduleArray = transformSchedule(schedule);
             this.setState({
                 schedule,
                 scheduleArray,

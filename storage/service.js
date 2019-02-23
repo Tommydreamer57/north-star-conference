@@ -42,9 +42,19 @@ const allKeys = [
     "keynotes",
     "schedule",
     "speakers",
+    "date",
 ];
 
 const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
+
+export const refetchSessionsEachDay = async () => {
+    const fetchDate = await getItem("date");
+    if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
+        Alert.alert("Refetching Sessions");
+        return fetchSessions();
+    }
+    else return false;
+}
 
 export const fetchSessions = async () => {
     try {
@@ -63,9 +73,6 @@ export const fetchSessions = async () => {
                 sessiontype: sessiontype.toUpperCase()
             }));
 
-        // log({ keynotes })
-        // console.log({ keynotes });
-
         const breakouts = (data || [])
             .filter(({ sessiontype }) => sessiontype.match(/breakout/i))
             .reduce((all, breakout) => {
@@ -75,9 +82,6 @@ export const fetchSessions = async () => {
                     [key]: [...(all[key] || []), breakout]
                 };
             }, {});
-
-        // log({ breakouts });
-        // console.log({ breakouts });
 
         const schedule = {
             ...Object.keys(breakouts)
@@ -92,9 +96,6 @@ export const fetchSessions = async () => {
                 }), {}),
         };
 
-        // log({ schedule });
-        // console.log({ schedule });
-
         const speakers = data.reduce((all, { id, speakername, speakerbio, speakerphoto }) => ({
             ...all,
             [speakername]: {
@@ -106,17 +107,22 @@ export const fetchSessions = async () => {
             },
         }), {});
 
+        const date = `${Date.now()}`;
+
         await AsyncStorage.multiSet([
             [validKeys.breakouts, JSON.stringify(breakouts)],
             [validKeys.keynotes, JSON.stringify(keynotes)],
             [validKeys.schedule, JSON.stringify(schedule)],
             [validKeys.speakers, JSON.stringify(speakers)],
+            [validKeys.date, JSON.stringify(date)],
         ]);
 
         return {
             keynotes,
             breakouts,
             schedule,
+            speakers,
+            date,
         };
     } catch (err) {
         console.error(err);
@@ -124,7 +130,9 @@ export const fetchSessions = async () => {
 }
 
 export const getItem = async key => {
-    if (allKeys.includes(key)) {
+    if (!allKeys.includes(key)) {
+        throw new Error(`Invalid key: ${key}. Please use one of: "${allKeys.join('," "')}"`);
+    } else {
         try {
             const data = await AsyncStorage.getItem(key);
             if (data) {
@@ -136,15 +144,13 @@ export const getItem = async key => {
         } catch (err) {
             console.error(err);
         }
-    } else {
-        throw new Error(`Invalid key: ${key}. Please use one of: ${allKeys.join(', ')}`);
     }
 }
 
-export const getItems = async (...keys) => {
+export const getItems = (...keys) => {
     const invalidKey = keys.find(key => !allKeys.includes(key));
     if (invalidKey) {
-        console.error(`Key not found ${invalidKey}`);
+        console.error(`Key not found: "${invalidKey}"`);
     } else {
         try {
             return Promise.all(keys.map(getItem));
@@ -154,11 +160,10 @@ export const getItems = async (...keys) => {
     }
 }
 
-
 export const submitReview = async review => {
     try {
         const { data } = await axios.post('https://northstarconferenceadmin.herokuapp.com/api/review', review);
-        Alert.alert("Submitted review" + JSON.stringify(data));
+        Alert.alert(`Submitted review: ${JSON.stringify(data)}`);
         return true;
     } catch (err) {
         console.error(err);

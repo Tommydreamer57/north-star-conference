@@ -14,6 +14,8 @@ import SessionInfo from '../screens/SessionInfo';
 import SpeakerInfo from '../screens/SpeakerInfo';
 import Feedback from '../screens/Feedback';
 
+import { Colors } from '../styles/styles';
+
 export default createStackNavigator({
     Home,
     AllSessions,
@@ -25,4 +27,9 @@ export default createStackNavigator({
     Feedback,
     Map,
     Notifications,
-});
+}, {
+        cardStyle: {
+            backgroundColor: Colors.white,
+        },
+    }
+);

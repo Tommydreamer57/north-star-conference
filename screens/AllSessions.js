@@ -54,19 +54,20 @@ function Day({
         <StorageConsumer>
             {({ keynotes, breakouts, schedule }) => (
                 <View
-                    style={styles.day}
+                    style={styles.view}
                 >
-                    <Text>{day}</Text>
+                    <Text style={styles.h1} >{day}</Text>
                     <SessionTile
                         navigation={navigation}
                         session={keynotes[k1]}
                     />
                     {breakoutNames.map(breakoutName => (
                         <View
-                            style={styles.breakoutGroup}
                             key={breakoutName}
                         >
-                            <Text>{breakoutName}: {breakouts[breakoutName][0].sessiontime}</Text>
+                            <Text
+                                style={styles.h3}
+                            >{breakoutName}: {breakouts[breakoutName][0].sessiontime}</Text>
                             <View>
                                 {breakouts[breakoutName].map(session => (
                                     <SessionTile

@@ -5,11 +5,6 @@ import {
     Notifications,
 } from 'expo';
 
-import {
-    View,
-    Text,
-    TouchableOpacity,
-} from 'react-native';
 
 import axios from 'axios';
 
@@ -73,29 +68,6 @@ export default class App extends Component {
         } = this;
 
         return (
-            // <View
-            //     style={{
-            //         height: '100%',
-            //         width: '100%',
-            //         justifyContent: 'center',
-            //         alignItems: 'center',
-            //     }}
-            // >
-            //     <TouchableOpacity
-            //         onPress={_registerAppForPushNotifications}
-            //     >
-            //         <Text>
-            //             REGISTER FOR NOTIFICATIONS
-            //         </Text>
-            //     </TouchableOpacity>
-            //     <TouchableOpacity
-            //         onPress={sendNotification}
-            //     >
-            //         <Text>
-            //             SEND NOTIFICATION
-            //         </Text>
-            //     </TouchableOpacity>
-            // </View>
             <StorageProvider>
                 <AppNavigator />
             </StorageProvider>

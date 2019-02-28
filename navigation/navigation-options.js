@@ -1,10 +1,9 @@
-import Colors from '../styles/Colors';
+import { Colors } from '../styles/styles';
 
 export default title => ({
     title,
     headerStyle: {
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
     },
-    headerTintColor: 'white',
-    // headerLeft: null,
+    headerTintColor: Colors.blue,
 });

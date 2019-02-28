@@ -9,6 +9,8 @@ import {
     // Alert,
 } from 'react-native';
 
+import styles from '../styles/styles';
+
 import createNavigationOptions from '../navigation/navigation-options';
 
 import { StorageConsumer } from '../storage/StorageProvider';
@@ -45,20 +47,21 @@ export default function SessionInfo({
                 addToSchedule,
                 removeFromSchedule,
             }) => (
-                    <ScrollView>
-                        <Text>
+                    <ScrollView style={styles.view} >
+                        <Text style={styles.h2} >
                             {sessionName}: {sessiontime}
                         </Text>
-                        <Text>
+                        <Text style={styles.h2} >
                             {title}
                         </Text>
-                        <Text>
+                        <Text style={styles.paragraph} >
                             {description}
                         </Text>
-                        <Text>
+                        <Text style={styles.h4} >
                             {demographic}
                         </Text>
                         <Button
+                            style={styles.button}
                             title={speakername}
                             onPress={() => navigate('SpeakerInfo', {
                                 speakername,
@@ -70,6 +73,7 @@ export default function SessionInfo({
                             scheduleArray.some(({ selectedSession: { id: selectedId } }) => selectedId === id) ? (
                                 <>
                                     <Button
+                                        style={styles.button}
                                         title="Remove From Schedule"
                                         onPress={async () => {
                                             await removeFromSchedule(id);
@@ -78,12 +82,14 @@ export default function SessionInfo({
                                         }}
                                     />
                                     <Button
+                                        style={styles.button}
                                         title="Provide Feedback"
                                         onPress={() => navigate("Feedback", { id, sessionName })}
                                     />
                                 </>
                             ) : (
                                     <Button
+                                        style={styles.button}
                                         title="Add To Schedule"
                                         onPress={async () => {
                                             await addToSchedule(id);

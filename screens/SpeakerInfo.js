@@ -6,7 +6,7 @@ import {
     Image,
 } from 'react-native';
 
-import styles from '../styles/styles';
+import styles, { Window } from '../styles/styles';
 
 import createNavigationOptions from '../navigation/navigation-options';
 
@@ -27,20 +27,15 @@ export default function SpeakerInfo({
     },
 }) {
     return (
-        <ScrollView>
+        <ScrollView style={styles.view} >
             <Image
-                style={{
-                    height: 250,
-                    width: 250,
-                }}
-                source={{
-                    uri: speakerphoto || photo
-                }}
+                style={styles.speakerphoto}
+                source={{ uri: speakerphoto || photo }}
             />
-            <Text>
+            <Text style={styles.h2} >
                 {speakername || name}
             </Text>
-            <Text>
+            <Text style={styles.paragraph} >
                 {speakerbio || bio}
             </Text>
         </ScrollView>

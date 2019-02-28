@@ -41,8 +41,8 @@ export default function SelectBreakout({
                     },
                 },
             }) => (
-                    <ScrollView>
-                        <Text>
+                    <ScrollView style={styles.view} >
+                        <Text style={styles.h3} >
                             {sessionName}
                         </Text>
                         {breakouts.map(({

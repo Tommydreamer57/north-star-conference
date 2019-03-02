@@ -11,6 +11,7 @@ import {
 } from './service';
 
 import {
+    Text,
     AsyncStorage,
 } from 'react-native';
 
@@ -49,10 +50,10 @@ export default class StorageProvider extends Component {
     };
 
     componentDidMount = async () => {
-        
+
         await refetchSessionsEachDay();
 
-        const [schedule, breakouts, keynotes, speakers] = await getItems("schedule", "breakouts", "keynotes","speakers");
+        const [schedule, breakouts, keynotes, speakers] = await getItems("schedule", "breakouts", "keynotes", "speakers");
 
         const scheduleArray = transformSchedule(schedule);
 
@@ -131,6 +132,11 @@ export default class StorageProvider extends Component {
         <Provider
             value={this.state}
         >
+            {/* <Text>{JSON.stringify({
+                value: 1,
+                schedule: this.state.schedule,
+                scheduleArray: this.state.scheduleArray,
+            })}</Text> */}
             {this.props.children}
         </Provider>
     );

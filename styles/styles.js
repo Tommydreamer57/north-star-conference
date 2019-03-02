@@ -29,29 +29,35 @@ export default StyleSheet.create({
         flex: 1,
         flexGrow: 1,
     },
+    // large bold
     h1: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 8,
+        marginBottom: 10,
     },
+    // medium large bold blue
     h2: {
-        fontSize: 14,
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: Colors.blue,
+        marginBottom: 7,
+    },
+    // medium bold
+    h3: {
+        fontSize: 13,
         fontWeight: 'bold',
         marginBottom: 7,
     },
-    h3: {
+    // medium small italic
+    h4: {
         fontSize: 12,
-        color: Colors.blue,
-        fontWeight: 'bold',
+        fontStyle: 'italic',
         marginBottom: 6,
     },
-    h4: {
-        fontSize: 10,
-        fontStyle: 'italic',
+    // small
+    text: {
+        fontSize: 11,
         marginBottom: 5,
-    },
-    paragraph: {
-
     },
     speakerphoto: {
         height: height / 3,

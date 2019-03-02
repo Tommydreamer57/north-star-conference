@@ -66,15 +66,17 @@ function Day({
                             key={breakoutName}
                         >
                             <Text
-                                style={styles.h3}
-                            >{breakoutName}: {breakouts[breakoutName][0].sessiontime}</Text>
+                                style={styles.h2}
+                            >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}: {breakouts[breakoutName][0].sessiontime}</Text>
                             <View>
                                 {breakouts[breakoutName].map(session => (
                                     <SessionTile
                                         key={session.id}
                                         session={session}
                                         navigation={navigation}
-                                        addedToSchedule={schedule[breakoutName].id === session.id}
+                                        addedToSchedule={schedule[breakoutName]
+                                            &&
+                                            schedule[breakoutName].id === session.id}
                                     />
                                 ))}
                             </View>

@@ -38,34 +38,36 @@ export default function SelectBreakout({
                 schedule: {
                     [sessionName]: {
                         id: selectedSessionId
-                    },
+                    } = {},
                 },
             }) => (
-                    <ScrollView style={styles.view} >
-                        <Text style={styles.h3} >
-                            {sessionName}
-                        </Text>
-                        {breakouts.map(({
-                            id,
-                            title,
-                            speakername,
-                        }) => (
-                                <TouchableOpacity
-                                    key={id}
-                                    onPress={() => navigate("SessionInfo", { sessionName, id })}
-                                    style={id === selectedSessionId ?
-                                        styles.selectedSession
-                                        :
-                                        styles.session}
-                                >
-                                    <Text>
-                                        {title}
-                                    </Text>
-                                    <Text>
-                                        {speakername}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
+                    <ScrollView>
+                        <View style={styles.view}>
+                            <Text style={styles.h3} >
+                                {sessionName}
+                            </Text>
+                            {breakouts.map(({
+                                id,
+                                title,
+                                speakername,
+                            }) => (
+                                    <TouchableOpacity
+                                        key={id}
+                                        onPress={() => navigate("SessionInfo", { sessionName, id })}
+                                        style={id === selectedSessionId ?
+                                            styles.selectedSession
+                                            :
+                                            styles.session}
+                                    >
+                                        <Text>
+                                            {title}
+                                        </Text>
+                                        <Text>
+                                            {speakername}
+                                        </Text>
+                                    </TouchableOpacity>
+                                ))}
+                        </View>
                     </ScrollView>
                 )}
         </StorageConsumer>

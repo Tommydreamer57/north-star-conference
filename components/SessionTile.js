@@ -19,6 +19,8 @@ export default function SessionTile({
         speakername,
         sessiontype,
         sessiontime,
+        room,
+        demographic,
     },
     addedToSchedule,
 
@@ -35,13 +37,25 @@ export default function SessionTile({
                     styles.selectedSession
                     :
                     styles.session}
-            onPress={() => navigate("SessionInfo", { sessionName: sessiontype.toUpperCase(), id })}
+            onPress={() => navigate("SessionInfo", {
+                sessionName: sessiontype.toUpperCase(),
+                id,
+            })}
         >
-            <Text>{title}</Text>
             {isKeynote ? (
-                <Text>{sessiontime}</Text>
-            ) : null}
-            <Text>{speakername}</Text>
+                <>
+                    <Text style={styles.h2} >{title}</Text>
+                    <Text style={styles.h3} >{speakername}</Text>
+                    <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
+                </>
+            ) : (
+                    <>
+                        <Text style={styles.h3} >{title}</Text>
+                        <Text style={styles.text} >{speakername}</Text>
+                    </>
+                )}
+            <Text style={styles.text} >{room}</Text>
+            <Text style={styles.text} >{demographic}</Text>
         </TouchableOpacity>
     );
 }

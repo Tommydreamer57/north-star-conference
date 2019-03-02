@@ -49,16 +49,27 @@ const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
 
 export const refetchSessionsEachDay = async () => {
     const fetchDate = await getItem("date");
-    if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
+    // if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
         Alert.alert("Refetching Sessions");
         return fetchSessions();
-    }
-    else return false;
+    // }
+    // else return false;
 }
 
 export const fetchSessions = async () => {
     try {
-        const { data } = await axios.get('https://northstarconferenceadmin.herokuapp.com/api/sessions');
+
+        const sessionPromise = axios.get('https://northstarconferenceadmin.herokuapp.com/api/sessions');
+
+        const schedulePromise = AsyncStorage.getItem(validKeys.schedule);
+
+        const [
+            { data },
+            existingSessions,
+        ] = await Promise.all([
+            sessionPromise,
+            schedulePromise,
+        ]);
 
         const keynotes = (data || [])
             .filter(({ sessiontype }) => sessiontype.match(/keynote/i))
@@ -83,18 +94,21 @@ export const fetchSessions = async () => {
                 };
             }, {});
 
-        const schedule = {
-            ...Object.keys(breakouts)
-                .reduce((all, key) => ({
-                    ...all,
-                    [key]: {},
-                }), {}),
-            ...keynotes
-                .reduce((all, { sessiontype, ...session }) => ({
-                    ...all,
-                    [sessiontype.toUpperCase()]: session,
-                }), {}),
-        };
+        const schedule = existingSessions ?
+            JSON.parse(existingSessions)
+            :
+            {
+                ...Object.keys(breakouts)
+                    .reduce((all, key) => ({
+                        ...all,
+                        [key]: {},
+                    }), {}),
+                ...keynotes
+                    .reduce((all, { sessiontype, ...session }) => ({
+                        ...all,
+                        [sessiontype.toUpperCase()]: session,
+                    }), {}),
+            };
 
         const speakers = data.reduce((all, { id, speakername, speakerbio, speakerphoto }) => ({
             ...all,

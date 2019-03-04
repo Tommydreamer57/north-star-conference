@@ -15,47 +15,58 @@ export default function SessionTile({
     },
     session: {
         id,
-        title,
-        speakername,
-        sessiontype,
-        sessiontime,
-        room,
-        demographic,
-    },
+        title = "",
+        speakername = "",
+        sessiontype = "",
+        sessiontime = "",
+        room = "",
+        demographic = "",
+    } = {},
     addedToSchedule,
-
 }) {
 
     const isKeynote = sessiontype.match(/keynote/i);
 
     return (
         <TouchableOpacity
-            style={isKeynote ?
-                styles.keynoteSession
-                :
-                addedToSchedule ?
-                    styles.selectedSession
-                    :
-                    styles.session}
+            style={[
+                styles.sessionTile,
+                isKeynote && styles.keynoteSession,
+                addedToSchedule && styles.selectedSession,
+            ]}
             onPress={() => navigate("SessionInfo", {
                 sessionName: sessiontype.toUpperCase(),
                 id,
             })}
         >
-            {isKeynote ? (
-                <>
-                    <Text style={styles.h2} >{title}</Text>
-                    <Text style={styles.h3} >{speakername}</Text>
-                    <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
-                </>
-            ) : (
+            <View style={[
+                styles.sessionTileBar,
+                isKeynote ?
+                    styles.blueBackground
+                    :
+                    styles.blackBackground,
+            ]} />
+            <View>
+                {isKeynote ? (
                     <>
-                        <Text style={styles.h3} >{title}</Text>
-                        <Text style={styles.text} >{speakername}</Text>
+                        <Text style={styles.h2} >{title}</Text>
+                        <Text style={styles.h3} >{speakername}</Text>
+                        <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
                     </>
-                )}
-            <Text style={styles.text} >{room}</Text>
-            <Text style={styles.text} >{demographic}</Text>
+                ) : (
+                        <>
+                            <Text style={styles.h3} >{title}</Text>
+                            <Text style={styles.h4} >{speakername}</Text>
+                        </>
+                    )}
+                {/* <Text style={styles.h2} >{title}</Text>
+            <Text style={styles.h3} >{speakername}</Text>
+            {isKeynote ? (
+                <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
+            ) : null} */}
+                <Text style={styles.text} >Room: {room}</Text>
+                <Text style={styles.text} >Demographic{demographic.trim().match(/ .* /) ? 's' : ''}: {demographic}</Text>
+            </View>
         </TouchableOpacity>
     );
 }

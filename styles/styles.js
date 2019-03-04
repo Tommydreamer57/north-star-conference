@@ -29,30 +29,36 @@ export default StyleSheet.create({
         flex: 1,
         flexGrow: 1,
     },
+    // extra large bold
+    title: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        marginBottom: 13,
+    },
     // large bold
     h1: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 16,
     },
     // medium large bold blue
     h2: {
         fontSize: 15,
         fontWeight: 'bold',
         color: Colors.blue,
-        marginBottom: 7,
+        marginBottom: 16,
     },
     // medium bold
     h3: {
         fontSize: 13,
         fontWeight: 'bold',
-        marginBottom: 7,
+        marginBottom: 5,
     },
     // medium small italic
     h4: {
         fontSize: 12,
         fontStyle: 'italic',
-        marginBottom: 6,
+        marginBottom: 5,
     },
     // small
     text: {
@@ -68,5 +74,21 @@ export default StyleSheet.create({
         padding: 5,
         borderColor: Colors.black,
         borderWidth: 1,
+    },
+    sessionTile: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 5,
+    },
+    sessionTileBar: {
+        height: '100%',
+        width: 5,
+        marginRight: 10,
+    },
+    blueBackground: {
+        backgroundColor: Colors.blue + '44',
+    },
+    blackBackground: {
+        backgroundColor: Colors.black + '44',
     },
 });

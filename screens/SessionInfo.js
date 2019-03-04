@@ -21,7 +21,7 @@ export default function SessionInfo({
     navigation: {
         state: {
             params: {
-                sessionName,
+                sessionName='',
                 id,
             },
         },
@@ -34,13 +34,13 @@ export default function SessionInfo({
             {({
                 allSessions: {
                     [id]: {
-                        sessiontime,
-                        title,
-                        description,
-                        demographic,
-                        speakername,
-                        speakerbio,
-                        speakerphoto,
+                        sessiontime='',
+                        title='',
+                        description='',
+                        demographic='',
+                        speakername='',
+                        speakerbio='',
+                        speakerphoto='',
                     } = {},
                 },
                 scheduleArray,
@@ -55,7 +55,7 @@ export default function SessionInfo({
                             <Text style={styles.h2} >
                                 {title}
                             </Text>
-                            <Text style={styles.paragraph} >
+                            <Text style={styles.text} >
                                 {description}
                             </Text>
                             <Text style={styles.h4} >

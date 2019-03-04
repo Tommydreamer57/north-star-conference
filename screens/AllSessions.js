@@ -56,32 +56,38 @@ function Day({
                 <View
                     style={styles.view}
                 >
-                    <Text style={styles.h1} >{day}</Text>
+                    <Text style={styles.title} >{day}</Text>
                     <SessionTile
                         navigation={navigation}
                         session={keynotes[k1]}
                     />
-                    {breakoutNames.map(breakoutName => (
-                        <View
-                            key={breakoutName}
-                        >
-                            <Text
-                                style={styles.h2}
-                            >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}: {breakouts[breakoutName][0].sessiontime}</Text>
-                            <View>
-                                {breakouts[breakoutName].map(session => (
-                                    <SessionTile
-                                        key={session.id}
-                                        session={session}
-                                        navigation={navigation}
-                                        addedToSchedule={schedule[breakoutName]
-                                            &&
-                                            schedule[breakoutName].id === session.id}
-                                    />
-                                ))}
+                    {breakoutNames.map(breakoutName => {
+                        const breakout = breakouts[breakoutName] || [];
+                        const [
+                            {
+                                sessionTime = '',
+                            } = {}
+                        ] = breakout;
+                        return (
+                            <View
+                                key={breakoutName}
+                            >
+                                <Text style={styles.h2} >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}: {sessionTime}</Text>
+                                <View>
+                                    {breakout.map(session => (
+                                        <SessionTile
+                                            key={session.id}
+                                            session={session}
+                                            navigation={navigation}
+                                            addedToSchedule={schedule[breakoutName]
+                                                &&
+                                                schedule[breakoutName].id === session.id}
+                                        />
+                                    ))}
+                                </View>
                             </View>
-                        </View>
-                    ))}
+                        );
+                    })}
                     <SessionTile
                         navigation={navigation}
                         session={keynotes[k2]}

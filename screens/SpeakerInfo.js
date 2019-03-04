@@ -6,7 +6,7 @@ import {
     Image,
 } from 'react-native';
 
-import styles, { Window } from '../styles/styles';
+import styles from '../styles/styles';
 
 import createNavigationOptions from '../navigation/navigation-options';
 

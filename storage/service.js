@@ -50,8 +50,8 @@ const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
 export const refetchSessionsEachDay = async () => {
     const fetchDate = await getItem("date");
     // if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
-        Alert.alert("Refetching Sessions");
-        return fetchSessions();
+    Alert.alert("Refetching Sessions");
+    return fetchSessions();
     // }
     // else return false;
 }
@@ -98,6 +98,8 @@ export const fetchSessions = async () => {
             JSON.parse(existingSessions)
             :
             {
+                friday: false,
+                saturday: false,
                 ...Object.keys(breakouts)
                     .reduce((all, key) => ({
                         ...all,

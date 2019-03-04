@@ -11,7 +11,6 @@ import {
 } from './service';
 
 import {
-    Text,
     AsyncStorage,
 } from 'react-native';
 

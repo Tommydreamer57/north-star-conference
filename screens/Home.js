@@ -62,7 +62,7 @@ const links = [
     [
         {
 
-            name: "CONTACT",
+            name: "AUDIO",
             url: "https://vimeo.com/ondemand/northstar2018/256616872",
             icon: "play-circle",
         },
@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
     },
     touchable: {
-        // color: 'white',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
@@ -186,7 +185,4 @@ const styles = StyleSheet.create({
         fontSize: 9,
         textAlign: 'center',
     },
-    // bottomPadding: {
-    //     height: '17%',
-    // },
 });

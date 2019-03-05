@@ -64,6 +64,7 @@ export default class FeedbackModal extends Component {
                     >
                         <ScrollView>
                             <View style={styles.view}>
+                                <Text style={styles.title} >Select A Session</Text>
                                 <Text>Search</Text>
                                 <TextInput
                                     style={styles.input}
@@ -71,22 +72,6 @@ export default class FeedbackModal extends Component {
                                     clearTextOnFocus={true}
                                     onChangeText={input => this.setState({ input })}
                                 />
-                                {/* <Text>Filter By</Text>
-                                <Picker
-                                    selectedValue={name}
-                                    onValueChange={filterName => this.setState({
-                                        filter: filters.find(({ name }) => name === filterName),
-                                    })}
-                                >
-                                    {filters.map(({ name }) => (
-                                        <Picker.Item
-                                            key={name}
-                                            label={name}
-                                            value={name}
-                                        />
-                                    ))}
-                                </Picker> */}
-                                {/* <Text>Select A Session</Text> */}
                                 {Object.values(context.allSessions)
                                     .filter(filter({ context, state }))
                                     .map(session => (

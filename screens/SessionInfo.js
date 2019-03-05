@@ -3,10 +3,10 @@ import React from 'react';
 import {
     ScrollView,
     View,
-    TouchableOpacity,
+    Image,
     Button,
     Text,
-    // Alert,
+    TouchableOpacity,
 } from 'react-native';
 
 import styles from '../styles/styles';
@@ -49,27 +49,27 @@ export default function SessionInfo({
             }) => (
                     <ScrollView>
                         <View style={styles.view} >
-                            <Text style={styles.h2} >
-                                {sessionName}: {sessiontime}
-                            </Text>
-                            <Text style={styles.h2} >
-                                {title}
-                            </Text>
-                            <Text style={styles.text} >
-                                {description}
-                            </Text>
-                            <Text style={styles.h4} >
-                                {demographic}
-                            </Text>
-                            <Button
-                                style={styles.button}
-                                title={speakername}
+                            <Text style={styles.h1} >{title}</Text>
+                            <TouchableOpacity
                                 onPress={() => navigate('SpeakerInfo', {
                                     speakername,
                                     speakerbio,
                                     speakerphoto,
                                 })}
-                            />
+                            >
+                                <Image
+                                    style={styles.speakerphoto}
+                                    source={{
+                                        uri: speakerphoto
+                                            ||
+                                            'https://www.nycc.edu/themes/nycc/images/default_profile.jpg',
+                                    }}
+                                />
+                                <Text style={styles.h2}>{speakername}</Text>
+                            </TouchableOpacity>
+                            <Text style={styles.h4} >{sessionName}: {sessiontime}</Text>
+                            <Text style={styles.h4} >{demographic}</Text>
+                            <Text style={styles.text} >{description}</Text>
                             {sessionName.match(/breakout/i) ? (
                                 scheduleArray.some(({
                                     selectedSession: {
@@ -81,29 +81,25 @@ export default function SessionInfo({
                                             title="Remove From Schedule"
                                             onPress={async () => {
                                                 await removeFromSchedule(id);
-                                                // Alert.alert(`Removed ${title} from schedule.`);
                                                 goBack();
                                             }}
                                         />
                                     ) : (
-                                        <>
-                                            <Button
-                                                style={styles.button}
-                                                title="Add To Schedule"
-                                                onPress={async () => {
-                                                    await addToSchedule(id);
-                                                    // Alert.alert(`Added ${title} to schedule.`);
-                                                    goBack();
-                                                }}
-                                            />
-                                            <Button
-                                                style={styles.button}
-                                                title="Provide Feedback"
-                                                onPress={() => navigate("Feedback", { id, sessionName })}
-                                            />
-                                        </>
+                                        <Button
+                                            style={styles.button}
+                                            title="Add To Schedule"
+                                            onPress={async () => {
+                                                await addToSchedule(id);
+                                                goBack();
+                                            }}
+                                        />
                                     )
                             ) : null}
+                            <Button
+                                style={styles.button}
+                                title="Provide Feedback"
+                                onPress={() => navigate("Feedback", { id, sessionName })}
+                            />
                         </View>
                     </ScrollView>
                 )}

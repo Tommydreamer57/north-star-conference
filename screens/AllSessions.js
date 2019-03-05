@@ -104,16 +104,17 @@ function Day({
                                 <View
                                     style={{
                                         flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        marginTop: 25,
+                                        marginBottom: 10,
                                     }}
                                 >
                                     <Text style={[
                                         styles.h2,
                                         styles.noMargin,
-                                        {
-                                            marginTop: 10,
-                                        },
-                                    ]} >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}: </Text>
-                                    <Text styles={[
+                                    ]} >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}</Text>
+                                    <Text style={[
                                         styles.h4,
                                         styles.noMargin,
                                     ]} >{sessiontime}</Text>

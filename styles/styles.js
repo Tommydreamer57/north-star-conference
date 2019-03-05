@@ -84,6 +84,17 @@ export default StyleSheet.create({
         padding: 5,
         borderColor: Colors.black,
         borderWidth: 1,
+        marginBottom: 16,
+    },
+    emptySession: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderColor: Colors.blue,
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10
     },
     sessionTile: {
         flexDirection: 'row',

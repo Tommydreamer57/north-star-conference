@@ -5,10 +5,16 @@ import {
     Text,
 } from 'react-native';
 
-export default () => (
-    <ScrollView>
-        <Text>
-            NOTIFICATIONS
-        </Text>
-    </ScrollView>
-);
+import createNavigationOptions from '../navigation/navigation-options';
+
+Notifications.navigationOptions = createNavigationOptions("Notifications");
+
+export default function Notifications() {
+    return (
+        <ScrollView>
+            <Text>
+                NOTIFICATIONS
+            </Text>
+        </ScrollView>
+    );
+}

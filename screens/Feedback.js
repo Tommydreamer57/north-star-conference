@@ -144,7 +144,6 @@ export default class Feedback extends Component {
                                     onSubmitEditing={onSubmitEditing("dislikeFeedback")}
                                 />
                                 <Text style={{
-                                    marginTop: 16,
                                     fontWeight: 'bold',
                                 }} >Suggestions</Text>
                                 <TextInput
@@ -156,7 +155,6 @@ export default class Feedback extends Component {
                                     onSubmitEditing={onSubmitEditing("generalFeedback")}
                                 />
                                 <Text style={{
-                                    marginTop: 16,
                                     fontWeight: 'bold',
                                 }} >General Feedback</Text>
                                 <TextInput
@@ -168,7 +166,6 @@ export default class Feedback extends Component {
                                     onSubmitEditing={onSubmitEditing("username")}
                                 />
                                 <Text style={{
-                                    marginTop: 16,
                                     fontWeight: 'bold',
                                 }} >Your Name</Text>
                                 <TextInput
@@ -180,7 +177,6 @@ export default class Feedback extends Component {
                                     onSubmitEditing={onSubmitEditing("email")}
                                 />
                                 <Text style={{
-                                    marginTop: 16,
                                     fontWeight: 'bold',
                                 }} >Your Email</Text>
                                 <TextInput

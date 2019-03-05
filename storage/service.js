@@ -52,8 +52,7 @@ export const refetchSessionsEachDay = async () => {
     if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
         Alert.alert("Refetching Sessions");
         return fetchSessions();
-    }
-    else return false;
+    } else return false;
 }
 
 export const fetchSessions = async () => {
@@ -107,9 +106,9 @@ export const fetchSessions = async () => {
                     [key]: {},
                 }), {}),
             ...keynotes
-                .reduce((all, { sessiontype, ...session }) => ({
+                .reduce((all, session) => ({
                     ...all,
-                    [sessiontype.toUpperCase()]: session,
+                    [session.sessiontype.toUpperCase()]: session,
                 }), {}),
         };
 

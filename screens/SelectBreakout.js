@@ -7,27 +7,37 @@ import {
     Text,
 } from 'react-native';
 
+import SessionTile from '../components/SessionTile';
+
 import { StorageConsumer } from '../storage/StorageProvider';
 
 import styles from '../styles/styles';
 
 import createNavigationOptions from '../navigation/navigation-options';
 
-SelectBreakout.navigationOptions = ({ navigation: { state: { params: { sessionName } } } }) => ({
+SelectBreakout.navigationOptions = ({
+    navigation: {
+        state: {
+            params: {
+                sessionName = '',
+            },
+        },
+    },
+}) => ({
     ...createNavigationOptions("Select Breakout"),
-    title: sessionName,
+    title: sessionName.slice(0, 1).toUpperCase() + sessionName.slice(1).toLowerCase(),
 });
 
 export default function SelectBreakout({
+    navigation,
     navigation: {
-        navigate,
         state: {
             params: {
                 sessionName,
                 id,
-            }
-        }
-    }
+            },
+        },
+    },
 }) {
     return (
         <StorageConsumer>
@@ -35,38 +45,16 @@ export default function SelectBreakout({
                 breakouts: {
                     [sessionName]: breakouts = [],
                 },
-                schedule: {
-                    [sessionName]: {
-                        id: selectedSessionId
-                    } = {},
-                },
             }) => (
                     <ScrollView>
                         <View style={styles.view}>
-                            <Text style={styles.h3} >
-                                {sessionName}
-                            </Text>
-                            {breakouts.map(({
-                                id,
-                                title,
-                                speakername,
-                            }) => (
-                                    <TouchableOpacity
-                                        key={id}
-                                        onPress={() => navigate("SessionInfo", { sessionName, id })}
-                                        style={id === selectedSessionId ?
-                                            styles.selectedSession
-                                            :
-                                            styles.session}
-                                    >
-                                        <Text>
-                                            {title}
-                                        </Text>
-                                        <Text>
-                                            {speakername}
-                                        </Text>
-                                    </TouchableOpacity>
-                                ))}
+                            {breakouts.map(session => (
+                                <SessionTile
+                                    key={session.id}
+                                    navigation={navigation}
+                                    session={session}
+                                />
+                            ))}
                         </View>
                     </ScrollView>
                 )}

@@ -51,7 +51,12 @@ export default function SessionTile({
             <View>
                 {isKeynote ? (
                     <>
-                        <Text style={styles.h2} >{title}</Text>
+                        <Text style={[
+                            styles.h2,
+                            {
+                                marginBottom: 10,
+                            }
+                        ]} >{title}</Text>
                         {renderTimeInsteadOfSpeaker && (
                             <Text style={styles.h3} >{speakername}</Text>
                         )}

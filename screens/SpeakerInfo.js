@@ -46,12 +46,8 @@ export default function SpeakerInfo({
                                     'https://www.nycc.edu/themes/nycc/images/default_profile.jpg'
                             }}
                         />
-                        <Text style={styles.h1} >
-                            {speakername || name}
-                        </Text>
-                        <Text style={styles.text} >
-                            {speakerbio || bio}
-                        </Text>
+                        <Text style={styles.h1} >{speakername || name}</Text>
+                        <Text style={styles.text} >{speakerbio || bio}</Text>
                         <View>
                             <Text style={[
                                 styles.h2,

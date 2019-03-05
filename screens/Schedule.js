@@ -24,7 +24,7 @@ export default function Schedule({
 }) {
     return (
         <StorageConsumer>
-            {({ scheduleArray, keynotes }) => (
+            {({ scheduleArray, keynotes, allSessions }) => (
                 <ScrollView>
                     <View style={styles.view}>
                         {scheduleArray
@@ -33,65 +33,53 @@ export default function Schedule({
                                 selectedSession,
                                 selectedSession: {
                                     id,
-                                    title,
-                                    speakername,
                                 } = {},
-                            }) => sessionName.match(/keynote/i) ? (
-                                <SessionTile
-                                    key={id || sessionName}
-                                    session={
-                                        selectedSession
-                                        ||
-                                        keynotes.find(({ sessiontype }) => sessiontype.toUpperCase() === sessionName.toUpperCase())
-                                    }
-                                    navigation={navigation}
-                                    addedToSchedule={true}
-                                />
-                                // <TouchableOpacity
-                                //     key={sessionName}
-                                //     style={styles.sessionTile}
-                                //         onPress={() => navigate('SessionInfo', {
-                                //             sessionName,
-                                //             id,
-                                //         })}
-                                // >
-                                //     <Text>
-                                //         {`${
-                                //             sessionName
-                                //             }: ${
-                                //             title
-                                //             }`}
-                                //     </Text>
-                                //     <Text>
-                                //         {speakername}
-                                //     </Text>
-                                // </TouchableOpacity>
-                            ) : (
-                                        <TouchableOpacity
-                                            key={sessionName}
-                                            onPress={id ?
-                                                () => navigate('SessionInfo', { sessionName, id })
-                                                :
-                                                () => navigate('SelectBreakout', { sessionName, id })}
-                                            style={id ?
-                                                styles.selectedSession
-                                                :
-                                                styles.emptySession}
-                                            key={sessionName}
-                                        >
-                                            <Text>
-                                                {`${
-                                                    sessionName
-                                                    }: ${
-                                                    title
-                                                    }`}
-                                            </Text>
-                                            <Text>
-                                                {speakername}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    )
-                            )}
+                            }, i) => (
+                                    <View key={sessionName}>
+                                        {i === 0 ? (
+                                            <Text style={styles.title}>Friday</Text>
+                                        ) : i === 5 ? (
+                                            <Text style={styles.title}>Saturday</Text>
+                                        ) : null}
+                                        {id ? (
+                                            <View
+                                                style={{
+                                                    marginBottom: 16,
+                                                }}
+                                            >
+                                                <Text style={[
+                                                    styles.h2,
+                                                    styles.noMargin,
+                                                    {
+                                                        marginTop: 10,
+                                                    }
+                                                ]}>{sessionName}</Text>
+                                                <SessionTile
+                                                    navigation={navigation}
+                                                    session={selectedSession || keynotes.find(({ sessiontype }) => sessiontype.toUpperCase() === sessionName.toUpperCase())}
+                                                    addedToSchedule={true}
+                                                />
+                                            </View>
+                                        ) : (
+                                                <TouchableOpacity
+                                                    style={styles.emptySession}
+                                                    onPress={() => navigate('SelectBreakout', { sessionName })}
+                                                >
+                                                    <Text style={[
+                                                        styles.h2,
+                                                        styles.noMargin,
+                                                        {
+                                                            fontSize: 12,
+                                                        },
+                                                    ]}>{sessionName}</Text>
+                                                    <Text style={[
+                                                        styles.h4,
+                                                        styles.noMargin,
+                                                    ]}>{(Object.values(allSessions).find(({ sessiontype }) => sessiontype.toLowerCase() === sessionName.toLowerCase()) || {}).sessiontime || ''}</Text>
+                                                </TouchableOpacity>
+                                            )}
+                                    </View>
+                                ))}
                     </View>
                 </ScrollView>
             )}

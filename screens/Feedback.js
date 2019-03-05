@@ -139,7 +139,7 @@ export default class Feedback extends Component {
                                     ref={el => this.likeFeedback = el}
                                     style={styles.input}
                                     multiline={true}
-                                    value={likeFeedback.trim()}
+                                    value={likeFeedback.replace(/\n/, '')}
                                     onChangeText={likeFeedback => this.setState({ likeFeedback })}
                                     onSubmitEditing={onSubmitEditing("dislikeFeedback")}
                                 />
@@ -151,7 +151,7 @@ export default class Feedback extends Component {
                                     ref={el => this.dislikeFeedback = el}
                                     style={styles.input}
                                     multiline={true}
-                                    value={dislikeFeedback.trim()}
+                                    value={dislikeFeedback.replace(/\n/, '')}
                                     onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
                                     onSubmitEditing={onSubmitEditing("generalFeedback")}
                                 />
@@ -163,7 +163,7 @@ export default class Feedback extends Component {
                                     ref={el => this.generalFeedback = el}
                                     style={styles.input}
                                     multiline={true}
-                                    value={generalFeedback.trim()}
+                                    value={generalFeedback.replace(/\n/, '')}
                                     onChangeText={generalFeedback => this.setState({ generalFeedback })}
                                     onSubmitEditing={onSubmitEditing("username")}
                                 />
@@ -175,7 +175,7 @@ export default class Feedback extends Component {
                                     ref={el => this.username = el}
                                     style={styles.input}
                                     multiline={true}
-                                    value={username.trim()}
+                                    value={username.replace(/\n/, '')}
                                     onChangeText={username => this.setState({ username })}
                                     onSubmitEditing={onSubmitEditing("email")}
                                 />
@@ -187,7 +187,7 @@ export default class Feedback extends Component {
                                     ref={el => this.email = el}
                                     style={styles.input}
                                     multiline={true}
-                                    value={email.trim()}
+                                    value={email.replace(/\n/, '')}
                                     onChangeText={email => this.setState({ email })}
                                 />
                                 <Button

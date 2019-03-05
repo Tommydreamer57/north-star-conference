@@ -9,6 +9,7 @@ import {
     Picker,
     Button,
     View,
+    ScrollView,
     Modal,
 } from 'react-native';
 
@@ -20,20 +21,25 @@ import { log } from '../storage/service';
 
 import styles from '../styles/styles';
 
-import KeyboardView from '../components/KeyboardView';
+// import KeyboardView from '../components/KeyboardView';
 import SessionTile from '../components/SessionTile';
 
 
-const filters = [
-    {
-        name: "Schedule",
-        filter: ({ scheduleArray }) => ({ id }) => scheduleArray.find(({ selectedSession }) => selectedSession && selectedSession.id === id),
-    },
-    {
-        name: "Display All",
-        filter: () => () => true,
+const filterBySchedule = ({
+    context: {
+        scheduleArray
     }
-];
+}) => ({ id }) => scheduleArray.find(({ selectedSession }) => selectedSession && selectedSession.id === id);
+
+const displayAll = () => () => true;
+
+const filterByTextInput = ({ state: { input } }) => ({
+    title,
+    speakername,
+    sessiontype,
+    room,
+    demographic,
+}) => [title, speakername, sessiontype, room, demographic].some(str => str.toUpperCase().includes(input.toUpperCase()));
 
 export default class FeedbackModal extends Component {
 
@@ -42,19 +48,17 @@ export default class FeedbackModal extends Component {
     static navigationOptions = createNavigationOptions("Select Session");
 
     state = {
+        input: "",
         sessionId: 0,
-        filter: filters[0],
+        filter: filterByTextInput,
     };
 
     render = () => {
         const {
+            state,
             state: {
-                sessionId,
-                sessionName,
-                filter: {
-                    name,
-                    filter,
-                },
+                input,
+                filter,
             },
             props: {
                 navigation,
@@ -67,62 +71,51 @@ export default class FeedbackModal extends Component {
 
         return (
             <StorageConsumer>
-                {context => {
-                    const {
-                        keynotes,
-                        breakouts,
-                        allSessions,
-                        allSessions: {
-                            [sessionId]: {
-                                title,
-                                speakername,
-                                sessiontime,
-                            } = {},
-                        },
-                        scheduleArray,
-                    } = context;
-
-                    log({ FEEDBACK_SCHEDULE: scheduleArray });
-
-                    return (
-                        <Modal
-                            visible={visible}
-                            animationType={animationType}
-                            onRequestClose={onRequestClose}
-                        >
-                            <KeyboardView>
-                                <View style={styles.view}>
-                                    <Text>Filter By</Text>
-                                    <Picker
-                                        selectedValue={name}
-                                        onValueChange={filterName => this.setState({
-                                            filter: filters.find(({ name }) => name === filterName),
-                                        })}
-                                    >
-                                        {filters.map(({ name }) => (
-                                            <Picker.Item
-                                                key={name}
-                                                label={name}
-                                                value={name}
-                                            />
-                                        ))}
-                                    </Picker>
-                                    <Text>Select A Session</Text>
-                                    {Object.values(allSessions)
-                                        .filter(filter(context))
-                                        .map(session => (
-                                            <SessionTile
-                                                key={session.id}
-                                                session={session}
-                                                navigation={navigation}
-                                                onPress={() => onSelect(session.id)}
-                                            />
-                                        ))}
-                                </View>
-                            </KeyboardView>
-                        </Modal>
-                    );
-                }}
+                {context => (
+                    <Modal
+                        visible={visible}
+                        animationType={animationType}
+                        onRequestClose={onRequestClose}
+                    >
+                        <ScrollView>
+                            <View style={styles.view}>
+                                <Text>Search</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    value={input}
+                                    clearTextOnFocus={true}
+                                    onChangeText={input => this.setState({ input })}
+                                />
+                                {/* <Text>Filter By</Text>
+                                <Picker
+                                    selectedValue={name}
+                                    onValueChange={filterName => this.setState({
+                                        filter: filters.find(({ name }) => name === filterName),
+                                    })}
+                                >
+                                    {filters.map(({ name }) => (
+                                        <Picker.Item
+                                            key={name}
+                                            label={name}
+                                            value={name}
+                                        />
+                                    ))}
+                                </Picker> */}
+                                {/* <Text>Select A Session</Text> */}
+                                {Object.values(context.allSessions)
+                                    .filter(filter({ context, state }))
+                                    .map(session => (
+                                        <SessionTile
+                                            key={session.id}
+                                            session={session}
+                                            navigation={navigation}
+                                            onPress={() => onSelect(session.id)}
+                                        />
+                                    ))}
+                            </View>
+                        </ScrollView>
+                    </Modal>
+                )}
             </StorageConsumer>
         );
     }

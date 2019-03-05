@@ -65,14 +65,30 @@ function Day({
                         const breakout = breakouts[breakoutName] || [];
                         const [
                             {
-                                sessionTime = '',
+                                sessiontime = '',
                             } = {}
                         ] = breakout;
                         return (
                             <View
                                 key={breakoutName}
                             >
-                                <Text style={styles.h2} >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}: {sessionTime}</Text>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                    }}
+                                >
+                                    <Text style={[
+                                        styles.h2,
+                                        styles.noMargin,
+                                        {
+                                            marginTop: 10,
+                                        },
+                                    ]} >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}: </Text>
+                                    <Text styles={[
+                                        styles.h4,
+                                        styles.noMargin,
+                                    ]} >{sessiontime}</Text>
+                                </View>
                                 <View>
                                     {breakout.map(session => (
                                         <SessionTile

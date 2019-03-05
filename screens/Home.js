@@ -3,6 +3,7 @@ import React from 'react';
 import {
     Linking,
     ImageBackground,
+    Image,
     Text,
     View,
     TouchableOpacity,
@@ -13,6 +14,8 @@ import {
 import {
     Icon,
 } from 'expo';
+
+import { Window } from '../styles/styles';
 
 const iconPrefix = Platform.OS !== "ios" ?
     "md-"
@@ -92,10 +95,11 @@ export default function Home({
 }) {
     return (
         <ImageBackground
-            source={require('../assets/home-background.png')}
+            source={require('../assets/BKGD.png')}
             style={styles.background}
         >
-            <View
+            <Image
+                source={require('../assets/LogoTop.png')}
                 style={styles.topPadding}
             />
             <View
@@ -149,7 +153,8 @@ export default function Home({
                     </View>
                 ))}
             </View>
-            <View
+            <Image
+                source={require('../assets/LogoBottom.png')}
                 style={styles.bottomPadding}
             />
         </ImageBackground>
@@ -162,11 +167,24 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     topPadding: {
-        height: '33%',
+        resizeMode: 'contain',
+        width: Window.width * 0.8,
+        marginLeft: Window.width * 0.1,
+        marginRight: Window.width * 0.1,
+        marginTop: Window.height * 0.03,
+        height: Window.height * 0.3,
+    },
+    bottomPadding: {
+        resizeMode: 'contain',
+        width: Window.width * 0.6,
+        height:  Window.height * 0.17,
+        marginLeft: Window.width * 0.2,
+        marginRight: Window.width * 0.2,
+        marginTop: 0,
     },
     links: {
-        height: '50%',
-        width: '100%',
+        height: Window.height * 0.5,
+        width: Window.width,
         justifyContent: 'space-evenly',
         alignItems: 'center'
     },

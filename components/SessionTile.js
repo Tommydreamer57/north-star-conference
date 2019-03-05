@@ -61,9 +61,20 @@ export default function SessionTile({
                         <>
                             <Text style={styles.h3} >{title}</Text>
                             {renderTimeInsteadOfSpeaker ? (
-                                <Text style={styles.h4} >{speakername}</Text>
+                                <Text style={styles.h4} >{(
+                                    sessiontype.match(/breakout/i) ?
+                                        sessiontype.replace(/\D/g, '') < 3.5 ?
+                                            'Friday'
+                                            :
+                                            'Saturday'
+                                        :
+                                        sessiontype.replace(/\D/g, '') < 2.5 ?
+                                            'Friday'
+                                            :
+                                            'Saturday'
+                                )} {sessiontime}</Text>
                             ) : (
-                                    <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
+                                    <Text style={styles.h4} >{speakername}</Text>
                                 )}
                         </>
                     )}

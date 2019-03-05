@@ -23,10 +23,10 @@ export default function SpeakerInfo({
             params: {
                 speakername = '',
                 speakerbio,
-                speakerphoto,
+                speakerphoto = '',
                 name,
                 bio,
-                photo,
+                photo = '',
             },
         },
     },
@@ -38,7 +38,13 @@ export default function SpeakerInfo({
                     <View style={styles.view}>
                         <Image
                             style={styles.speakerphoto}
-                            source={{ uri: speakerphoto || photo }}
+                            source={{
+                                uri: speakerphoto
+                                    ||
+                                    photo
+                                    ||
+                                    'https://www.nycc.edu/themes/nycc/images/default_profile.jpg'
+                            }}
                         />
                         <Text style={styles.h1} >
                             {speakername || name}
@@ -47,7 +53,13 @@ export default function SpeakerInfo({
                             {speakerbio || bio}
                         </Text>
                         <View>
-                            <Text style={styles.h2} >Sessions</Text>
+                            <Text style={[
+                                styles.h2,
+                                styles.noMargin,
+                                {
+                                    marginTop: 20,
+                                },
+                            ]} >Sessions</Text>
                             {Object.values(allSessions)
                                 .filter(session => (session.speakername || "").toLowerCase() === (speakername || name).toLowerCase())
                                 .map(session => (

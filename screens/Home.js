@@ -129,7 +129,7 @@ export default function Home({
                                 >
                                     <Icon.Ionicons
                                         name={iconPrefix + icon}
-                                        size={50}
+                                        size={55}
                                         color='white'
                                     // style={styles.icon}
                                     />
@@ -176,10 +176,10 @@ const styles = StyleSheet.create({
     },
     bottomPadding: {
         resizeMode: 'contain',
-        width: Window.width * 0.6,
+        width: Window.width * 0.5,
         height:  Window.height * 0.17,
-        marginLeft: Window.width * 0.2,
-        marginRight: Window.width * 0.2,
+        marginLeft: Window.width * 0.25,
+        marginRight: Window.width * 0.25,
         marginTop: 0,
     },
     links: {

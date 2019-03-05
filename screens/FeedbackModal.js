@@ -17,29 +17,14 @@ import createNavigationOptions from '../navigation/navigation-options';
 
 import { StorageContext, StorageConsumer } from '../storage/StorageProvider';
 
-import { log } from '../storage/service';
+// import { log } from '../storage/service';
 
 import styles from '../styles/styles';
 
 // import KeyboardView from '../components/KeyboardView';
 import SessionTile from '../components/SessionTile';
 
-
-const filterBySchedule = ({
-    context: {
-        scheduleArray
-    }
-}) => ({ id }) => scheduleArray.find(({ selectedSession }) => selectedSession && selectedSession.id === id);
-
-const displayAll = () => () => true;
-
-const filterByTextInput = ({ state: { input } }) => ({
-    title,
-    speakername,
-    sessiontype,
-    room,
-    demographic,
-}) => [title, speakername, sessiontype, room, demographic].some(str => str.toUpperCase().includes(input.toUpperCase()));
+import filters from '../utils/filters';
 
 export default class FeedbackModal extends Component {
 
@@ -50,7 +35,7 @@ export default class FeedbackModal extends Component {
     state = {
         input: "",
         sessionId: 0,
-        filter: filterByTextInput,
+        filter: filters.filterByTextInput,
     };
 
     render = () => {

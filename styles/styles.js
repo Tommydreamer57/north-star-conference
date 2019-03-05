@@ -72,8 +72,12 @@ export default StyleSheet.create({
         marginBottom: 5,
     },
     speakerphoto: {
-        height: height / 3,
-        width: width / 2,
+        height: Window.width * 0.7,
+        width: Window.width * 0.7,
+        borderRadius: Window.width * 0.35,
+        marginLeft: Window.width * 0.15 - 18,
+        marginRight: Window.width * 0.15 - 18,
+        marginBottom: 20,
     },
     input: {
         margin: 5,

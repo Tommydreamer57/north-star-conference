@@ -23,6 +23,7 @@ export default function SessionTile({
         room = "",
         demographic = "",
     } = {},
+    renderTimeInsteadOfSpeaker,
     addedToSchedule,
 }) {
 
@@ -51,13 +52,19 @@ export default function SessionTile({
                 {isKeynote ? (
                     <>
                         <Text style={styles.h2} >{title}</Text>
-                        <Text style={styles.h3} >{speakername}</Text>
+                        {renderTimeInsteadOfSpeaker && (
+                            <Text style={styles.h3} >{speakername}</Text>
+                        )}
                         <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
                     </>
                 ) : (
                         <>
                             <Text style={styles.h3} >{title}</Text>
-                            <Text style={styles.h4} >{speakername}</Text>
+                            {renderTimeInsteadOfSpeaker ? (
+                                <Text style={styles.h4} >{speakername}</Text>
+                            ) : (
+                                    <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
+                                )}
                         </>
                     )}
                 {/* <Text style={styles.h2} >{title}</Text>

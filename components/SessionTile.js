@@ -13,6 +13,7 @@ export default function SessionTile({
     navigation: {
         navigate,
     },
+    onPress,
     session: {
         id,
         title = "",
@@ -34,10 +35,10 @@ export default function SessionTile({
                 isKeynote && styles.keynoteSession,
                 addedToSchedule && styles.selectedSession,
             ]}
-            onPress={() => navigate("SessionInfo", {
+            onPress={onPress || (() => navigate("SessionInfo", {
                 sessionName: sessiontype.toUpperCase(),
                 id,
-            })}
+            }))}
         >
             <View style={[
                 styles.sessionTileBar,

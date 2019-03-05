@@ -21,7 +21,7 @@ import axios from 'axios';
 
 (async () => {
     try {
-        await axios.delete('http://192.168.0.43:4321/log');
+        await axios.delete('http://192.168.1.105:4321/log');
     } catch (err) {
         console.error(err);
     }
@@ -29,7 +29,7 @@ import axios from 'axios';
 
 export const log = async body => {
     try {
-        await axios.post('http://192.168.0.43:4321/log', body);
+        await axios.post('http://192.168.1.105:4321/log', body);
     } catch (err) {
         console.log(err);
     }
@@ -49,11 +49,11 @@ const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
 
 export const refetchSessionsEachDay = async () => {
     const fetchDate = await getItem("date");
-    // if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
-    Alert.alert("Refetching Sessions");
-    return fetchSessions();
-    // }
-    // else return false;
+    if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
+        Alert.alert("Refetching Sessions");
+        return fetchSessions();
+    }
+    else return false;
 }
 
 export const fetchSessions = async () => {
@@ -94,23 +94,24 @@ export const fetchSessions = async () => {
                 };
             }, {});
 
-        const schedule = existingSessions ?
-            JSON.parse(existingSessions)
-            :
-            {
-                friday: false,
-                saturday: false,
-                ...Object.keys(breakouts)
-                    .reduce((all, key) => ({
-                        ...all,
-                        [key]: {},
-                    }), {}),
-                ...keynotes
-                    .reduce((all, { sessiontype, ...session }) => ({
-                        ...all,
-                        [sessiontype.toUpperCase()]: session,
-                    }), {}),
-            };
+        const schedule =
+        // existingSessions ?
+        // JSON.parse(existingSessions)
+        //     :
+        {
+            friday: false,
+            saturday: false,
+            ...Object.keys(breakouts)
+                .reduce((all, key) => ({
+                    ...all,
+                    [key]: {},
+                }), {}),
+            ...keynotes
+                .reduce((all, { sessiontype, ...session }) => ({
+                    ...all,
+                    [sessiontype.toUpperCase()]: session,
+                }), {}),
+        };
 
         const speakers = data.reduce((all, { id, speakername, speakerbio, speakerphoto }) => ({
             ...all,
@@ -164,7 +165,7 @@ export const getItem = async key => {
 }
 
 export const getItems = (...keys) => {
-    const invalidKey = keys.find(key => !allKeys.includes(key));
+    const invalidKey = !keys.every(key => key in validKeys);
     if (invalidKey) {
         console.error(`Key not found: "${invalidKey}"`);
     } else {

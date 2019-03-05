@@ -19,16 +19,18 @@ import styles from '../styles/styles';
 
 import KeyboardView from '../components/KeyboardView';
 
+import FeedbackModal from './FeedbackModal';
+
 export default class Feedback extends Component {
 
     static navigationOptions = createNavigationOptions("Feedback");
 
     state = {
-        sessionId: 0,
+        sessionId: -1,
         sessionName: "",
         likeFeedback: "",
         dislikeFeedback: "",
-        rating: 0,
+        rating: 5,
         generalFeedback: "",
         email: "",
         username: "",
@@ -58,6 +60,8 @@ export default class Feedback extends Component {
         });
     }
 
+    selectSession = sessionId => this.setState({ sessionId });
+
     render = () => {
         const {
             state: {
@@ -71,123 +75,132 @@ export default class Feedback extends Component {
                 username,
             },
             props: {
+                navigation,
                 navigation: {
                     goBack,
                 },
             },
+            selectSession,
             onSubmitEditing,
         } = this;
         return (
             <StorageConsumer>
                 {({
                     allSessions: {
+                        [sessionId]: session,
                         [sessionId]: {
                             title,
                             speakername,
                             sessiontime,
+                            sessiontype = '',
                         } = {},
                     },
                     scheduleArray,
                     submitReview,
                 }) => (
                         <KeyboardView>
+                            <FeedbackModal
+                                navigation={navigation}
+                                visible={!sessionId}
+                                animationType={'slide'}
+                                onRequestClose={() => { }}
+                                onSelect={selectSession}
+                            />
                             <View style={styles.view}>
-                                <Picker
-                                    selectedValue={sessionId}
-                                    onValueChange={sessionId => this.setState({ sessionId })}
-                                >
-                                    <Picker.Item
-                                        value={0}
-                                        label="Select A Session"
-                                    />
-                                    {scheduleArray
-                                        .filter(({
-                                            selectedSession: {
-                                                id,
-                                            } = {}
-                                        }) => id)
-                                        .map(({
-                                            sessionName, selectedSession: {
-                                                id,
-                                                title
-                                            }
-                                        }) => (
-                                                <Picker.Item
-                                                    key={sessionName}
-                                                    value={id}
-                                                    label={title}
-                                                />
-                                            ))}
-                                </Picker>
-                                {sessionId ? (
-                                    <>
-                                        <Text>{sessionName}</Text>
-                                        <Text>{title}</Text>
-                                        <Text>{speakername}</Text>
-                                        <Text>{sessiontime}</Text>
+                                <Text style={{
+                                    fontWeight: 'bold',
+                                    fontSize: 16,
+                                }} >{title}</Text>
+                                <Text style={{
+                                    fontSize: 14,
+                                }} >{sessiontype.slice(0, 1).toUpperCase() + sessiontype.slice(1).toLowerCase()}, {sessiontime}</Text>
+                                <Text style={{
+                                    fontSize: 14,
+                                    marginBottom: 16,
+                                }} >{speakername}</Text>
 
-                                        <Text>How would you rate this session overall?</Text>
-                                        <Slider
-                                            ref={el => this.rating = el}
-                                            value={rating}
-                                            minimumValue={0}
-                                            maximumValue={10}
-                                            onSlidingComplete={rating => this.setState({ rating })}
-                                        />
-                                        <Text>What did you like about this session?</Text>
-                                        <TextInput
-                                            ref={el => this.likeFeedback = el}
-                                            style={styles.input}
-                                            value={likeFeedback}
-                                            onChangeText={likeFeedback => this.setState({ likeFeedback })}
-                                            onSubmitEditing={onSubmitEditing("dislikeFeedback")}
-                                        />
-                                        <Text>What didn't you like about this session?</Text>
-                                        <TextInput
-                                            ref={el => this.dislikeFeedback = el}
-                                            style={styles.input}
-                                            value={dislikeFeedback}
-                                            onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
-                                            onSubmitEditing={onSubmitEditing("generalFeedback")}
-                                        />
-                                        <Text>What general feedback do you have?</Text>
-                                        <TextInput
-                                            ref={el => this.generalFeedback = el}
-                                            style={styles.input}
-                                            value={generalFeedback}
-                                            onChangeText={generalFeedback => this.setState({ generalFeedback })}
-                                            onSubmitEditing={onSubmitEditing("username")}
-                                        />
-                                        <Text>What is your name?</Text>
-                                        <TextInput
-                                            ref={el => this.username = el}
-                                            style={styles.input}
-                                            value={username}
-                                            onChangeText={username => this.setState({ username })}
-                                            onSubmitEditing={onSubmitEditing("email")}
-                                        />
-                                        <Text>What is your email?</Text>
-                                        <TextInput
-                                            ref={el => this.email = el}
-                                            style={styles.input}
-                                            value={email}
-                                            onChangeText={email => this.setState({ email })}
-                                        />
-                                        <Button
-                                            title="Submit Review"
-                                            onPress={async () => {
-                                                if (await submitReview({
-                                                    ...this.state,
-                                                    sessionTitle: title,
-                                                    sessionSpeaker: speakername,
-                                                }))
-                                                    goBack();
-                                            }}
-                                        />
-                                    </>
-                                ) : (
-                                        <Text>Please Select A Session</Text>
-                                    )}
+                                <Text style={{
+                                    marginTop: 16,
+                                    fontWeight: 'bold',
+                                }} >Overall Rating</Text>
+                                <Slider
+                                    ref={el => this.rating = el}
+                                    value={rating}
+                                    minimumValue={0}
+                                    step={1}
+                                    maximumValue={16}
+                                    onSlidingComplete={rating => this.setState({ rating })}
+                                />
+                                <Text style={{
+                                    marginTop: 16,
+                                    fontWeight: 'bold',
+                                }} >Likes</Text>
+                                <TextInput
+                                    ref={el => this.likeFeedback = el}
+                                    style={styles.input}
+                                    multiline={true}
+                                    value={likeFeedback.trim()}
+                                    onChangeText={likeFeedback => this.setState({ likeFeedback })}
+                                    onSubmitEditing={onSubmitEditing("dislikeFeedback")}
+                                />
+                                <Text style={{
+                                    marginTop: 16,
+                                    fontWeight: 'bold',
+                                }} >Suggestions</Text>
+                                <TextInput
+                                    ref={el => this.dislikeFeedback = el}
+                                    style={styles.input}
+                                    multiline={true}
+                                    value={dislikeFeedback.trim()}
+                                    onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
+                                    onSubmitEditing={onSubmitEditing("generalFeedback")}
+                                />
+                                <Text style={{
+                                    marginTop: 16,
+                                    fontWeight: 'bold',
+                                }} >General Feedback</Text>
+                                <TextInput
+                                    ref={el => this.generalFeedback = el}
+                                    style={styles.input}
+                                    multiline={true}
+                                    value={generalFeedback.trim()}
+                                    onChangeText={generalFeedback => this.setState({ generalFeedback })}
+                                    onSubmitEditing={onSubmitEditing("username")}
+                                />
+                                <Text style={{
+                                    marginTop: 16,
+                                    fontWeight: 'bold',
+                                }} >Your Name</Text>
+                                <TextInput
+                                    ref={el => this.username = el}
+                                    style={styles.input}
+                                    multiline={true}
+                                    value={username.trim()}
+                                    onChangeText={username => this.setState({ username })}
+                                    onSubmitEditing={onSubmitEditing("email")}
+                                />
+                                <Text style={{
+                                    marginTop: 16,
+                                    fontWeight: 'bold',
+                                }} >Your Email</Text>
+                                <TextInput
+                                    ref={el => this.email = el}
+                                    style={styles.input}
+                                    multiline={true}
+                                    value={email.trim()}
+                                    onChangeText={email => this.setState({ email })}
+                                />
+                                <Button
+                                    title="Submit Review"
+                                    onPress={async () => {
+                                        if (await submitReview({
+                                            ...this.state,
+                                            sessionTitle: title,
+                                            sessionSpeaker: speakername,
+                                        }))
+                                            goBack();
+                                    }}
+                                />
                             </View>
                         </KeyboardView>
                     )}

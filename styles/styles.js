@@ -41,6 +41,12 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 16,
     },
+    // medium large bold
+    header: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        marginBottom: 16,
+    },
     // medium large bold blue
     h2: {
         fontSize: 15,
@@ -90,5 +96,14 @@ export default StyleSheet.create({
     },
     blackBackground: {
         backgroundColor: Colors.black + '44',
+    },
+    noMargin: {
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+    },
+    blackText: {
+        color: Colors.black,
     },
 });

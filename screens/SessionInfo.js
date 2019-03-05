@@ -21,7 +21,7 @@ export default function SessionInfo({
     navigation: {
         state: {
             params: {
-                sessionName='',
+                sessionName = '',
                 id,
             },
         },
@@ -34,13 +34,13 @@ export default function SessionInfo({
             {({
                 allSessions: {
                     [id]: {
-                        sessiontime='',
-                        title='',
-                        description='',
-                        demographic='',
-                        speakername='',
-                        speakerbio='',
-                        speakerphoto='',
+                        sessiontime = '',
+                        title = '',
+                        description = '',
+                        demographic = '',
+                        speakername = '',
+                        speakerbio = '',
+                        speakerphoto = '',
                     } = {},
                 },
                 scheduleArray,
@@ -76,13 +76,23 @@ export default function SessionInfo({
                                         id: selectedId,
                                     } = {},
                                 }) => selectedId === id) ? (
+                                        <Button
+                                            style={styles.button}
+                                            title="Remove From Schedule"
+                                            onPress={async () => {
+                                                await removeFromSchedule(id);
+                                                // Alert.alert(`Removed ${title} from schedule.`);
+                                                goBack();
+                                            }}
+                                        />
+                                    ) : (
                                         <>
                                             <Button
                                                 style={styles.button}
-                                                title="Remove From Schedule"
+                                                title="Add To Schedule"
                                                 onPress={async () => {
-                                                    await removeFromSchedule(id);
-                                                    // Alert.alert(`Removed ${title} from schedule.`);
+                                                    await addToSchedule(id);
+                                                    // Alert.alert(`Added ${title} to schedule.`);
                                                     goBack();
                                                 }}
                                             />
@@ -92,16 +102,6 @@ export default function SessionInfo({
                                                 onPress={() => navigate("Feedback", { id, sessionName })}
                                             />
                                         </>
-                                    ) : (
-                                        <Button
-                                            style={styles.button}
-                                            title="Add To Schedule"
-                                            onPress={async () => {
-                                                await addToSchedule(id);
-                                                // Alert.alert(`Added ${title} to schedule.`);
-                                                goBack();
-                                            }}
-                                        />
                                     )
                             ) : null}
                         </View>

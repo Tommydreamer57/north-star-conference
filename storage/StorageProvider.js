@@ -14,7 +14,9 @@ import {
     AsyncStorage,
 } from 'react-native';
 
-const { Provider, Consumer } = createContext();
+export const StorageContext = createContext();
+
+const { Provider, Consumer } = StorageContext;
 
 export const StorageConsumer = Consumer;
 
@@ -66,10 +68,6 @@ export default class StorageProvider extends Component {
                 }), {}),
         };
 
-        log({
-            allSessions,
-        });
-
         this.setState({
             allSessions,
             scheduleArray,
@@ -81,6 +79,15 @@ export default class StorageProvider extends Component {
             removeFromSchedule: this.removeFromSchedule,
             submitReview,
         });
+
+        // [
+        //     { allSessions },
+        //     { scheduleArray },
+        //     { schedule },
+        //     { breakouts },
+        //     { keynotes },
+        // ]
+        //     .forEach(log);
     }
 
     addToSchedule = async id => {

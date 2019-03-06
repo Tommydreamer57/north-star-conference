@@ -1,6 +1,7 @@
 import {
     StyleSheet,
     Dimensions,
+    Platform,
 } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
@@ -10,115 +11,179 @@ export const Window = {
     width,
 };
 
-export const Colors = {
+export const COLORS = {
     green: "#C8C751",
     blueGreen: "#60A471",
     blue: "#00849B",
     yellow: "#44CC22",
     white: "#FFFFFF",
     black: "#000000",
+    gray: "#00000022",
+    darkGray: "#00000044"
+};
+
+export const SIZES = {
+    xxLarge: 24,
+    xLarge: 20,
+    large: 18,
+    mLarge: 15,
+    medium: 13,
+    mSmall: 12,
+    small: 11,
+    xSmall: 8,
+    xxSmall: 5,
 };
 
 export default StyleSheet.create({
     view: {
-        backgroundColor: Colors.white,
-        paddingTop: 24,
-        paddingBottom: 48,
-        paddingLeft: 18,
-        paddingRight: 18,
+        backgroundColor: COLORS.white,
+        paddingTop: SIZES.xxLarge,
+        paddingBottom: SIZES.xxLarge * 3,
+        paddingLeft: SIZES.large,
+        paddingRight: SIZES.large,
         flex: 1,
         flexGrow: 1,
     },
     // extra large bold
     title: {
-        fontSize: 26,
+        fontSize: SIZES.xxLarge,
         fontWeight: 'bold',
-        marginBottom: 13,
     },
     // large bold
     h1: {
-        fontSize: 20,
+        fontSize: SIZES.xLarge,
         fontWeight: 'bold',
-        marginBottom: 16,
     },
     // medium large bold
     header: {
-        fontSize: 17,
+        fontSize: SIZES.large,
         fontWeight: 'bold',
-        marginBottom: 16,
     },
     // medium large bold blue
     h2: {
-        fontSize: 15,
+        fontSize: SIZES.mLarge,
         fontWeight: 'bold',
-        color: Colors.blue,
-        marginBottom: 16,
+        color: COLORS.blue,
     },
     // medium bold
     h3: {
-        fontSize: 13,
+        fontSize: SIZES.medium,
         fontWeight: 'bold',
-        marginBottom: 5,
     },
     // medium small italic
     h4: {
-        fontSize: 12,
+        fontSize: SIZES.mSmall,
         fontStyle: 'italic',
-        marginBottom: 5,
     },
     // small
     text: {
-        fontSize: 11,
-        marginBottom: 5,
+        fontSize: SIZES.small,
     },
     speakerphoto: {
         height: Window.width * 0.7,
         width: Window.width * 0.7,
         borderRadius: Window.width * 0.35,
-        marginLeft: Window.width * 0.15 - 18,
-        marginRight: Window.width * 0.15 - 18,
-        marginBottom: 20,
+        marginLeft: Window.width * 0.15 - SIZES.large,
+        marginRight: Window.width * 0.15 - SIZES.large,
+        marginBottom: SIZES.xLarge,
+        backgroundColor: COLORS.gray,
     },
     input: {
-        margin: 5,
-        padding: 5,
-        borderColor: Colors.black,
+        margin: SIZES.xxSmall,
+        padding: SIZES.xxSmall,
+        borderColor: COLORS.black,
         borderWidth: 1,
-        marginBottom: 16,
     },
     emptySession: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderColor: Colors.blue,
+        borderColor: COLORS.blue,
         borderWidth: 1,
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10
+        borderRadius: SIZES.xxSmall,
+        padding: SIZES.small,
     },
-    sessionTile: {
+    button: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: COLORS.blue,
+        borderWidth: 1,
+        borderRadius: SIZES.xxSmall,
+        padding: SIZES.small,
+    },
+    buttonText: {
+        color: COLORS.blue,
+        fontSize: SIZES.mSmall,
+        fontWeight: 'bold',
+    },
+    speakerButton: {
         flexDirection: 'row',
-        marginTop: 10,
-        marginBottom: 5,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderColor: COLORS.blue,
+        borderWidth: 1,
+        borderRadius: SIZES.xxSmall,
+        padding: SIZES.small,
+    },
+    speakerButtonText: {
+        color: COLORS.black,
+        fontSize: SIZES.mSmall,
+        fontWeight: 'bold',
+        width: '85%'
+    },
+    speakerButtonArrow: {
+        fontSize: SIZES.mSmall,
+        fontWeight: 'bold',
+        color: COLORS.darkGray,
+    },
+    breakoutHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     sessionTileBar: {
         height: '100%',
-        width: 5,
-        marginRight: 10,
+        width: SIZES.xxSmall,
+        marginRight: SIZES.small,
+    },
+    sessionTile: {
+        flexDirection: 'row',
+        width: Window.width - SIZES.large * 2,
     },
     blueBackground: {
-        backgroundColor: Colors.blue + '44',
+        backgroundColor: COLORS.blue + '44',
     },
     blackBackground: {
-        backgroundColor: Colors.black + '44',
+        backgroundColor: COLORS.black + '44',
     },
-    noMargin: {
-        marginTop: 0,
-        marginBottom: 0,
-        marginLeft: 0,
-        marginRight: 0,
+    marginTopSmall: {
+        marginTop: SIZES.small,
+    },
+    marginTopMedium: {
+        marginTop: SIZES.medium,
+    },
+    marginTopXLarge: {
+        marginTop: SIZES.xLarge,
+    },
+    marginTopXxLarge: {
+        marginTop: SIZES.xxLarge,
+    },
+    marginBottomMedium: {
+        marginBottom: SIZES.medium,
+    },
+    marginBottomXxSmall: {
+        marginBottom: SIZES.xxSmall,
+    },
+    marginBottomLarge: {
+        marginBottom: SIZES.large,
+    },
+    marginBottomXLarge: {
+        marginBottom: SIZES.xLarge,
+    },
+    marginBottomXxLarge: {
+        marginBottom: SIZES.xxLarge,
     },
     blackText: {
-        color: Colors.black,
+        color: COLORS.black,
     },
 });

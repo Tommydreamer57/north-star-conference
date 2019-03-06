@@ -14,7 +14,7 @@ import SessionInfo from '../screens/SessionInfo';
 import SpeakerInfo from '../screens/SpeakerInfo';
 import Feedback from '../screens/Feedback';
 
-import { Colors } from '../styles/styles';
+import { COLORS } from '../styles/styles';
 
 export default createStackNavigator({
     Home,
@@ -29,7 +29,7 @@ export default createStackNavigator({
     Notifications,
 }, {
         cardStyle: {
-            backgroundColor: Colors.white,
+            backgroundColor: COLORS.white,
         },
     }
 );

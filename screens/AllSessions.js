@@ -85,7 +85,24 @@ function Day({
         <StorageConsumer>
             {({ keynotes, breakouts, schedule }) => (
                 <>
-                    <Text style={styles.title} >{day}</Text>
+                    <Text style={[
+                        styles.title,
+                        styles.marginTopXxLarge,
+                        styles.marginBottomXLarge,
+                    ]} >{day}</Text>
+                    <View
+                        style={[
+                            styles.breakoutHeader,
+                            styles.marginBottomMedium,
+                        ]}
+                    >
+                        <Text style={[
+                            styles.h2,
+                        ]} >Keynote {k1 + 1}</Text>
+                        <Text style={[
+                            styles.h4,
+                        ]} >{(keynotes[k1] || {}).sessiontime || ''}</Text>
+                    </View>
                     <SessionTile
                         navigation={navigation}
                         session={keynotes[k1]}
@@ -102,21 +119,17 @@ function Day({
                                 key={breakoutName}
                             >
                                 <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        marginTop: 25,
-                                        marginBottom: 10,
-                                    }}
+                                    style={[
+                                        styles.breakoutHeader,
+                                        styles.marginTopXxLarge,
+                                        styles.marginBottomMedium,
+                                    ]}
                                 >
                                     <Text style={[
                                         styles.h2,
-                                        styles.noMargin,
                                     ]} >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}</Text>
                                     <Text style={[
                                         styles.h4,
-                                        styles.noMargin,
                                     ]} >{sessiontime}</Text>
                                 </View>
                                 <View>
@@ -136,6 +149,20 @@ function Day({
                             </View>
                         );
                     })}
+                    <View
+                        style={[
+                            styles.breakoutHeader,
+                            styles.marginTopMedium,
+                            styles.marginBottomMedium,
+                        ]}
+                    >
+                        <Text style={[
+                            styles.h2,
+                        ]} >Keynote {k2 + 1}</Text>
+                        <Text style={[
+                            styles.h4,
+                        ]} >{(keynotes[k2] || {}).sessiontime || ''}</Text>
+                    </View>
                     <SessionTile
                         navigation={navigation}
                         session={keynotes[k2]}

@@ -14,7 +14,7 @@ import createNavigationOptions from '../navigation/navigation-options';
 import { StorageConsumer } from '../storage/StorageProvider';
 import SessionTile from '../components/SessionTile';
 
-Schedule.navigationOptions = createNavigationOptions("Schedule");
+Schedule.navigationOptions = createNavigationOptions("Your Schedule");
 
 export default function Schedule({
     navigation,
@@ -37,23 +37,26 @@ export default function Schedule({
                             }, i) => (
                                     <View key={sessionName}>
                                         {i === 0 ? (
-                                            <Text style={styles.title}>Friday</Text>
+                                            <Text style={[
+                                                styles.title,
+                                                styles.marginBottomMedium,
+                                            ]}>Friday</Text>
                                         ) : i === 5 ? (
-                                            <Text style={styles.title}>Saturday</Text>
+                                            <Text style={[
+                                                styles.title,
+                                                styles.marginBottomMedium,
+                                            ]}>Saturday</Text>
                                         ) : null}
                                         {id ? (
                                             <View
-                                                style={{
-                                                    marginBottom: 16,
-                                                }}
+                                                style={[
+                                                    styles.marginBottomMedium
+                                                ]}
                                             >
                                                 <Text style={[
                                                     styles.h2,
-                                                    styles.noMargin,
-                                                    {
-                                                        marginTop: 10,
-                                                    }
-                                                ]}>{sessionName}</Text>
+                                                    styles.marginBottomMedium,
+                                                ]}>{sessionName.slice(0, 1).toUpperCase() + sessionName.slice(1).toLowerCase()}</Text>
                                                 <SessionTile
                                                     navigation={navigation}
                                                     session={selectedSession || keynotes.find(({ sessiontype }) => sessiontype.toUpperCase() === sessionName.toUpperCase())}
@@ -62,19 +65,17 @@ export default function Schedule({
                                             </View>
                                         ) : (
                                                 <TouchableOpacity
-                                                    style={styles.emptySession}
+                                                    style={[
+                                                        styles.emptySession,
+                                                        styles.marginBottomMedium,
+                                                    ]}
                                                     onPress={() => navigate('SelectBreakout', { sessionName })}
                                                 >
                                                     <Text style={[
-                                                        styles.h2,
-                                                        styles.noMargin,
-                                                        {
-                                                            fontSize: 12,
-                                                        },
-                                                    ]}>{sessionName}</Text>
+                                                        styles.buttonText,
+                                                    ]}>+ {sessionName.slice(0, 1).toUpperCase() + sessionName.slice(1).toLowerCase()}</Text>
                                                     <Text style={[
                                                         styles.h4,
-                                                        styles.noMargin,
                                                     ]}>{(Object.values(allSessions).find(({ sessiontype }) => sessiontype.toLowerCase() === sessionName.toLowerCase()) || {}).sessiontime || ''}</Text>
                                                 </TouchableOpacity>
                                             )}

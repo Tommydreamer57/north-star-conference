@@ -16,7 +16,7 @@ import createNavigationOptions from '../navigation/navigation-options';
 
 
 export default class AllSpeakers extends Component {
-    
+
     static navigationOptions = createNavigationOptions("All Speakers");
 
     state = {
@@ -41,7 +41,10 @@ export default class AllSpeakers extends Component {
                         <View style={styles.view} >
                             <Text>Search</Text>
                             <TextInput
-                                style={styles.input}
+                                style={[
+                                    styles.input,
+                                    styles.marginBottomXxLarge,
+                                ]}
                                 value={input}
                                 onChangeText={input => this.setState({ input })}
                             />
@@ -50,10 +53,19 @@ export default class AllSpeakers extends Component {
                                 .filter(({ name }) => name.toLowerCase().includes(input.toLowerCase()))
                                 .map(({ name, bio, photo }) => (
                                     <TouchableOpacity
+                                        style={[
+                                            styles.speakerButton,
+                                            styles.marginBottomMedium,
+                                        ]}
                                         key={name}
                                         onPress={() => navigate("SpeakerInfo", { name, bio, photo })}
                                     >
-                                        <Text style={styles.h3} >{name}</Text>
+                                        <Text style={[
+                                            styles.speakerButtonText,
+                                        ]} >{name}</Text>
+                                        <Text style={[
+                                            styles.speakerButtonArrow,
+                                        ]}>></Text>
                                     </TouchableOpacity>
                                 ))}
                         </View>

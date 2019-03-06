@@ -69,7 +69,6 @@ export default class FeedbackModal extends Component {
                                 <TextInput
                                     style={styles.input}
                                     value={input}
-                                    clearTextOnFocus={true}
                                     onChangeText={input => this.setState({ input })}
                                 />
                                 {Object.values(context.allSessions)

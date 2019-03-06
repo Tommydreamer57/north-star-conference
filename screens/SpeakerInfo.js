@@ -46,15 +46,19 @@ export default function SpeakerInfo({
                                     'https://www.nycc.edu/themes/nycc/images/default_profile.jpg'
                             }}
                         />
-                        <Text style={styles.h1} >{speakername || name}</Text>
-                        <Text style={styles.text} >{speakerbio || bio}</Text>
+                        <Text style={[
+                            styles.h1,
+                            styles.marginBottomLarge,
+                        ]} >{speakername || name}</Text>
+                        <Text style={[
+                            styles.text,
+                            styles.marginBottomXLarge,
+                        ]} >{speakerbio || bio}</Text>
                         <View>
                             <Text style={[
                                 styles.h2,
-                                styles.noMargin,
-                                {
-                                    marginTop: 20,
-                                },
+                                styles.marginTopMedium,
+                                styles.marginBottomMedium,
                             ]} >Sessions</Text>
                             {Object.values(allSessions)
                                 .filter(session => (session.speakername || "").toLowerCase() === (speakername || name).toLowerCase())

@@ -35,6 +35,7 @@ export default function SessionTile({
                 styles.sessionTile,
                 isKeynote && styles.keynoteSession,
                 addedToSchedule && styles.selectedSession,
+                styles.marginBottomLarge,
             ]}
             onPress={onPress || (() => navigate("SessionInfo", {
                 sessionName: sessiontype.toUpperCase(),
@@ -49,47 +50,65 @@ export default function SessionTile({
                     styles.blackBackground,
             ]} />
             <View>
-                {isKeynote ? (
+                {/* {isKeynote ? (
                     <>
                         <Text style={[
                             styles.h2,
-                            {
-                                marginBottom: 10,
-                            }
+                            styles.marginBottomXxSmall,
                         ]} >{title}</Text>
-                        {renderTimeInsteadOfSpeaker && (
-                            <Text style={styles.h3} >{speakername}</Text>
-                        )}
-                        <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
+                        {renderTimeInsteadOfSpeaker ? (
+                            <Text style={styles.h4} >{(
+                                sessiontype.replace(/\D/g, '') < 2.5 ?
+                                    'Friday'
+                                    :
+                                    'Saturday'
+                            )} {sessiontime}</Text>
+                        ) : (
+                                <>
+                                    <Text style={[
+                                        styles.h3,
+                                        styles.marginBottomXxSmall,
+                                    ]} >{speakername}</Text>
+                                    <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
+                                </>
+                            )}
                     </>
+                ) : ( */}
+                {/* <> */}
+                <Text style={[
+                    styles.h3,
+                    styles.marginBottomXxSmall,
+                ]} >{title}</Text>
+                {renderTimeInsteadOfSpeaker ? (
+                    <Text style={[
+                        styles.h4,
+                        styles.marginBottomXxSmall,
+                    ]} >{(
+                        isKeynote ?
+                            sessiontype.replace(/\D/g, '') < 2.5 ?
+                                'Friday'
+                                :
+                                'Saturday'
+                            :
+                            sessiontype.replace(/\D/g, '') < 3.5 ?
+                                'Friday'
+                                :
+                                'Saturday'
+                    )} {sessiontime}</Text>
                 ) : (
-                        <>
-                            <Text style={styles.h3} >{title}</Text>
-                            {renderTimeInsteadOfSpeaker ? (
-                                <Text style={styles.h4} >{(
-                                    sessiontype.match(/breakout/i) ?
-                                        sessiontype.replace(/\D/g, '') < 3.5 ?
-                                            'Friday'
-                                            :
-                                            'Saturday'
-                                        :
-                                        sessiontype.replace(/\D/g, '') < 2.5 ?
-                                            'Friday'
-                                            :
-                                            'Saturday'
-                                )} {sessiontime}</Text>
-                            ) : (
-                                    <Text style={styles.h4} >{speakername}</Text>
-                                )}
-                        </>
+                        <Text style={[
+                            styles.h4,
+                            styles.marginBottomXxSmall,
+                        ]} >{speakername}</Text>
                     )}
-                {/* <Text style={styles.h2} >{title}</Text>
-            <Text style={styles.h3} >{speakername}</Text>
-            {isKeynote ? (
-                <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
-            ) : null} */}
-                <Text style={styles.text} >Room: {room}</Text>
-                <Text style={styles.text} >Demographic{demographic.trim().match(/ .* /) ? 's' : ''}: {demographic}</Text>
+                {/* </> */}
+                {/* )} */}
+                <Text style={[
+                    styles.text,
+                ]} >Room: {room}</Text>
+                <Text style={[
+                    styles.text,
+                ]} >Demographic{demographic.trim().match(/ .* /) ? 's' : ''}: {demographic}</Text>
             </View>
         </TouchableOpacity>
     );

@@ -4,7 +4,6 @@ import {
     ScrollView,
     View,
     Image,
-    Button,
     Text,
     TouchableOpacity,
 } from 'react-native';
@@ -49,7 +48,10 @@ export default function SessionInfo({
             }) => (
                     <ScrollView>
                         <View style={styles.view} >
-                            <Text style={styles.h1} >{title}</Text>
+                            <Text style={[
+                                styles.h1,
+                                styles.marginBottomXLarge,
+                            ]} >{title}</Text>
                             <TouchableOpacity
                                 onPress={() => navigate('SpeakerInfo', {
                                     speakername,
@@ -65,41 +67,71 @@ export default function SessionInfo({
                                             'https://www.nycc.edu/themes/nycc/images/default_profile.jpg',
                                     }}
                                 />
-                                <Text style={styles.h2}>{speakername}</Text>
+                                <Text style={[
+                                    styles.h2,
+                                    styles.marginBottomXxSmall,
+                                ]}>{speakername}</Text>
                             </TouchableOpacity>
-                            <Text style={styles.h4} >{sessionName}: {sessiontime}</Text>
-                            <Text style={styles.h4} >{demographic}</Text>
-                            <Text style={styles.text} >{description}</Text>
+                            <Text style={[
+                                styles.h4,
+                                styles.marginBottomXxSmall,
+                            ]} >{sessionName}: {sessiontime}</Text>
+                            <Text style={[
+                                styles.h4,
+                                styles.marginBottomLarge,
+                            ]} >{demographic}</Text>
+                            <Text style={[
+                                styles.text,
+                                styles.marginBottomXLarge,
+                            ]} >{description}</Text>
                             {sessionName.match(/breakout/i) ? (
                                 scheduleArray.some(({
                                     selectedSession: {
                                         id: selectedId,
                                     } = {},
                                 }) => selectedId === id) ? (
-                                        <Button
-                                            style={styles.button}
-                                            title="Remove From Schedule"
+                                        <TouchableOpacity
+                                            style={[
+                                                styles.button,
+                                                styles.marginTopMedium,
+                                            ]}
                                             onPress={async () => {
                                                 await removeFromSchedule(id);
                                                 goBack();
                                             }}
-                                        />
+                                        >
+                                            <Text style={[
+                                                styles.buttonText,
+                                            ]} >Remove From Schedule</Text>
+                                        </TouchableOpacity>
                                     ) : (
-                                        <Button
-                                            style={styles.button}
-                                            title="Add To Schedule"
+                                        <TouchableOpacity
+                                            style={[
+                                                styles.button,
+                                                styles.marginTopMedium,
+                                            ]}
                                             onPress={async () => {
                                                 await addToSchedule(id);
                                                 goBack();
                                             }}
-                                        />
+                                        >
+                                            <Text style={[
+                                                styles.buttonText,
+                                            ]} >Add To Schedule</Text>
+                                        </TouchableOpacity>
                                     )
                             ) : null}
-                            <Button
-                                style={styles.button}
-                                title="Provide Feedback"
+                            <TouchableOpacity
+                                style={[
+                                    styles.button,
+                                    styles.marginTopMedium,
+                                ]}
                                 onPress={() => navigate("Feedback", { id, sessionName })}
-                            />
+                            >
+                                <Text style={[
+                                    styles.buttonText,
+                                ]} >Provide Feedback</Text>
+                            </TouchableOpacity>
                         </View>
                     </ScrollView>
                 )}

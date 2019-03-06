@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "rn-app",
-    "description": "A very interesting project.",
-    "slug": "rn-app",
+    "name": "North Star Conference",
+    "description": "Provides a tool for users to plan their conference, read bios, and receive important notifications",
+    "slug": "north-star-conf",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/App Icon.png",
+    "icon": "./assets/appIcon.png",
     "splash": {
       "image": "./assets/home-background.png",
       "resizeMode": "contain",
@@ -21,7 +21,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     }
   }
 }

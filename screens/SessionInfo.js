@@ -13,6 +13,7 @@ import styles from '../styles/styles';
 import createNavigationOptions from '../navigation/navigation-options';
 
 import { StorageConsumer } from '../storage/StorageProvider';
+import { extractSessionType } from '../utils/sessions';
 
 SessionInfo.navigationOptions = createNavigationOptions("Session Info");
 
@@ -75,15 +76,24 @@ export default function SessionInfo({
                             <Text style={[
                                 styles.h4,
                                 styles.marginBottomXxSmall,
-                            ]} >{sessionName}: {sessiontime}</Text>
+                            ]} >{extractSessionType({ sessiontype: sessionName })}: {sessiontime}</Text>
                             <Text style={[
                                 styles.h4,
                                 styles.marginBottomLarge,
                             ]} >{demographic}</Text>
                             <Text style={[
                                 styles.text,
-                                styles.marginBottomXLarge,
+                                styles.marginBottomXxLarge,
                             ]} >{description}</Text>
+                            <Text style={[
+                                styles.h3,
+                                styles.marginBottomLarge,
+                            ]} >About The Speaker{speakername.match(/,|and/) ? 's' : ''}</Text>
+                            <Text style={[
+                                styles.text,
+                                styles.marginBottomXLarge
+                            ]} >{speakerbio}</Text>
+
                             {sessionName.match(/breakout/i) ? (
                                 scheduleArray.some(({
                                     selectedSession: {

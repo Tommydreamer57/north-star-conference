@@ -8,7 +8,6 @@ import {
     Slider,
     TouchableOpacity,
     View,
-    Alert,
 } from 'react-native';
 
 import createNavigationOptions from '../navigation/navigation-options';
@@ -18,8 +17,6 @@ import { StorageConsumer } from '../storage/StorageProvider';
 import styles, { COLORS } from '../styles/styles';
 
 import KeyboardView from '../components/KeyboardView';
-
-import FeedbackModal from './FeedbackModal';
 
 export default class Feedback extends Component {
 
@@ -111,16 +108,17 @@ export default class Feedback extends Component {
                     submitReview,
                 }) => (
                         <KeyboardView>
-                            <FeedbackModal
+                            {/* <FeedbackSelect
                                 navigation={navigation}
                                 visible={!sessionId}
-                                animationType={'slide'}
-                                onRequestClose={() => { }}
                                 onSelect={selectSession}
-                            />
+                            /> */}
                             <View style={styles.view}>
                                 <TouchableOpacity
-                                    onPress={() => navigate('')}
+                                    onPress={() => navigate('SessionInfo', {
+                                        id: sessionId,
+                                        sessionName,
+                                    })}
                                 >
                                     <Text style={[
                                         styles.h1,
@@ -152,16 +150,16 @@ export default class Feedback extends Component {
                                     minimumTrackTintColor={COLORS.blue}
                                     ref={el => this.rating = el}
                                     value={rating}
-                                    minimumValue={1}
+                                    minimumValue={0}
                                     step={1}
                                     maximumValue={10}
-                                    onValueChange={rating => this.setState({ rating })}
+                                    onSlidingComplete={rating => this.setState({ rating })}
                                 />
                                 <View style={[
                                     styles.sliderLabels,
                                     styles.marginBottomXxLarge,
                                 ]}>
-                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
                                         <Text
                                             key={n}
                                             style={{
@@ -184,8 +182,10 @@ export default class Feedback extends Component {
                                     ]}
                                     scrollEnabled={false}
                                     multiline={true}
-                                    value={likeFeedback.replace(/\n/, '')}
-                                    onChangeText={likeFeedback => this.setState({ likeFeedback })}
+                                    value={likeFeedback}
+                                    onChangeText={likeFeedback => this.setState({
+                                        likeFeedback: likeFeedback.replace(/\n/, ''),
+                                    })}
                                     onSubmitEditing={onSubmitEditing("dislikeFeedback")}
                                 />
                                 <Text style={[
@@ -199,8 +199,10 @@ export default class Feedback extends Component {
                                     ]}
                                     scrollEnabled={false}
                                     multiline={true}
-                                    value={dislikeFeedback.replace(/\n/, '')}
-                                    onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
+                                    value={dislikeFeedback}
+                                    onChangeText={dislikeFeedback => this.setState({
+                                        dislikeFeedback: dislikeFeedback.replace(/\n/, ''),
+                                    })}
                                     onSubmitEditing={onSubmitEditing("generalFeedback")}
                                 />
                                 <Text style={[
@@ -214,8 +216,10 @@ export default class Feedback extends Component {
                                     ]}
                                     scrollEnabled={false}
                                     multiline={true}
-                                    value={generalFeedback.replace(/\n/, '')}
-                                    onChangeText={generalFeedback => this.setState({ generalFeedback })}
+                                    value={generalFeedback}
+                                    onChangeText={generalFeedback => this.setState({
+                                        generalFeedback: generalFeedback.replace(/\n/, ''),
+                                    })}
                                     onSubmitEditing={onSubmitEditing("username")}
                                 />
                                 <Text style={[
@@ -227,9 +231,7 @@ export default class Feedback extends Component {
                                         styles.input,
                                         styles.marginBottomXxLarge,
                                     ]}
-                                    scrollEnabled={false}
-                                    multiline={true}
-                                    value={username.replace(/\n/, '')}
+                                    value={username}
                                     onChangeText={username => this.setState({ username })}
                                     onSubmitEditing={onSubmitEditing("email")}
                                 />
@@ -242,9 +244,7 @@ export default class Feedback extends Component {
                                         styles.input,
                                         styles.marginBottomXLarge,
                                     ]}
-                                    scrollEnabled={false}
-                                    multiline={true}
-                                    value={email.replace(/\n/, '')}
+                                    value={email}
                                     onChangeText={email => this.setState({ email })}
                                 />
                                 <TouchableOpacity

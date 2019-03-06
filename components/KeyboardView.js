@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 
 import {
-    Alert,
     Animated,
     Keyboard,
-    Text,
-    ScrollView,
 } from 'react-native';
-
-import { log } from '../storage/service';
 
 export default class KeyboardView extends Component {
 
@@ -28,7 +23,6 @@ export default class KeyboardView extends Component {
     }
 
     keyboardWillShow = (event) => {
-        log(event);
         Animated.spring(this.state.keyboardHeight, {
             duration: event.duration,
             toValue: -event.endCoordinates.height,

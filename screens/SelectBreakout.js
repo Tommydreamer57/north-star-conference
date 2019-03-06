@@ -3,8 +3,7 @@ import React from 'react';
 import {
     ScrollView,
     View,
-    TouchableOpacity,
-    Text,
+    FlatList,
 } from 'react-native';
 
 import SessionTile from '../components/SessionTile';
@@ -14,6 +13,7 @@ import { StorageConsumer } from '../storage/StorageProvider';
 import styles from '../styles/styles';
 
 import createNavigationOptions from '../navigation/navigation-options';
+import { extractSessionType } from '../utils/sessions';
 
 SelectBreakout.navigationOptions = ({
     navigation: {
@@ -25,7 +25,7 @@ SelectBreakout.navigationOptions = ({
     },
 }) => ({
     ...createNavigationOptions("Select Breakout"),
-    title: sessionName.slice(0, 1).toUpperCase() + sessionName.slice(1).toLowerCase(),
+    title: extractSessionType({ sessiontype: sessionName }),
 });
 
 export default function SelectBreakout({
@@ -48,13 +48,16 @@ export default function SelectBreakout({
             }) => (
                     <ScrollView>
                         <View style={styles.view}>
-                            {breakouts.map(session => (
-                                <SessionTile
-                                    key={session.id}
-                                    navigation={navigation}
-                                    session={session}
-                                />
-                            ))}
+                            <FlatList
+                                keyExtractor={({ id }) => id}
+                                data={breakouts}
+                                renderItem={({ item: session }) => (
+                                    <SessionTile
+                                        navigation={navigation}
+                                        session={session}
+                                    />
+                                )}
+                            />
                         </View>
                     </ScrollView>
                 )}

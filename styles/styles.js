@@ -90,7 +90,7 @@ export default StyleSheet.create({
     },
     sliderLabels: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
     switchWrapper: {

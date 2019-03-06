@@ -3,6 +3,7 @@ import React from 'react';
 import {
     ScrollView,
     View,
+    FlatList,
     Text,
     Image,
     TouchableOpacity,
@@ -60,16 +61,18 @@ export default function SpeakerInfo({
                                 styles.marginTopMedium,
                                 styles.marginBottomMedium,
                             ]} >Sessions</Text>
-                            {Object.values(allSessions)
-                                .filter(session => (session.speakername || "").toLowerCase() === (speakername || name).toLowerCase())
-                                .map(session => (
+                            <FlatList
+                                keyExtractor={({ id }) => id}
+                                data={Object.values(allSessions)
+                                    .filter(session => (session.speakername || "").toLowerCase() === (speakername || name).toLowerCase())}
+                                renderItem={({ item: session }) => (
                                     <SessionTile
                                         navigation={navigation}
-                                        key={session.id}
                                         session={session}
                                         renderTimeInsteadOfSpeaker={true}
                                     />
-                                ))}
+                                )}
+                            />
                         </View>
                     </View>
                 </ScrollView>

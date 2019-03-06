@@ -1,41 +1,8 @@
 import {
     AsyncStorage,
-    Alert,
 } from 'react-native';
 
 import axios from 'axios';
-
-// REMOVE THIS LINE
-// (async () => {
-//     try {
-//         // await AsyncStorage.clear();
-//         const keys = await AsyncStorage.getAllKeys();
-//         console.log("Removing all keys");
-//         console.log(keys);
-//         await AsyncStorage.multiRemove(keys);
-//         console.log("Done removing keys");
-//     } catch (err) {
-//         console.error(err);
-//     }
-// })();
-
-(async () => {
-    try {
-        await axios.delete('http://192.168.1.105:4321/log');
-    } catch (err) {
-        console.error(err);
-    }
-})();
-
-export const log = async body => {
-    try {
-        await axios.post('http://192.168.1.105:4321/log', body);
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-
 
 const allKeys = [
     "breakouts",
@@ -50,7 +17,6 @@ const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
 export const refetchSessionsEachDay = async () => {
     const fetchDate = await getItem("date");
     if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
-        Alert.alert("Refetching Sessions");
         return fetchSessions();
     } else return false;
 }
@@ -93,24 +59,23 @@ export const fetchSessions = async () => {
                 };
             }, {});
 
-        const schedule =
-        // existingSessions ?
-        // JSON.parse(existingSessions)
-        //     :
-        {
-            friday: false,
-            saturday: false,
-            ...Object.keys(breakouts)
-                .reduce((all, key) => ({
-                    ...all,
-                    [key]: {},
-                }), {}),
-            ...keynotes
-                .reduce((all, session) => ({
-                    ...all,
-                    [session.sessiontype.toUpperCase()]: session,
-                }), {}),
-        };
+        const schedule = existingSessions ?
+            JSON.parse(existingSessions)
+            :
+            {
+                friday: false,
+                saturday: false,
+                ...Object.keys(breakouts)
+                    .reduce((all, key) => ({
+                        ...all,
+                        [key]: {},
+                    }), {}),
+                ...keynotes
+                    .reduce((all, session) => ({
+                        ...all,
+                        [session.sessiontype.toUpperCase()]: session,
+                    }), {}),
+            };
 
         const speakers = data.reduce((all, { id, speakername, speakerbio, speakerphoto }) => ({
             ...all,
@@ -178,12 +143,10 @@ export const getItems = (...keys) => {
 
 export const submitReview = async review => {
     try {
-        const { data } = await axios.post('https://northstarconferenceadmin.herokuapp.com/api/review', review);
-        Alert.alert(`Submitted review: ${JSON.stringify(data)}`);
+        await axios.post('https://northstarconferenceadmin.herokuapp.com/api/review', review);
         return true;
     } catch (err) {
         console.error(err);
-        Alert.alert("Something went wrong");
         return false;
     }
 }

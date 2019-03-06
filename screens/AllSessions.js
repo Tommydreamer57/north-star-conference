@@ -5,6 +5,7 @@ import {
     View,
     Text,
     TextInput,
+    FlatList,
 } from 'react-native';
 
 import { StorageConsumer } from '../storage/StorageProvider';
@@ -17,10 +18,12 @@ import SessionTile from '../components/SessionTile';
 
 import filterSessions from '../utils/filters';
 
+import { extractSessionType } from '../utils/sessions';
+
 
 export default class AllSessions extends Component {
 
-    static navigationOptions = createNavigationOptions("Sessions");
+    static navigationOptions = createNavigationOptions("All Sessions");
 
     state = {
         input: '',
@@ -46,27 +49,35 @@ export default class AllSessions extends Component {
                         value={input}
                         onChangeText={input => this.setState({ input })}
                     />
-                    <Day
-                        input={input}
-                        day="Friday"
-                        keynoteIndeces={[0, 1]}
-                        breakoutNames={[
-                            'BREAKOUT 1',
-                            'BREAKOUT 2',
-                            'BREAKOUT 3',
+                    <FlatList
+                        keyExtractor={(_, i) => `${i}`}
+                        data={[
+                            {
+                                input,
+                                day: "Friday",
+                                keynoteIndeces: [0, 1],
+                                breakoutNames: [
+                                    'BREAKOUT 1',
+                                    'BREAKOUT 2',
+                                    'BREAKOUT 3',
+                                ],
+                                navigation,
+                            },
+                            {
+                                input,
+                                day: "Saturday",
+                                keynoteIndeces: [2, 3],
+                                breakoutNames: [
+                                    'BREAKOUT 4',
+                                    'BREAKOUT 5',
+                                    'BREAKOUT 6',
+                                ],
+                                navigation,
+                            },
                         ]}
-                        navigation={navigation}
-                    />
-                    <Day
-                        input={input}
-                        day="Saturday"
-                        keynoteIndeces={[2, 3]}
-                        breakoutNames={[
-                            'BREAKOUT 4',
-                            'BREAKOUT 5',
-                            'BREAKOUT 6',
-                        ]}
-                        navigation={navigation}
+                        renderItem={({ item }) => (
+                            <Day {...item} />
+                        )}
                     />
                 </View>
             </ScrollView>
@@ -107,48 +118,50 @@ function Day({
                         navigation={navigation}
                         session={keynotes[k1]}
                     />
-                    {breakoutNames.map(breakoutName => {
-                        const breakout = breakouts[breakoutName] || [];
-                        const [
-                            {
-                                sessiontime = '',
-                            } = {}
-                        ] = breakout;
-                        return (
-                            <View
-                                key={breakoutName}
-                            >
-                                <View
-                                    style={[
-                                        styles.breakoutHeader,
-                                        styles.marginTopXxLarge,
-                                        styles.marginBottomMedium,
-                                    ]}
-                                >
-                                    <Text style={[
-                                        styles.h2,
-                                    ]} >{breakoutName.slice(0, 1) + breakoutName.slice(1).toLowerCase()}</Text>
-                                    <Text style={[
-                                        styles.h4,
-                                    ]} >{sessiontime}</Text>
-                                </View>
-                                <View>
-                                    {breakout
-                                        .filter(filterSessions({ state: { input } }))
-                                        .map(session => (
+                    <FlatList
+                        keyExtractor={name => name}
+                        data={breakoutNames}
+                        renderItem={({ item: breakoutName }) => {
+                            const breakout = breakouts[breakoutName] || [];
+                            const [
+                                {
+                                    sessiontime = '',
+                                } = {}
+                            ] = breakout;
+                            return (
+                                <>
+                                    <View
+                                        style={[
+                                            styles.breakoutHeader,
+                                            styles.marginTopXxLarge,
+                                            styles.marginBottomMedium,
+                                        ]}
+                                    >
+                                        <Text style={[
+                                            styles.h2,
+                                        ]} >{extractSessionType({ sessiontype: breakoutName })}</Text>
+                                        <Text style={[
+                                            styles.h4,
+                                        ]} >{sessiontime}</Text>
+                                    </View>
+                                    <FlatList
+                                        keyExtractor={({ id }) => id}
+                                        data={breakout
+                                            .filter(filterSessions({ state: { input } }))}
+                                        renderItem={({ item: session }) => (
                                             <SessionTile
-                                                key={session.id}
                                                 session={session}
                                                 navigation={navigation}
                                                 addedToSchedule={schedule[breakoutName]
                                                     &&
                                                     schedule[breakoutName].id === session.id}
                                             />
-                                        ))}
-                                </View>
-                            </View>
-                        );
-                    })}
+                                        )}
+                                    />
+                                </>
+                            );
+                        }}
+                    />
                     <View
                         style={[
                             styles.breakoutHeader,

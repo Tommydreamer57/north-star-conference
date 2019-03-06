@@ -13,6 +13,7 @@ import SelectBreakout from '../screens/SelectBreakout';
 import SessionInfo from '../screens/SessionInfo';
 import SpeakerInfo from '../screens/SpeakerInfo';
 import Feedback from '../screens/Feedback';
+import FeedbackSelect from '../screens/FeedbackSelect';
 
 import { COLORS } from '../styles/styles';
 
@@ -25,6 +26,7 @@ export default createStackNavigator({
     SessionInfo,
     SpeakerInfo,
     Feedback,
+    FeedbackSelect,
     Map,
     Notifications,
 }, {

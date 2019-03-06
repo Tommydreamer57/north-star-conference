@@ -25,21 +25,19 @@ const iconPrefix = Platform.OS !== "ios" ?
 const links = [
     [
         {
-
             name: "SCHEDULE",
             to: "Schedule",
             // icon: "calendar",
             icon: "add-circle",
         },
         {
-
             name: "SESSIONS",
             to: "AllSessions",
             icon: "microphone",
         },
         {
             name: "FEEDBACK",
-            to: "Feedback",
+            to: "FeedbackSelect",
             icon: "paper",
         },
     ],
@@ -50,13 +48,11 @@ const links = [
             icon: "people",
         },
         {
-
             name: "MAP",
             to: "Map",
             icon: "map",
         },
         {
-
             name: "NOTIFICATIONS",
             to: "Notifications",
             icon: "notifications",
@@ -64,19 +60,16 @@ const links = [
     ],
     [
         {
-
             name: "AUDIO",
             url: "https://vimeo.com/ondemand/northstar2018/256616872",
             icon: "play-circle",
         },
         {
-
             name: "CONTACT",
             url: "sms:770-530-1892",
             icon: "text",
         },
         {
-
             name: "DONATE",
             url: "https://northstarlds.org/give/donate/",
             icon: "cash",
@@ -177,7 +170,7 @@ const styles = StyleSheet.create({
     bottomPadding: {
         resizeMode: 'contain',
         width: Window.width * 0.5,
-        height:  Window.height * 0.17,
+        height: Window.height * 0.17,
         marginLeft: Window.width * 0.25,
         marginRight: Window.width * 0.25,
         marginTop: 0,

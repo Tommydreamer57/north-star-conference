@@ -79,15 +79,6 @@ export default class StorageProvider extends Component {
             removeFromSchedule: this.removeFromSchedule,
             submitReview,
         });
-
-        // [
-        //     { allSessions },
-        //     { scheduleArray },
-        //     { schedule },
-        //     { breakouts },
-        //     { keynotes },
-        // ]
-        //     .forEach(log);
     }
 
     addToSchedule = async id => {
@@ -103,9 +94,6 @@ export default class StorageProvider extends Component {
             this.setState({
                 schedule,
                 scheduleArray,
-            });
-            log({
-                schedule,
             });
         } catch (err) {
             console.error(err);
@@ -126,9 +114,6 @@ export default class StorageProvider extends Component {
                 schedule,
                 scheduleArray,
             });
-            log({
-                schedule,
-            });
         } catch (err) {
             console.error(err);
         }
@@ -138,11 +123,6 @@ export default class StorageProvider extends Component {
         <Provider
             value={this.state}
         >
-            {/* <Text>{JSON.stringify({
-                value: 1,
-                schedule: this.state.schedule,
-                scheduleArray: this.state.scheduleArray,
-            })}</Text> */}
             {this.props.children}
         </Provider>
     );

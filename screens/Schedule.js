@@ -3,6 +3,7 @@ import React from 'react';
 import {
     ScrollView,
     View,
+    FlatList,
     Text,
     TouchableOpacity,
 } from 'react-native';
@@ -13,6 +14,7 @@ import createNavigationOptions from '../navigation/navigation-options';
 
 import { StorageConsumer } from '../storage/StorageProvider';
 import SessionTile from '../components/SessionTile';
+import { extractSessionType } from '../utils/sessions';
 
 Schedule.navigationOptions = createNavigationOptions("Your Schedule");
 
@@ -27,21 +29,26 @@ export default function Schedule({
             {({ scheduleArray, keynotes, allSessions }) => (
                 <ScrollView>
                     <View style={styles.view}>
-                        {scheduleArray
-                            .map(({
-                                sessionName,
-                                selectedSession,
-                                selectedSession: {
-                                    id,
-                                } = {},
-                            }, i) => (
-                                    <View key={sessionName}>
-                                        {i === 0 ? (
+                        <FlatList
+                            keyExtractor={({ sessionName }) => sessionName}
+                            data={scheduleArray}
+                            renderItem={({
+                                item: {
+                                    sessionName,
+                                    selectedSession,
+                                    selectedSession: {
+                                        id,
+                                    } = {},
+                                },
+                                index,
+                            }) => (
+                                    <View>
+                                        {index === 0 ? (
                                             <Text style={[
                                                 styles.title,
                                                 styles.marginBottomXLarge,
                                             ]}>Friday</Text>
-                                        ) : i === 5 ? (
+                                        ) : index === 5 ? (
                                             <Text style={[
                                                 styles.title,
                                                 styles.marginBottomXLarge,
@@ -56,7 +63,7 @@ export default function Schedule({
                                                 <Text style={[
                                                     styles.h2,
                                                     styles.marginBottomMedium,
-                                                ]}>{sessionName.slice(0, 1).toUpperCase() + sessionName.slice(1).toLowerCase()}</Text>
+                                                ]}>{extractSessionType(selectedSession)}</Text>
                                                 <SessionTile
                                                     navigation={navigation}
                                                     session={selectedSession || keynotes.find(({ sessiontype }) => sessiontype.toUpperCase() === sessionName.toUpperCase())}
@@ -73,14 +80,15 @@ export default function Schedule({
                                                 >
                                                     <Text style={[
                                                         styles.buttonText,
-                                                    ]}>+ {sessionName.slice(0, 1).toUpperCase() + sessionName.slice(1).toLowerCase()}</Text>
+                                                    ]}>+ {extractSessionType({ sessiontype: sessionName })}</Text>
                                                     <Text style={[
                                                         styles.h4,
                                                     ]}>{(Object.values(allSessions).find(({ sessiontype }) => sessiontype.toLowerCase() === sessionName.toLowerCase()) || {}).sessiontime || ''}</Text>
                                                 </TouchableOpacity>
                                             )}
                                     </View>
-                                ))}
+                                )}
+                        />
                     </View>
                 </ScrollView>
             )}

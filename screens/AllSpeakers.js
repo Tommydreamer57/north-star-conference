@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
     View,
     ScrollView,
+    FlatList,
     Text,
     TextInput,
     TouchableOpacity,
@@ -48,16 +49,17 @@ export default class AllSpeakers extends Component {
                                 value={input}
                                 onChangeText={input => this.setState({ input })}
                             />
-                            {Object.values(speakers)
-                                .sort(({ name: a }, { name: b }) => a > b)
-                                .filter(({ name }) => name.toLowerCase().includes(input.toLowerCase()))
-                                .map(({ name, bio, photo }) => (
+                            <FlatList
+                                keyExtractor={({ name }) => name}
+                                data={Object.values(speakers)
+                                    .sort(({ name: a }, { name: b }) => a > b)
+                                    .filter(({ name }) => name.toLowerCase().includes(input.toLowerCase()))}
+                                renderItem={({ item: { name, bio, photo } }) => (
                                     <TouchableOpacity
                                         style={[
                                             styles.speakerButton,
                                             styles.marginBottomMedium,
                                         ]}
-                                        key={name}
                                         onPress={() => navigate("SpeakerInfo", { name, bio, photo })}
                                     >
                                         <Text style={[
@@ -67,7 +69,8 @@ export default class AllSpeakers extends Component {
                                             styles.speakerButtonArrow,
                                         ]}>></Text>
                                     </TouchableOpacity>
-                                ))}
+                                )}
+                            />
                         </View>
                     </ScrollView>
                 )}

@@ -88,11 +88,28 @@ export default StyleSheet.create({
         marginBottom: SIZES.xLarge,
         backgroundColor: COLORS.gray,
     },
+    sliderLabels: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+    },
+    switchWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    switchLabel: {
+        marginLeft: SIZES.medium,
+    },
     input: {
-        margin: SIZES.xxSmall,
+        marginTop: SIZES.xxSmall,
+        marginBottom: SIZES.xxSmall,
         padding: SIZES.xxSmall,
         borderColor: COLORS.black,
         borderWidth: 1,
+    },
+    feedbackLabel: {
+        fontSize: SIZES.medium,
+        fontWeight: 'bold',
     },
     emptySession: {
         flexDirection: 'row',

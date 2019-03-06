@@ -15,7 +15,7 @@ import createNavigationOptions from '../navigation/navigation-options';
 
 import SessionTile from '../components/SessionTile';
 
-import filters from '../utils/filters';
+import filterSessions from '../utils/filters';
 
 
 export default class AllSessions extends Component {
@@ -134,7 +134,7 @@ function Day({
                                 </View>
                                 <View>
                                     {breakout
-                                        .filter(filters.filterByTextInput({ state: { input } }))
+                                        .filter(filterSessions({ state: { input } }))
                                         .map(session => (
                                             <SessionTile
                                                 key={session.id}

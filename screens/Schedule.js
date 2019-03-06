@@ -39,12 +39,12 @@ export default function Schedule({
                                         {i === 0 ? (
                                             <Text style={[
                                                 styles.title,
-                                                styles.marginBottomMedium,
+                                                styles.marginBottomXLarge,
                                             ]}>Friday</Text>
                                         ) : i === 5 ? (
                                             <Text style={[
                                                 styles.title,
-                                                styles.marginBottomMedium,
+                                                styles.marginBottomXLarge,
                                             ]}>Saturday</Text>
                                         ) : null}
                                         {id ? (

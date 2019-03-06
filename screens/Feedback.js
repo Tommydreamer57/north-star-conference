@@ -6,16 +6,16 @@ import {
     Text,
     TextInput,
     Slider,
-    Button,
-    Picker,
+    TouchableOpacity,
     View,
+    Alert,
 } from 'react-native';
 
 import createNavigationOptions from '../navigation/navigation-options';
 
 import { StorageConsumer } from '../storage/StorageProvider';
 
-import styles from '../styles/styles';
+import styles, { COLORS } from '../styles/styles';
 
 import KeyboardView from '../components/KeyboardView';
 
@@ -26,6 +26,7 @@ export default class Feedback extends Component {
     static navigationOptions = createNavigationOptions("Feedback");
 
     state = {
+        loading: false,
         sessionId: -1,
         sessionName: "",
         likeFeedback: "",
@@ -60,11 +61,15 @@ export default class Feedback extends Component {
         });
     }
 
-    selectSession = sessionId => this.setState({ sessionId });
+    selectSession = ({ sessionId, sessionName }) => this.setState({
+        sessionId,
+        sessionName,
+    });
 
     render = () => {
         const {
             state: {
+                loading,
                 sessionId,
                 sessionName,
                 likeFeedback,
@@ -77,13 +82,20 @@ export default class Feedback extends Component {
             props: {
                 navigation,
                 navigation: {
+                    navigate,
                     goBack,
                 },
             },
             selectSession,
             onSubmitEditing,
         } = this;
-        return (
+
+        if (loading) return (
+            <View style={styles.view}>
+                <Text>Sending Review...</Text>
+            </View>
+        );
+        else return (
             <StorageConsumer>
                 {({
                     allSessions: {
@@ -107,96 +119,156 @@ export default class Feedback extends Component {
                                 onSelect={selectSession}
                             />
                             <View style={styles.view}>
-                                <Text style={{
-                                    fontWeight: 'bold',
-                                    fontSize: 16,
-                                }} >{title}</Text>
-                                <Text style={{
-                                    fontSize: 14,
-                                }} >{sessiontype.slice(0, 1).toUpperCase() + sessiontype.slice(1).toLowerCase()}, {sessiontime}</Text>
-                                <Text style={{
-                                    fontSize: 14,
-                                    marginBottom: 16,
-                                }} >{speakername}</Text>
+                                <TouchableOpacity
+                                    onPress={() => navigate('')}
+                                >
+                                    <Text style={[
+                                        styles.h1,
+                                        styles.marginBottomXxSmall,
+                                    ]} >{title}</Text>
+                                    <Text style={[
+                                        styles.h2,
+                                        styles.marginBottomXxSmall,
+                                    ]} >{speakername}</Text>
+                                    <Text style={[
+                                        styles.h4,
+                                        styles.marginBottomXxLarge,
+                                    ]} >{sessiontype.match(/keynote/i) ?
+                                        sessiontype.replace(/\D/g, '') < 2.5 ?
+                                            'Friday'
+                                            :
+                                            'Saturday'
+                                        :
+                                        sessiontype.replace(/\D/g, '') < 3.5 ?
+                                            'Friday'
+                                            :
+                                            'Saturday'} {sessiontime}</Text>
+                                </TouchableOpacity>
 
-                                <Text style={{
-                                    marginTop: 16,
-                                    fontWeight: 'bold',
-                                }} >Overall Rating</Text>
+                                <Text style={[
+                                    styles.feedbackLabel,
+                                ]}>Overall Rating</Text>
                                 <Slider
+                                    minimumTrackTintColor={COLORS.blue}
                                     ref={el => this.rating = el}
                                     value={rating}
-                                    minimumValue={0}
+                                    minimumValue={1}
                                     step={1}
-                                    maximumValue={16}
-                                    onSlidingComplete={rating => this.setState({ rating })}
+                                    maximumValue={10}
+                                    onValueChange={rating => this.setState({ rating })}
                                 />
-                                <Text style={{
-                                    marginTop: 16,
-                                    fontWeight: 'bold',
-                                }} >Likes</Text>
+                                <View style={[
+                                    styles.sliderLabels,
+                                    styles.marginBottomXxLarge,
+                                ]}>
+                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                                        <Text
+                                            key={n}
+                                            style={{
+                                                color: n === rating ?
+                                                    COLORS.blue
+                                                    :
+                                                    COLORS.black,
+                                            }}
+                                        >{n}</Text>
+                                    ))}
+                                </View>
+                                <Text style={[
+                                    styles.feedbackLabel,
+                                ]} >Likes</Text>
                                 <TextInput
                                     ref={el => this.likeFeedback = el}
-                                    style={styles.input}
+                                    style={[
+                                        styles.input,
+                                        styles.marginBottomXxLarge,
+                                    ]}
+                                    scrollEnabled={false}
                                     multiline={true}
                                     value={likeFeedback.replace(/\n/, '')}
                                     onChangeText={likeFeedback => this.setState({ likeFeedback })}
                                     onSubmitEditing={onSubmitEditing("dislikeFeedback")}
                                 />
-                                <Text style={{
-                                    fontWeight: 'bold',
-                                }} >Suggestions</Text>
+                                <Text style={[
+                                    styles.feedbackLabel,
+                                ]} >Suggestions</Text>
                                 <TextInput
                                     ref={el => this.dislikeFeedback = el}
-                                    style={styles.input}
+                                    style={[
+                                        styles.input,
+                                        styles.marginBottomXxLarge,
+                                    ]}
+                                    scrollEnabled={false}
                                     multiline={true}
                                     value={dislikeFeedback.replace(/\n/, '')}
                                     onChangeText={dislikeFeedback => this.setState({ dislikeFeedback })}
                                     onSubmitEditing={onSubmitEditing("generalFeedback")}
                                 />
-                                <Text style={{
-                                    fontWeight: 'bold',
-                                }} >General Feedback</Text>
+                                <Text style={[
+                                    styles.feedbackLabel,
+                                ]} >General Feedback</Text>
                                 <TextInput
                                     ref={el => this.generalFeedback = el}
-                                    style={styles.input}
+                                    style={[
+                                        styles.input,
+                                        styles.marginBottomXxLarge,
+                                    ]}
+                                    scrollEnabled={false}
                                     multiline={true}
                                     value={generalFeedback.replace(/\n/, '')}
                                     onChangeText={generalFeedback => this.setState({ generalFeedback })}
                                     onSubmitEditing={onSubmitEditing("username")}
                                 />
-                                <Text style={{
-                                    fontWeight: 'bold',
-                                }} >Your Name</Text>
+                                <Text style={[
+                                    styles.feedbackLabel,
+                                ]} >Your Name</Text>
                                 <TextInput
                                     ref={el => this.username = el}
-                                    style={styles.input}
+                                    style={[
+                                        styles.input,
+                                        styles.marginBottomXxLarge,
+                                    ]}
+                                    scrollEnabled={false}
                                     multiline={true}
                                     value={username.replace(/\n/, '')}
                                     onChangeText={username => this.setState({ username })}
                                     onSubmitEditing={onSubmitEditing("email")}
                                 />
-                                <Text style={{
-                                    fontWeight: 'bold',
-                                }} >Your Email</Text>
+                                <Text style={[
+                                    styles.feedbackLabel,
+                                ]} >Your Email</Text>
                                 <TextInput
                                     ref={el => this.email = el}
-                                    style={styles.input}
+                                    style={[
+                                        styles.input,
+                                        styles.marginBottomXLarge,
+                                    ]}
+                                    scrollEnabled={false}
                                     multiline={true}
                                     value={email.replace(/\n/, '')}
                                     onChangeText={email => this.setState({ email })}
                                 />
-                                <Button
-                                    title="Submit Review"
+                                <TouchableOpacity
+                                    style={[
+                                        styles.button,
+                                        styles.marginTopMedium,
+                                    ]}
                                     onPress={async () => {
-                                        if (await submitReview({
+                                        // Alert.alert(JSON.stringify(this.state));
+                                        this.setState({ loading: true });
+                                        const success = await submitReview({
                                             ...this.state,
                                             sessionTitle: title,
                                             sessionSpeaker: speakername,
-                                        }))
+                                        });
+                                        if (success) {
                                             goBack();
+                                        } else {
+                                            this.setState({ loading: false });
+                                        }
                                     }}
-                                />
+                                >
+                                    <Text style={styles.buttonText}>Submit Review</Text>
+                                </TouchableOpacity>
                             </View>
                         </KeyboardView>
                     )}

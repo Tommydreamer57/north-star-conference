@@ -63,7 +63,7 @@ const links = [
         },
         {
             name: "CONTACT",
-            url: "sms:770-530-1892",
+            url: "sms:435-612-2474",
             icon: "text",
         },
         {

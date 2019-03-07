@@ -9,7 +9,7 @@ npm-debug.*
 
 # Xcode
 
-#
+ios/.DS_Store
 
 build/
 

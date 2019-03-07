@@ -5,11 +5,11 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <permission
-    android:name="com.northstarconf.northstarlds.permission.C2D_MESSAGE"
+    android:name="com.northstarlds.northstarconf.permission.C2D_MESSAGE"
     android:protectionLevel="signature"/>
 
   <!-- These are required permissions to make the app run -->
-  <uses-permission android:name="com.northstarconf.northstarlds.permission.C2D_MESSAGE" />
+  <uses-permission android:name="com.northstarlds.northstarconf.permission.C2D_MESSAGE" />
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -70,7 +70,7 @@
 
     <activity
       android:name=".MainActivity"
-      android:launchMode="singleTop"
+      android:launchMode="singleTask"
       android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
       android:theme="@style/Theme.Exponent.Splash"
       android:windowSoftInputMode="adjustResize">
@@ -170,7 +170,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.northstarconf.northstarlds" android:path="oauthredirect"/>
+        <data android:scheme="com.northstarlds.northstarconf" android:path="oauthredirect"/>
       </intent-filter>
     </activity>
 
@@ -188,7 +188,7 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="expo.modules.payments.stripe.1d10f0f1-9305-411e-8761-8186e65db41f" />
+            <data android:scheme="expo.modules.payments.stripe.e3350d24-9cdc-4fb2-9080-b1b7c5f3d646" />
         </intent-filter>
     </activity>
     <!-- Versioned Activity for Stripe -->
@@ -277,7 +277,7 @@
         <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
         <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 
-        <category android:name="com.northstarconf.northstarlds"/>
+        <category android:name="com.northstarlds.northstarconf"/>
       </intent-filter>
     </receiver>
 
@@ -344,7 +344,7 @@
     <!-- The Facebook SDK runs FacebookInitProvider on startup and crashes if there isn't an ID here -->
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb0"/>
 
-    <meta-data android:name="standaloneStripeScheme" android:value="1d10f0f1-9305-411e-8761-8186e65db41f" />
+    <meta-data android:name="standaloneStripeScheme" android:value="e3350d24-9cdc-4fb2-9080-b1b7c5f3d646" />
   </application>
 
 </manifest>

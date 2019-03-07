@@ -136,6 +136,25 @@ export const getItems = (...keys) => {
     }
 }
 
+export const handleReceivedNotification = async notification => {
+    try {
+        const result = await AsyncStorage.getItem(validKeys.notifications);
+
+        const previousNotifications = JSON.parse(result || "[]");
+        const allNotifications = [notification].concat(previousNotifications);
+
+        try {
+            await AsyncStorage.setItem(validKeys.notifications, JSON.stringify(allNotifications));
+
+            return allNotifications;
+        } catch (err) {
+            console.error('Error setting notifications: ', err);
+        }
+    } catch (err) {
+        console.error('Error getting notifications: ', err);
+    }
+}
+
 export const submitReview = async review => {
     try {
         await axios.post('https://northstarconferenceadmin.herokuapp.com/api/review', review);

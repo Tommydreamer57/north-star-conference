@@ -157,6 +157,12 @@ export default StyleSheet.create({
         borderRadius: SIZES.xxSmall,
         padding: SIZES.small,
     },
+    notification: {
+        borderColor: COLORS.blue,
+        borderWidth: 1,
+        borderRadius: SIZES.xxSmall,
+        padding: SIZES.small,
+    },
     button: {
         justifyContent: 'center',
         alignItems: 'center',

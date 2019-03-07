@@ -5,12 +5,15 @@ import React, {
 
 import {
     log,
+    getItem,
     getItems,
     submitReview,
     refetchSessionsEachDay,
+    handleReceivedNotification,
 } from './service';
 
 import {
+    Alert,
     AsyncStorage,
 } from 'react-native';
 
@@ -20,7 +23,7 @@ const { Provider, Consumer } = StorageContext;
 
 export const StorageConsumer = Consumer;
 
-const transformSchedule = schedule => [
+const scheduleKeys = [
     "KEYNOTE 1",
     "BREAKOUT 1",
     "BREAKOUT 2",
@@ -31,7 +34,9 @@ const transformSchedule = schedule => [
     "BREAKOUT 5",
     "BREAKOUT 6",
     "KEYNOTE 4",
-].map(key => ({
+];
+
+const transformSchedule = schedule => scheduleKeys.map(key => ({
     sessionName: key,
     selectedSession: schedule[key],
 }));
@@ -45,16 +50,36 @@ export default class StorageProvider extends Component {
         breakouts: {},
         keynotes: [],
         speakers: {},
+        notifications: [],
         addToSchedule() { },
         removeFromSchedule() { },
         submitReview() { },
+        deleteNotification() { },
     };
+
+    componentDidUpdate = async ({ newNotification: oldNotification }) => {
+        const {
+            props: {
+                newNotification,
+            },
+        } = this;
+        if (newNotification !== oldNotification) {
+            try {
+                Alert.alert(newNotification.title);
+                const notifications = await handleReceivedNotification(newNotification);
+
+                if (notifications) this.setState({ notifications });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
 
     componentDidMount = async () => {
 
         await refetchSessionsEachDay();
 
-        const [schedule, breakouts, keynotes, speakers] = await getItems("schedule", "breakouts", "keynotes", "speakers");
+        const [schedule, breakouts, keynotes, speakers, notifications] = await getItems("schedule", "breakouts", "keynotes", "speakers", "notifications");
 
         const scheduleArray = transformSchedule(schedule);
 
@@ -75,8 +100,10 @@ export default class StorageProvider extends Component {
             breakouts,
             keynotes,
             speakers,
+            notifications,
             addToSchedule: this.addToSchedule,
             removeFromSchedule: this.removeFromSchedule,
+            deleteNotification:this.deleteNotification,
             submitReview,
         });
     }
@@ -114,6 +141,17 @@ export default class StorageProvider extends Component {
                 schedule,
                 scheduleArray,
             });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    deleteNotification = async id => {
+        const notifications = this.state.notifications.filter(({ notificationID }) => notificationID !== id);
+
+        try {
+            await AsyncStorage.setItem("notifications", JSON.stringify(notifications));
+            this.setState({ notifications });
         } catch (err) {
             console.error(err);
         }

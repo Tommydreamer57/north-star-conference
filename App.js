@@ -26,11 +26,9 @@ export default class App extends Component {
         clearInterval(this.interval);
     }
 
-    onReceived = ({ payload: newNotification }) => this.setState({ newNotification });
+    onReceived = (notification) => this.setState({ notification });
 
-    onOpened(openResult) {
-
-    }
+    onOpened(openResult) {}
 
     onIds(device) {
         console.log('Device info: ', device);
@@ -38,7 +36,7 @@ export default class App extends Component {
 
     render() {
         return (
-            <StorageProvider newNotification={this.state.newNotification} >
+            <StorageProvider newNotification={this.state.notification} >
                 <AppNavigator />
             </StorageProvider>
         );

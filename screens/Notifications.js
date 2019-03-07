@@ -16,37 +16,7 @@ import { StorageConsumer } from '../storage/StorageProvider';
 
 Notifications.navigationOptions = createNavigationOptions("Notifications");
 
-// const sampleNotificationPayload = {
-//     displayType: 1,
-//     isAppInFocus: true,
-//     // NOTIFICATIONS ARRAY WILL ONLY CONTAIN `payload`s
-//     payload: {
-//         actionButtons: [],
-//         body: "This is a sample payload",
-//         notificationID: "8acfff59-b592-4bf5-91a5-9f1640b22bf4",
-//         rawPayload: {
-//             aps: {
-//                 alert: {
-//                     body: "This is a sample payload",
-//                     title: "Test",
-//                 },
-//                 "mutable-content": 1,
-//                 sound: "default",
-//             },
-//             custom: {
-//                 i: "8acfff59-b592-4bf5-91a5-9f1640b22bf4",
-//             },
-//         },
-//         sound: "default",
-//         title: "Test",
-//     },
-//     shown: true,
-// };
-
-// const notifications = [sampleNotificationPayload.payload];
-
 // Notifications array only contains `payload`s
-
 export default function Notifications() {
     return (
         <StorageConsumer>
@@ -54,7 +24,7 @@ export default function Notifications() {
                 <ScrollView>
                     <View style={styles.view}>
                         <FlatList
-                            keyExtractor={({ notificationID }) => notificationID}
+                            keyExtractor={({ notificationID }) => notificationID }
                             data={notifications}
                             renderItem={({
                                 item: {

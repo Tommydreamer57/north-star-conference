@@ -17,6 +17,7 @@ import { StorageConsumer } from '../storage/StorageProvider';
 import styles, { COLORS } from '../styles/styles';
 
 import KeyboardView from '../components/KeyboardView';
+import { extractSessionDay } from '../utils/sessions';
 
 export default class Feedback extends Component {
 
@@ -131,16 +132,7 @@ export default class Feedback extends Component {
                                     <Text style={[
                                         styles.h4,
                                         styles.marginBottomXxLarge,
-                                    ]} >{sessiontype.match(/keynote/i) ?
-                                        sessiontype.replace(/\D/g, '') < 2.5 ?
-                                            'Friday'
-                                            :
-                                            'Saturday'
-                                        :
-                                        sessiontype.replace(/\D/g, '') < 3.5 ?
-                                            'Friday'
-                                            :
-                                            'Saturday'} {sessiontime}</Text>
+                                    ]} >{extractSessionDay({ sessiontype })} {sessiontime}</Text>
                                 </TouchableOpacity>
 
                                 <Text style={[

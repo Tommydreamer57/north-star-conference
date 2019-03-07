@@ -63,8 +63,6 @@ export const fetchSessions = async () => {
             JSON.parse(existingSessions)
             :
             {
-                friday: false,
-                saturday: false,
                 ...Object.keys(breakouts)
                     .reduce((all, key) => ({
                         ...all,

@@ -13,7 +13,8 @@ import styles from '../styles/styles';
 import createNavigationOptions from '../navigation/navigation-options';
 
 import { StorageConsumer } from '../storage/StorageProvider';
-import { extractSessionType } from '../utils/sessions';
+
+import { extractSessionDay } from '../utils/sessions';
 
 SessionInfo.navigationOptions = createNavigationOptions("Session Info");
 
@@ -76,7 +77,7 @@ export default function SessionInfo({
                             <Text style={[
                                 styles.h4,
                                 styles.marginBottomXxSmall,
-                            ]} >{extractSessionType({ sessiontype: sessionName })}: {sessiontime}</Text>
+                            ]} >{extractSessionDay({ sessiontype: sessionName })} {sessiontime}</Text>
                             <Text style={[
                                 styles.h4,
                                 styles.marginBottomLarge,
@@ -94,12 +95,13 @@ export default function SessionInfo({
                                 styles.marginBottomXLarge
                             ]} >{speakerbio}</Text>
 
-                            {sessionName.match(/breakout/i) ? (
-                                scheduleArray.some(({
-                                    selectedSession: {
-                                        id: selectedId,
-                                    } = {},
-                                }) => selectedId === id) ? (
+                            {scheduleArray.some(({
+                                selectedSession: {
+                                    id: selectedId,
+                                } = {},
+                            }) => selectedId === id) ? (
+                                    // cannot remove keynote from schedule
+                                    !sessionName.match(/keynote/i) ? (
                                         <TouchableOpacity
                                             style={[
                                                 styles.button,
@@ -114,23 +116,24 @@ export default function SessionInfo({
                                                 styles.buttonText,
                                             ]} >Remove From Schedule</Text>
                                         </TouchableOpacity>
-                                    ) : (
-                                        <TouchableOpacity
-                                            style={[
-                                                styles.button,
-                                                styles.marginTopMedium,
-                                            ]}
-                                            onPress={async () => {
-                                                await addToSchedule(id);
-                                                goBack();
-                                            }}
-                                        >
-                                            <Text style={[
-                                                styles.buttonText,
-                                            ]} >Add To Schedule</Text>
-                                        </TouchableOpacity>
-                                    )
-                            ) : null}
+                                    ) : null
+                                ) : (
+                                    // can add keynote to schedule
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.button,
+                                            styles.marginTopMedium,
+                                        ]}
+                                        onPress={async () => {
+                                            await addToSchedule(id);
+                                            goBack();
+                                        }}
+                                    >
+                                        <Text style={[
+                                            styles.buttonText,
+                                        ]} >Add To Schedule</Text>
+                                    </TouchableOpacity>
+                                )}
                             <TouchableOpacity
                                 style={[
                                     styles.button,

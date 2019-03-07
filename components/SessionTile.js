@@ -9,6 +9,8 @@ import {
 
 import styles from '../styles/styles';
 
+import { extractSessionDay } from '../utils/sessions';
+
 export default function SessionTile({
     navigation: {
         navigate,
@@ -61,18 +63,7 @@ export default function SessionTile({
                     <Text style={[
                         styles.h4,
                         styles.marginBottomXxSmall,
-                    ]} >{(
-                        isKeynote ?
-                            sessiontype.replace(/\D/g, '') < 2.5 ?
-                                'Friday'
-                                :
-                                'Saturday'
-                            :
-                            sessiontype.replace(/\D/g, '') < 3.5 ?
-                                'Friday'
-                                :
-                                'Saturday'
-                    )} {sessiontime}</Text>
+                    ]} >{extractSessionDay({ sessiontype })} {sessiontime}</Text>
                 ) : (
                         <Text style={[
                             styles.h4,

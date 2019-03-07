@@ -11,13 +11,10 @@ import {
 
 import createNavigationOptions from '../navigation/navigation-options';
 
-import { StorageContext, StorageConsumer } from '../storage/StorageProvider';
-
-// import { log } from '../storage/service';
+import { StorageConsumer } from '../storage/StorageProvider';
 
 import styles, { COLORS } from '../styles/styles';
 
-// import KeyboardView from '../components/KeyboardView';
 import SessionTile from '../components/SessionTile';
 
 import filterSessions from '../utils/filters';
@@ -29,7 +26,8 @@ export default class FeedbackSelect extends Component {
     state = {
         input: "",
         sessionId: 0,
-        filterBySchedule: true,
+        // I want this to default to true, but the items aren't rendering on initial load
+        filterBySchedule: false,
     };
 
     render = () => {
@@ -49,56 +47,71 @@ export default class FeedbackSelect extends Component {
 
         return (
             <StorageConsumer>
-                {context => (
-                    <ScrollView>
-                        <View style={styles.view}>
-                            <Text style={[
-                                styles.title,
-                                styles.marginTopXxLarge,
-                                styles.marginBottomXxLarge,
-                            ]} >Select A Session</Text>
-                            <Text>Search</Text>
-                            <TextInput
-                                style={[
-                                    styles.input,
-                                    styles.marginBottomMedium,
-                                ]}
-                                value={input}
-                                onChangeText={input => this.setState({ input })}
-                            />
-                            <View style={styles.switchWrapper}>
-                                <Switch
-                                    trackColor={{
-                                        true: COLORS.blue,
-                                        false: COLORS.gray,
-                                    }}
-                                    value={filterBySchedule}
-                                    onValueChange={filterBySchedule => this.setState({ filterBySchedule })}
+                {context => {
+                    const { allSessions } = context;
+                    const sessions = Object.values(allSessions);
+                    const currentFilter = filterSessions({ context, state });
+                    return (
+                        <ScrollView>
+                            <View style={styles.view}>
+                                <Text style={[
+                                    styles.title,
+                                    styles.marginBottomXxLarge,
+                                ]} >Select A Session</Text>
+                                <Text>Search</Text>
+                                <TextInput
+                                    clearButtonMode="always"
+                                    style={[
+                                        styles.searchInput,
+                                        styles.marginBottomMedium,
+                                    ]}
+                                    value={input}
+                                    onChangeText={input => this.setState({ input })}
                                 />
-                                <Text style={styles.switchLabel}>Filter By Schedule</Text>
+                                <View style={styles.switchWrapper}>
+                                    <Switch
+                                        trackColor={{
+                                            true: COLORS.blue,
+                                            false: COLORS.gray,
+                                        }}
+                                        value={filterBySchedule}
+                                        onValueChange={filterBySchedule => this.setState({ filterBySchedule })}
+                                    />
+                                    <Text style={styles.switchLabel}>Filter By Schedule</Text>
+                                </View>
+                                <View style={[
+                                    styles.marginTopXxLarge,
+                                ]}>
+                                    <FlatList
+                                        keyExtractor={({ id }) => `${id}`}
+                                        data={sessions}
+                                        extraData={{
+                                            ...state,
+                                            ...context,
+                                            n: Math.random(),
+                                            input,
+                                            filterBySchedule,
+                                            sessions,
+                                            state,
+                                            context,
+                                        }}
+                                        renderItem={({ item: session }) => (
+                                            <SessionTile
+                                                display={currentFilter(session)}
+                                                session={session}
+                                                navigation={navigation}
+                                                onPress={() => navigate("Feedback", {
+                                                    id: session.id,
+                                                    sessionName: (session.sessiontype || '').toUpperCase(),
+                                                })}
+                                            />
+                                        )}
+                                    />
+                                </View>
                             </View>
-                            <View style={[
-                                styles.marginTopXxLarge,
-                            ]}>
-                                <FlatList
-                                    keyExtractor={({ id }) => id}
-                                    data={Object.values(context.allSessions)
-                                        .filter(filterSessions({ context, state }))}
-                                    renderItem={({ item: session }) => (
-                                        <SessionTile
-                                            session={session}
-                                            navigation={navigation}
-                                            onPress={() => navigate("Feedback", {
-                                                id: session.id,
-                                                sessionName: (session.sessiontype || '').toUpperCase(),
-                                            })}
-                                        />
-                                    )}
-                                />
-                            </View>
-                        </View>
-                    </ScrollView>
-                )}
+                        </ScrollView>
+                    );
+                }}
             </StorageConsumer>
         );
     }

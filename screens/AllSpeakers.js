@@ -35,6 +35,9 @@ export default class AllSpeakers extends Component {
                 },
             },
         } = this;
+
+        const currentFilter = ({ name }) => name.toLowerCase().includes(input.toLowerCase());
+
         return (
             <StorageConsumer>
                 {({ speakers }) => (
@@ -42,8 +45,9 @@ export default class AllSpeakers extends Component {
                         <View style={styles.view} >
                             <Text>Search</Text>
                             <TextInput
+                                clearButtonMode="always"
                                 style={[
-                                    styles.input,
+                                    styles.searchInput,
                                     styles.marginBottomXxLarge,
                                 ]}
                                 value={input}
@@ -51,10 +55,9 @@ export default class AllSpeakers extends Component {
                             />
                             <FlatList
                                 keyExtractor={({ name }) => name}
-                                data={Object.values(speakers)
-                                    .sort(({ name: a }, { name: b }) => a > b)
-                                    .filter(({ name }) => name.toLowerCase().includes(input.toLowerCase()))}
-                                renderItem={({ item: { name, bio, photo } }) => (
+                                data={Object.values(speakers).sort(({ name: a }, { name: b }) => a > b)}
+                                extraData={{ input }}
+                                renderItem={({ item: { name, bio, photo } }) => currentFilter({ name }) ? (
                                     <TouchableOpacity
                                         style={[
                                             styles.speakerButton,
@@ -69,7 +72,7 @@ export default class AllSpeakers extends Component {
                                             styles.speakerButtonArrow,
                                         ]}>></Text>
                                     </TouchableOpacity>
-                                )}
+                                ) : null}
                             />
                         </View>
                     </ScrollView>

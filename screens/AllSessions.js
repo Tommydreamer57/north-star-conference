@@ -6,6 +6,7 @@ import {
     Text,
     TextInput,
     FlatList,
+    SectionList,
 } from 'react-native';
 
 import { StorageConsumer } from '../storage/StorageProvider';
@@ -21,16 +22,41 @@ import filterSessions from '../utils/filters';
 import { extractSessionType } from '../utils/sessions';
 
 
+const sessionsByDay = [
+    {
+        day: "Friday",
+        keynoteIndeces: [0, 1],
+        breakoutNames: [
+            'BREAKOUT 1',
+            'BREAKOUT 2',
+            'BREAKOUT 3',
+        ],
+    },
+    {
+        day: "Saturday",
+        keynoteIndeces: [2, 3],
+        breakoutNames: [
+            'BREAKOUT 4',
+            'BREAKOUT 5',
+            'BREAKOUT 6',
+        ],
+    },
+];
+
+
 export default class AllSessions extends Component {
 
     static navigationOptions = createNavigationOptions("All Sessions");
 
     state = {
-        input: '',
+        input: "",
     };
+
+    toggleDay = day => this.setState({ [day]: !this.state[day] });
 
     render = () => {
         const {
+            state,
             state: {
                 input,
             },
@@ -45,38 +71,21 @@ export default class AllSessions extends Component {
                 >
                     <Text>Search</Text>
                     <TextInput
-                        style={styles.input}
+                        clearButtonMode="always"
+                        style={styles.searchInput}
                         value={input}
                         onChangeText={input => this.setState({ input })}
                     />
                     <FlatList
                         keyExtractor={(_, i) => `${i}`}
-                        data={[
-                            {
-                                input,
-                                day: "Friday",
-                                keynoteIndeces: [0, 1],
-                                breakoutNames: [
-                                    'BREAKOUT 1',
-                                    'BREAKOUT 2',
-                                    'BREAKOUT 3',
-                                ],
-                                navigation,
-                            },
-                            {
-                                input,
-                                day: "Saturday",
-                                keynoteIndeces: [2, 3],
-                                breakoutNames: [
-                                    'BREAKOUT 4',
-                                    'BREAKOUT 5',
-                                    'BREAKOUT 6',
-                                ],
-                                navigation,
-                            },
-                        ]}
+                        data={sessionsByDay}
+                        extraData={state}
                         renderItem={({ item }) => (
-                            <Day {...item} />
+                            <Day
+                                {...item}
+                                input={input}
+                                navigation={navigation}
+                            />
                         )}
                     />
                 </View>
@@ -92,44 +101,55 @@ function Day({
     breakoutNames,
     navigation,
 }) {
+    const currentFilter = filterSessions({ state: { input } });
     return (
         <StorageConsumer>
-            {({ keynotes, breakouts, schedule }) => (
-                <>
-                    <Text style={[
-                        styles.title,
-                        styles.marginTopXxLarge,
-                        styles.marginBottomXLarge,
-                    ]} >{day}</Text>
-                    <View
-                        style={[
-                            styles.breakoutHeader,
-                            styles.marginBottomMedium,
-                        ]}
-                    >
+            {({ keynotes, breakouts, schedule }) => {
+                const [keynoteOne, keynoteTwo] = [k1, k2]
+                    .map(n => keynotes
+                        .find(({ sessiontype = '' }) => sessiontype
+                            .includes(n)) || {})
+                return (
+                    <>
                         <Text style={[
-                            styles.h2,
-                        ]} >Keynote {k1 + 1}</Text>
-                        <Text style={[
-                            styles.h4,
-                        ]} >{(keynotes[k1] || {}).sessiontime || ''}</Text>
-                    </View>
-                    <SessionTile
-                        navigation={navigation}
-                        session={keynotes[k1]}
-                    />
-                    <FlatList
-                        keyExtractor={name => name}
-                        data={breakoutNames}
-                        renderItem={({ item: breakoutName }) => {
-                            const breakout = breakouts[breakoutName] || [];
-                            const [
-                                {
-                                    sessiontime = '',
-                                } = {}
-                            ] = breakout;
-                            return (
-                                <>
+                            styles.title,
+                            styles.marginTopXxLarge,
+                            styles.marginBottomXLarge,
+                        ]} >{day}</Text>
+                        <View
+                            style={[
+                                styles.breakoutHeader,
+                                styles.marginBottomMedium,
+                            ]}
+                        >
+                            <Text style={[
+                                styles.h2,
+                            ]} >Keynote {k1 + 1}</Text>
+                            <Text style={[
+                                styles.h4,
+                            ]} >{keynoteOne.sessiontime || ''}</Text>
+                        </View>
+                        <SessionTile
+                            display={currentFilter(keynoteOne)}
+                            navigation={navigation}
+                            session={keynoteOne}
+                        />
+                        <SectionList
+                            keyExtractor={({ title, id }) => `${id} ${title}`}
+                            sections={breakoutNames.map(name => ({
+                                title: name,
+                                data: breakouts[name] || [],
+                            }))}
+                            renderSectionHeader={({
+                                section: {
+                                    title,
+                                    data: [
+                                        {
+                                            sessiontime = '',
+                                        } = {},
+                                    ],
+                                },
+                            }) => (
                                     <View
                                         style={[
                                             styles.breakoutHeader,
@@ -139,49 +159,46 @@ function Day({
                                     >
                                         <Text style={[
                                             styles.h2,
-                                        ]} >{extractSessionType({ sessiontype: breakoutName })}</Text>
+                                        ]} >{extractSessionType({ sessiontype: title })}</Text>
                                         <Text style={[
                                             styles.h4,
                                         ]} >{sessiontime}</Text>
                                     </View>
-                                    <FlatList
-                                        keyExtractor={({ id }) => id}
-                                        data={breakout
-                                            .filter(filterSessions({ state: { input } }))}
-                                        renderItem={({ item: session }) => (
-                                            <SessionTile
-                                                session={session}
-                                                navigation={navigation}
-                                                addedToSchedule={schedule[breakoutName]
-                                                    &&
-                                                    schedule[breakoutName].id === session.id}
-                                            />
-                                        )}
-                                    />
-                                </>
-                            );
-                        }}
-                    />
-                    <View
-                        style={[
-                            styles.breakoutHeader,
-                            styles.marginTopMedium,
-                            styles.marginBottomMedium,
-                        ]}
-                    >
-                        <Text style={[
-                            styles.h2,
-                        ]} >Keynote {k2 + 1}</Text>
-                        <Text style={[
-                            styles.h4,
-                        ]} >{(keynotes[k2] || {}).sessiontime || ''}</Text>
-                    </View>
-                    <SessionTile
-                        navigation={navigation}
-                        session={keynotes[k2]}
-                    />
-                </>
-            )}
+                                )}
+                            renderItem={({ item: session, section: { title } }) => (
+                                <SessionTile
+                                    display={currentFilter(session)}
+                                    input={input}
+                                    session={session}
+                                    navigation={navigation}
+                                    addedToSchedule={schedule[title]
+                                        &&
+                                        schedule[title].id === session.id}
+                                />
+                            )}
+                        />
+                        <View
+                            style={[
+                                styles.breakoutHeader,
+                                styles.marginTopXxLarge,
+                                styles.marginBottomMedium,
+                            ]}
+                        >
+                            <Text style={[
+                                styles.h2,
+                            ]} >Keynote {k2 + 1}</Text>
+                            <Text style={[
+                                styles.h4,
+                            ]} >{keynoteTwo.sessiontime || ''}</Text>
+                        </View>
+                        <SessionTile
+                            display={currentFilter(keynoteTwo)}
+                            navigation={navigation}
+                            session={keynoteTwo}
+                        />
+                    </>
+                );
+            }}
         </StorageConsumer>
     );
 }

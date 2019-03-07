@@ -23,13 +23,16 @@ export default function SessionTile({
         room = "",
         demographic = "",
     } = {},
+    display = true,
     renderTimeInsteadOfSpeaker,
     addedToSchedule,
 }) {
 
     const isKeynote = sessiontype.match(/keynote/i);
 
-    return (
+    if (!display) return null;
+
+    else return (
         <TouchableOpacity
             style={[
                 styles.sessionTile,
@@ -50,31 +53,6 @@ export default function SessionTile({
                     styles.blackBackground,
             ]} />
             <View>
-                {/* {isKeynote ? (
-                    <>
-                        <Text style={[
-                            styles.h2,
-                            styles.marginBottomXxSmall,
-                        ]} >{title}</Text>
-                        {renderTimeInsteadOfSpeaker ? (
-                            <Text style={styles.h4} >{(
-                                sessiontype.replace(/\D/g, '') < 2.5 ?
-                                    'Friday'
-                                    :
-                                    'Saturday'
-                            )} {sessiontime}</Text>
-                        ) : (
-                                <>
-                                    <Text style={[
-                                        styles.h3,
-                                        styles.marginBottomXxSmall,
-                                    ]} >{speakername}</Text>
-                                    <Text style={styles.h4} >{sessiontime.replace(/.*DAY /i, '')}</Text>
-                                </>
-                            )}
-                    </>
-                ) : ( */}
-                {/* <> */}
                 <Text style={[
                     styles.h3,
                     styles.marginBottomXxSmall,
@@ -101,8 +79,6 @@ export default function SessionTile({
                             styles.marginBottomXxSmall,
                         ]} >{speakername}</Text>
                     )}
-                {/* </> */}
-                {/* )} */}
                 <Text style={[
                     styles.text,
                 ]} >Room: {room}</Text>

@@ -90,7 +90,7 @@ export default StyleSheet.create({
     },
     sliderLabels: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
     },
     switchWrapper: {
@@ -99,6 +99,17 @@ export default StyleSheet.create({
     },
     switchLabel: {
         marginLeft: SIZES.medium,
+    },
+    searchInput: {
+        marginTop: SIZES.xxSmall,
+        marginBottom: SIZES.xxSmall,
+        paddingTop: SIZES.xxSmall,
+        paddingBottom: SIZES.xxSmall,
+        paddingLeft: SIZES.medium,
+        paddingRight: SIZES.medium,
+        borderColor: COLORS.darkGray,
+        borderWidth: 1,
+        borderRadius: SIZES.large,
     },
     input: {
         marginTop: SIZES.xxSmall,
@@ -165,7 +176,7 @@ export default StyleSheet.create({
     },
     sessionTile: {
         flexDirection: 'row',
-        width: Window.width - SIZES.large * 2,
+        // width: Window.width - SIZES.large * 2,
     },
     blueBackground: {
         backgroundColor: COLORS.blue + '44',

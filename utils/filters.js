@@ -8,17 +8,17 @@ export default ({
         filterBySchedule = false,
     } = {},
 }) => ({
-    id,
-    title,
-    speakername,
-    sessiontype,
-    room,
-    demographic,
-}) => [title, speakername, sessiontype, room, demographic]
+    id = '',
+    title = '',
+    speakername = '',
+    sessiontype = '',
+    room = '',
+    demographic = '',
+} = {}) => [title, speakername, sessiontype, room, demographic]
     .some(str => str.toUpperCase().includes(input.toUpperCase()))
         &&
         (
             !filterBySchedule
             ||
-            scheduleArray.find(({ selectedSession }) => selectedSession && selectedSession.id === id)
+            scheduleArray.some(({ selectedSession }) => selectedSession && selectedSession.id === id)
         );

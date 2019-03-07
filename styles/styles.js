@@ -33,7 +33,7 @@ const minWindowWidth = 320;
 const maxWindowWidth = 1300;
 const multiplier = (width - minWindowWidth) / maxWindowWidth;
 
-const dynamicSize = size => size + (size * 1.5) * multiplier;
+const dynamicSize = (size, range) => size + range * multiplier;
 
 
 // Solution from gihub

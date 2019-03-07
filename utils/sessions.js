@@ -9,7 +9,7 @@ export const isKeynote = ({ sessiontype = '' } = {}) => sessiontype.match(/keyno
 
 export const extractSessionDay = ({ sessiontype = '' } = {}) => isKeynote({ sessiontype }) ?
     sessiontype.replace(/\D/g, '') < 2.5 ?
-        'Friday'
+        'Monday'
         :
         'Saturday'
     :

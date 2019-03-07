@@ -11,23 +11,20 @@ import {
     Platform,
 } from 'react-native';
 
-import {
-    Icon,
-} from 'expo';
+import { Icon } from 'expo';
 
-import { Window } from '../styles/styles';
+import { Window, SIZES } from '../styles/styles';
 
-const iconPrefix = Platform.OS !== "ios" ?
-    "md-"
+const iconPrefix = Platform.OS === "ios" ?
+    "ios-"
     :
-    "ios-";
+    "md-";
 
 const links = [
     [
         {
             name: "SCHEDULE",
             to: "Schedule",
-            // icon: "calendar",
             icon: "add-circle",
         },
         {
@@ -122,7 +119,7 @@ export default function Home({
                                 >
                                     <Icon.Ionicons
                                         name={iconPrefix + icon}
-                                        size={55}
+                                        size={SIZES.homeIcon}
                                         color='white'
                                     // style={styles.icon}
                                     />
@@ -135,7 +132,7 @@ export default function Home({
                                                 &nbsp;
                                                 <Icon.Ionicons
                                                     name={iconPrefix + "open"}
-                                                    size={10}
+                                                    size={SIZES.small - 1}
                                                     color="white"
                                                 />
                                             </>
@@ -193,7 +190,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-        fontSize: 9,
+        fontSize: SIZES.small - 1,
         textAlign: 'center',
     },
 });

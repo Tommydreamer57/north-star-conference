@@ -15,7 +15,7 @@ export default ({
     room = '',
     demographic = '',
 } = {}) => [title, speakername, sessiontype, room, demographic]
-    .some(str => str.toUpperCase().includes(input.toUpperCase()))
+    .some(str => (str || '').toUpperCase().includes(input.toUpperCase()))
         &&
         (
             !filterBySchedule

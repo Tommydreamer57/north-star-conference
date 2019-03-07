@@ -2,6 +2,8 @@ import {
     StyleSheet,
     Dimensions,
     Platform,
+    PixelRatio,
+    Alert,
 } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
@@ -10,6 +12,8 @@ export const Window = {
     height,
     width,
 };
+
+// Alert.alert(JSON.stringify(Window));
 
 export const COLORS = {
     green: "#C8C751",
@@ -22,16 +26,38 @@ export const COLORS = {
     darkGray: "#00000044"
 };
 
+// My own responsive CSS functions
+// property: calc(minimum px + range * (viewport width - minimum screen width px) / max screen width);
+// 2px + 4 * (100vw - 769px) / 2048
+const minWindowWidth = 320;
+const maxWindowWidth = 1300;
+const multiplier = (width - minWindowWidth) / maxWindowWidth;
+
+const dynamicSize = size => size + (size * 1.5) * multiplier;
+
+
+// Solution from gihub
+// based on iphone 5s's scale
+const scale = width / 320;
+const normalize = size => {
+    const newSize = size * scale;
+    return Platform.OS === 'ios' ?
+        Math.round(PixelRatio.roundToNearestPixel(newSize))
+        :
+        Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+}
+
 export const SIZES = {
-    xxLarge: 24,
-    xLarge: 20,
-    large: 18,
-    mLarge: 15,
-    medium: 13,
-    mSmall: 12,
-    small: 11,
-    xSmall: 8,
-    xxSmall: 5,
+    xxLarge: dynamicSize(24),
+    xLarge: dynamicSize(20),
+    large: dynamicSize(18),
+    mLarge: dynamicSize(15),
+    medium: dynamicSize(13),
+    mSmall: dynamicSize(12),
+    small: dynamicSize(11),
+    xSmall: dynamicSize(8),
+    xxSmall: dynamicSize(5),
+    homeIcon: dynamicSize(55),
 };
 
 export default StyleSheet.create({

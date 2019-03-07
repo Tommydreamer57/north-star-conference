@@ -4,21 +4,20 @@ import {
 
 import axios from 'axios';
 
-const allKeys = [
-    "breakouts",
-    "keynotes",
-    "schedule",
-    "speakers",
-    "date",
-];
-
-const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
+export const validKeys = {
+    breakouts: "breakouts",
+    keynotes: "keynotes",
+    schedule: "schedule",
+    speakers: "speakers",
+    date: "date",
+    notifications: "notifications",
+};
 
 export const refetchSessionsEachDay = async () => {
     const fetchDate = await getItem("date");
-    // if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
+    if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
         return fetchSessions();
-    // } else return false;
+    } else return false;
 }
 
 export const fetchSessions = async () => {
@@ -107,8 +106,8 @@ export const fetchSessions = async () => {
 }
 
 export const getItem = async key => {
-    if (!allKeys.includes(key)) {
-        throw new Error(`Invalid key: ${key}. Please use one of: "${allKeys.join('," "')}"`);
+    if (!(key in validKeys)) {
+        throw new Error(`Invalid key: ${key}. Please use one of: "${Object.keys(validKeys).join('," "')}"`);
     } else {
         try {
             const data = await AsyncStorage.getItem(key);

@@ -1,7 +1,9 @@
-import React, { Component, AsyncStorage } from 'react';
+import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
 import StorageProvider from './storage/StorageProvider';
 import OneSignal from 'react-native-onesignal';
+import { validKeys } from './storage/service';
 
 export default class App extends Component {
 
@@ -21,14 +23,20 @@ export default class App extends Component {
     }
 
     async onReceived(notification) {
-      const result = await AsyncStorage.getItem('notifications');
+        try {
+            const result = await AsyncStorage.getItem(validKeys.notifications);
 
-      if (result) {
-          const notifications = JSON.parse(result).concat(notification);
-          await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
-      } else {
-          await AsyncStorage.setItem('notifications', JSON.stringify([notification]));
-      }
+            const previousNotifications = JSON.parse(result || "[]");
+            const allNotifications = [notification].concat(previousNotifications);
+
+            try {
+                await AsyncStorage.setItem(validKeys.notifications, JSON.stringify(allNotifications));
+            } catch (err) {
+                console.error('Error setting notifications: ', err);
+            }
+        } catch (err) {
+            console.error('Error getting notifications: ', err);
+        }
     }
 
     //Sample Payload:
@@ -66,7 +74,7 @@ export default class App extends Component {
         console.log('Device info: ', device);
     }
 
-    render = () => {
+    render() {
         return (
             <StorageProvider>
                 <AppNavigator />

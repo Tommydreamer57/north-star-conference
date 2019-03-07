@@ -25,7 +25,7 @@ import { extractSessionType } from '../utils/sessions';
 const sessionsByDay = [
     {
         day: "Friday",
-        keynoteIndeces: [0, 1],
+        keynoteNumbers: [1, 2],
         breakoutNames: [
             'BREAKOUT 1',
             'BREAKOUT 2',
@@ -34,7 +34,7 @@ const sessionsByDay = [
     },
     {
         day: "Saturday",
-        keynoteIndeces: [2, 3],
+        keynoteNumbers: [3, 4],
         breakoutNames: [
             'BREAKOUT 4',
             'BREAKOUT 5',
@@ -97,7 +97,7 @@ export default class AllSessions extends Component {
 function Day({
     input,
     day,
-    keynoteIndeces: [k1, k2],
+    keynoteNumbers: [k1, k2],
     breakoutNames,
     navigation,
 }) {
@@ -124,7 +124,7 @@ function Day({
                         >
                             <Text style={[
                                 styles.h2,
-                            ]} >Keynote {k1 + 1}</Text>
+                            ]} >Keynote {k1}</Text>
                             <Text style={[
                                 styles.h4,
                             ]} >{keynoteOne.sessiontime || ''}</Text>
@@ -186,7 +186,7 @@ function Day({
                         >
                             <Text style={[
                                 styles.h2,
-                            ]} >Keynote {k2 + 1}</Text>
+                            ]} >Keynote {k2}</Text>
                             <Text style={[
                                 styles.h4,
                             ]} >{keynoteTwo.sessiontime || ''}</Text>

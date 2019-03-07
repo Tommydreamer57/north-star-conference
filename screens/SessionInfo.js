@@ -85,7 +85,7 @@ export default function SessionInfo({
                             <Text style={[
                                 styles.text,
                                 styles.marginBottomXxLarge,
-                            ]} >{description}</Text>
+                            ]} >{description || 'No description'}</Text>
                             <Text style={[
                                 styles.h3,
                                 styles.marginBottomLarge,
@@ -100,25 +100,21 @@ export default function SessionInfo({
                                     id: selectedId,
                                 } = {},
                             }) => selectedId === id) ? (
-                                    // cannot remove keynote from schedule
-                                    !sessionName.match(/keynote/i) ? (
-                                        <TouchableOpacity
-                                            style={[
-                                                styles.button,
-                                                styles.marginTopMedium,
-                                            ]}
-                                            onPress={async () => {
-                                                await removeFromSchedule(id);
-                                                goBack();
-                                            }}
-                                        >
-                                            <Text style={[
-                                                styles.buttonText,
-                                            ]} >Remove From Schedule</Text>
-                                        </TouchableOpacity>
-                                    ) : null
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.button,
+                                            styles.marginTopMedium,
+                                        ]}
+                                        onPress={async () => {
+                                            await removeFromSchedule(id);
+                                            goBack();
+                                        }}
+                                    >
+                                        <Text style={[
+                                            styles.buttonText,
+                                        ]} >Remove From Schedule</Text>
+                                    </TouchableOpacity>
                                 ) : (
-                                    // can add keynote to schedule
                                     <TouchableOpacity
                                         style={[
                                             styles.button,

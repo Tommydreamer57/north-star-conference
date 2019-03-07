@@ -38,6 +38,7 @@ export default function Schedule({
                                     selectedSession,
                                     selectedSession: {
                                         id,
+                                        sessiontime,
                                     } = {},
                                 },
                                 index,
@@ -60,10 +61,19 @@ export default function Schedule({
                                                     styles.marginBottomMedium
                                                 ]}
                                             >
-                                                <Text style={[
-                                                    styles.h2,
-                                                    styles.marginBottomMedium,
-                                                ]}>{extractSessionType(selectedSession)}</Text>
+                                                <View
+                                                    style={[
+                                                        styles.breakoutHeader,
+                                                        styles.marginBottomMedium,
+                                                    ]}
+                                                >
+                                                    <Text style={[
+                                                        styles.h2,
+                                                    ]} >{extractSessionType(selectedSession)}</Text>
+                                                    <Text style={[
+                                                        styles.h4,
+                                                    ]} >{sessiontime}</Text>
+                                                </View>
                                                 <SessionTile
                                                     navigation={navigation}
                                                     session={selectedSession || keynotes.find(({ sessiontype }) => sessiontype.toUpperCase() === sessionName.toUpperCase())}

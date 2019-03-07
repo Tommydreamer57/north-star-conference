@@ -16,9 +16,9 @@ const validKeys = allKeys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
 
 export const refetchSessionsEachDay = async () => {
     const fetchDate = await getItem("date");
-    if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
+    // if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
         return fetchSessions();
-    } else return false;
+    // } else return false;
 }
 
 export const fetchSessions = async () => {
@@ -59,21 +59,19 @@ export const fetchSessions = async () => {
                 };
             }, {});
 
-        const schedule = existingSessions ?
-            JSON.parse(existingSessions)
-            :
-            {
-                ...Object.keys(breakouts)
-                    .reduce((all, key) => ({
-                        ...all,
-                        [key]: {},
-                    }), {}),
-                ...keynotes
-                    .reduce((all, session) => ({
-                        ...all,
-                        [session.sessiontype.toUpperCase()]: session,
-                    }), {}),
-            };
+        const schedule = {
+            ...Object.keys(breakouts)
+                .reduce((all, key) => ({
+                    ...all,
+                    [key]: {},
+                }), {}),
+            ...JSON.parse(existingSessions || "{}"),
+            ...keynotes
+                .reduce((all, session) => ({
+                    ...all,
+                    [session.sessiontype.toUpperCase()]: session,
+                }), {}),
+        };
 
         const speakers = data.reduce((all, { id, speakername, speakerbio, speakerphoto }) => ({
             ...all,

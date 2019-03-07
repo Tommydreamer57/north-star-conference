@@ -71,7 +71,7 @@ export default function SessionInfo({
                                 />
                                 <Text style={[
                                     styles.h2,
-                                    styles.marginBottomXxSmall,
+                                    styles.marginBottomMedium,
                                 ]}>{speakername}</Text>
                             </TouchableOpacity>
                             <Text style={[

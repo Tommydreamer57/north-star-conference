@@ -21,21 +21,45 @@ export default class App extends Component {
     }
 
     async onReceived(notification) {
-        const result = await AsyncStorage.getItem('notifications');
+      const result = await AsyncStorage.getItem('notifications');
 
-        if (result) {
-            const notifications = JSON.parse(result).concat(notification);
-            await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
-        } else {
-            await AsyncStorage.setItem('notifications', JSON.stringify([notification]));
-        }
+      if (result) {
+          const notifications = JSON.parse(result).concat(notification);
+          await AsyncStorage.setItem('notifications', JSON.stringify(notifications));
+      } else {
+          await AsyncStorage.setItem('notifications', JSON.stringify([notification]));
+      }
     }
 
+    //Sample Payload:
+
+    // {
+    //   "displayType": 1,
+    //   "isAppInFocus": true,
+    //   "payload": Object {
+    //     "actionButtons": Array [],
+    //     "body": "This is a sample payload",
+    //     "notificationID": "8acfff59-b592-4bf5-91a5-9f1640b22bf4",
+    //     "rawPayload": Object {
+    //       "aps": Object {
+    //         "alert": Object {
+    //           "body": "This is a sample payload",
+    //           "title": "Test",
+    //         },
+    //         "mutable-content": 1,
+    //         "sound": "default",
+    //       },
+    //       "custom": Object {
+    //         "i": "8acfff59-b592-4bf5-91a5-9f1640b22bf4",
+    //       },
+    //     },
+    //     "sound": "default",
+    //     "title": "Test",
+    //   },
+    //   "shown": true,
+    // }
+
     onOpened(openResult) {
-        console.log('Message: ', openResult.notification.payload.body);
-        console.log('Data: ', openResult.notification.payload.additionalData);
-        console.log('isActive: ', openResult.notification.isAppInFocus);
-        console.log('openResult: ', openResult);
     }
 
     onIds(device) {

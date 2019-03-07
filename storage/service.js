@@ -137,22 +137,23 @@ export const getItems = (...keys) => {
 }
 
 export const handleReceivedNotification = async notification => {
+  try {
+    const { body, title, notificationID } = notification.payload;
+    const result = await AsyncStorage.getItem(validKeys.notifications);
+
+    const previousNotifications = JSON.parse(result) || [];
+    const allNotifications = [{body, title, notificationID}].concat(previousNotifications);
+
     try {
-        const result = await AsyncStorage.getItem(validKeys.notifications);
+      await AsyncStorage.setItem(validKeys.notifications, JSON.stringify(allNotifications));
 
-        const previousNotifications = JSON.parse(result || "[]");
-        const allNotifications = [notification].concat(previousNotifications);
-
-        try {
-            await AsyncStorage.setItem(validKeys.notifications, JSON.stringify(allNotifications));
-
-            return allNotifications;
-        } catch (err) {
-            console.error('Error setting notifications: ', err);
-        }
+      return allNotifications;
     } catch (err) {
-        console.error('Error getting notifications: ', err);
+      console.error('Error setting notifications: ', err);
     }
+  } catch (err) {
+    console.error('Error getting notifications: ', err);
+  }
 }
 
 export const submitReview = async review => {

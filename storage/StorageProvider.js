@@ -65,7 +65,6 @@ export default class StorageProvider extends Component {
         } = this;
         if (newNotification !== oldNotification) {
             try {
-                Alert.alert(newNotification.title);
                 const notifications = await handleReceivedNotification(newNotification);
 
                 if (notifications) this.setState({ notifications });

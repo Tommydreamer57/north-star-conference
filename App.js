@@ -7,7 +7,7 @@ import { handleReceivedNotification } from './storage/service';
 export default class App extends Component {
 
     state = {
-        newNotification: {},
+        notification: {},
     };
 
     constructor(properties) {
@@ -26,7 +26,7 @@ export default class App extends Component {
         clearInterval(this.interval);
     }
 
-    onReceived = (notification) => this.setState({ notification });
+    onReceived = notification => this.setState({ notification });
 
     onOpened(openResult) {}
 

@@ -146,7 +146,8 @@ export default class StorageProvider extends Component {
     }
 
     deleteNotification = async id => {
-        const notifications = this.state.notifications.filter(({ notificationID }) => notificationID !== id);
+        const notifications = this.state.notifications
+            .filter(({ notificationID }) => notificationID !== id);
 
         try {
             await AsyncStorage.setItem("notifications", JSON.stringify(notifications));

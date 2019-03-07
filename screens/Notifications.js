@@ -16,7 +16,6 @@ import { StorageConsumer } from '../storage/StorageProvider';
 
 Notifications.navigationOptions = createNavigationOptions("Notifications");
 
-// Notifications array only contains `payload`s
 export default function Notifications() {
     return (
         <StorageConsumer>
@@ -24,8 +23,9 @@ export default function Notifications() {
                 <ScrollView>
                     <View style={styles.view}>
                         <FlatList
-                            keyExtractor={({ notificationID }) => notificationID }
+                            keyExtractor={({ notificationID }) => notificationID}
                             data={notifications}
+                            extraData={[notifications, notifications.length]}
                             renderItem={({
                                 item: {
                                     title = '',

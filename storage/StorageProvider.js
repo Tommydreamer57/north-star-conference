@@ -59,33 +59,23 @@ export default class StorageProvider extends Component {
         deleteNotification() { },
     };
 
-    /**
-     * I'm not sure I know what's wrong actually,
-     * This component wraps the entire app and so it is always mounted.
-     * When it mounts, it gets all the notifications from asyncstorage.
-     * Then it handles receiving a new notification when one comes in while the app is open.
-     * 
-     * What old notification?
-     */
-
-    // this lifecycle hook receive prevProps and prevState as arguments. 
-    // oldnotification is the one from prvious props
-
     componentWillUnmount() {
         OneSignal.removeEventListener('received', this.receiveNotification);
         OneSignal.removeEventListener('opened', this.onOpened);
         OneSignal.removeEventListener('ids', this.onIds);
-        clearInterval(this.interval);
     }
 
     componentDidMount = async () => {
-
         OneSignal.init("d8ca736c-86df-4151-9df8-2fbfecf81436");
 
         OneSignal.addEventListener('received', this.receiveNotification);
         OneSignal.addEventListener('opened', this.onOpened);
         OneSignal.addEventListener('ids', this.onIds);
 
+        this._fetchData();
+    }
+
+    async _fetchData() {
         await refetchSessionsEachDay();
 
         const [schedule, breakouts, keynotes, speakers, notifications] = await getItems("schedule", "breakouts", "keynotes", "speakers", "notifications");

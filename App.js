@@ -4,7 +4,7 @@ import StorageProvider from './storage/StorageProvider';
 
 export default function App() {
     return (
-        <StorageProvider newNotification={this.state.notification} >
+        <StorageProvider>
             <AppNavigator />
         </StorageProvider>
     );

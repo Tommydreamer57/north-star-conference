@@ -17,48 +17,56 @@ import { StorageConsumer } from '../storage/StorageProvider';
 Notifications.navigationOptions = createNavigationOptions("Notifications");
 
 export default function Notifications() {
+    const notifications = [{
+        title: "Test",
+        body: "body",
+        notificationID: "sdf",
+    }];
     return (
         <StorageConsumer>
-            {({ notifications, deleteNotification }) => (
-                <ScrollView>
-                    <View style={styles.view}>
-                        <FlatList
-                            keyExtractor={({ notificationID }) => notificationID}
-                            data={notifications}
-                            extraData={[notifications, notifications.length]}
-                            renderItem={({
-                                item: {
-                                    title = '',
-                                    body = '',
-                                    notificationID,
-                                },
-                            }) => (
-                                    <View style={[
-                                        styles.speakerButton,
-                                        styles.marginBottomLarge,
-                                    ]} >
-                                        <View>
-                                            <Text style={[
-                                                styles.h3,
-                                                styles.marginBottomXxSmall,
-                                            ]} >{title}</Text>
-                                            <Text style={[
-                                                styles.text,
-                                            ]} >{body}</Text>
+            {({
+                // notifications,
+                deleteNotification,
+            }) => (
+                    <ScrollView>
+                        <View style={styles.view}>
+                            <FlatList
+                                keyExtractor={({ notificationID }) => notificationID}
+                                data={notifications}
+                                extraData={[notifications, notifications.length]}
+                                renderItem={({
+                                    item: {
+                                        title = '',
+                                        body = '',
+                                        notificationID,
+                                    },
+                                }) => (
+                                        <View style={[
+                                            styles.speakerButton,
+                                            styles.marginBottomLarge,
+                                        ]} >
+                                            <View>
+                                                <Text style={[
+                                                    styles.h3,
+                                                    styles.marginBottomXxSmall,
+                                                ]} >{title}</Text>
+                                                <Text style={[
+                                                    styles.text,
+                                                ]} >{body}</Text>
+                                            </View>
+                                            <TouchableOpacity
+                                                onPress={() => deleteNotification(notificationID)}
+                                            >
+                                                <Text style={[
+                                                    styles.deleteNotification,
+                                                ]} >X</Text>
+                                            </TouchableOpacity>
                                         </View>
-                                        <TouchableOpacity
-                                            onPress={() => deleteNotification(notificationID)}
-                                        >
-                                            <Text style={[
-                                                styles.speakerButtonArrow,
-                                            ]} >X</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                )}
-                        />
-                    </View>
-                </ScrollView>
-            )}
+                                    )}
+                            />
+                        </View>
+                    </ScrollView>
+                )}
         </StorageConsumer>
     );
 }

@@ -196,6 +196,11 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: COLORS.darkGray,
     },
+    deleteNotification: {
+        fontSize: SIZES.large,
+        fontWeight: 'bold',
+        color: COLORS.darkGray,
+    },
     breakoutHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',

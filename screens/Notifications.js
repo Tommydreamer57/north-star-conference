@@ -8,65 +8,73 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
+import { Icon } from 'expo';
+
 import createNavigationOptions from '../navigation/navigation-options';
 
-import styles from '../styles/styles';
+import styles, { COLORS, SIZES } from '../styles/styles';
 
 import { StorageConsumer } from '../storage/StorageProvider';
+
+import { iconPrefix } from './Home';
 
 Notifications.navigationOptions = createNavigationOptions("Notifications");
 
 export default function Notifications() {
-    const notifications = [{
-        title: "Test",
-        body: "body",
-        notificationID: "sdf",
-    }];
     return (
         <StorageConsumer>
-            {({
-                // notifications,
-                deleteNotification,
-            }) => (
-                    <ScrollView>
-                        <View style={styles.view}>
-                            <FlatList
-                                keyExtractor={({ notificationID }) => notificationID}
-                                data={notifications}
-                                extraData={[notifications, notifications.length]}
-                                renderItem={({
-                                    item: {
-                                        title = '',
-                                        body = '',
-                                        notificationID,
-                                    },
-                                }) => (
-                                        <View style={[
-                                            styles.speakerButton,
-                                            styles.marginBottomLarge,
-                                        ]} >
-                                            <View>
-                                                <Text style={[
-                                                    styles.h3,
-                                                    styles.marginBottomXxSmall,
-                                                ]} >{title}</Text>
-                                                <Text style={[
-                                                    styles.text,
-                                                ]} >{body}</Text>
-                                            </View>
-                                            <TouchableOpacity
-                                                onPress={() => deleteNotification(notificationID)}
-                                            >
-                                                <Text style={[
-                                                    styles.deleteNotification,
-                                                ]} >X</Text>
-                                            </TouchableOpacity>
+            {({ notifications, deleteNotification }) => (
+                <ScrollView>
+                    <View style={styles.view}>
+                        <FlatList
+                            keyExtractor={({ notificationID }) => notificationID}
+                            data={notifications}
+                            extraData={[notifications, notifications.length]}
+                            ListEmptyComponent={(
+                                <View style={[
+                                    styles.speakerButton,
+                                    styles.center,
+                                ]} >
+                                    <Text style={[
+                                        styles.h3,
+                                    ]} >All clear!</Text>
+                                </View>
+                            )}
+                            renderItem={({
+                                item: {
+                                    title = '',
+                                    body = '',
+                                    notificationID,
+                                },
+                            }) => (
+                                    <View style={[
+                                        styles.speakerButton,
+                                        styles.marginBottomLarge,
+                                    ]} >
+                                        <View>
+                                            <Text style={[
+                                                styles.h3,
+                                                styles.marginBottomXxSmall,
+                                            ]} >{title}</Text>
+                                            <Text style={[
+                                                styles.text,
+                                            ]} >{body}</Text>
                                         </View>
-                                    )}
-                            />
-                        </View>
-                    </ScrollView>
-                )}
+                                        <TouchableOpacity
+                                            onPress={() => deleteNotification(notificationID)}
+                                        >
+                                            <Icon.Ionicons
+                                                name={iconPrefix + "close"}
+                                                size={SIZES.large * 2.5}
+                                                color={COLORS.darkGray}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+                        />
+                    </View>
+                </ScrollView>
+            )}
         </StorageConsumer>
     );
 }

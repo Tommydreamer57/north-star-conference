@@ -175,11 +175,12 @@ export default class Feedback extends Component {
                                     ]}
                                     scrollEnabled={false}
                                     multiline={true}
+                                    placeholder="What did you like?"
                                     value={likeFeedback}
                                     onChangeText={likeFeedback => this.setState({
                                         likeFeedback: likeFeedback.replace(/\n/, ''),
                                     })}
-                                    onSubmitEditing={onSubmitEditing("dislikeFeedback")}
+                                    onSubmitEditing={onSubmitEditing("likeFeedback")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
@@ -192,11 +193,12 @@ export default class Feedback extends Component {
                                     ]}
                                     scrollEnabled={false}
                                     multiline={true}
+                                    placeholder="Any suggestions?"
                                     value={dislikeFeedback}
                                     onChangeText={dislikeFeedback => this.setState({
                                         dislikeFeedback: dislikeFeedback.replace(/\n/, ''),
                                     })}
-                                    onSubmitEditing={onSubmitEditing("generalFeedback")}
+                                    onSubmitEditing={onSubmitEditing("dislikeFeedback")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
@@ -209,11 +211,12 @@ export default class Feedback extends Component {
                                     ]}
                                     scrollEnabled={false}
                                     multiline={true}
+                                    placeholder="Any other feedback?"
                                     value={generalFeedback}
                                     onChangeText={generalFeedback => this.setState({
                                         generalFeedback: generalFeedback.replace(/\n/, ''),
                                     })}
-                                    onSubmitEditing={onSubmitEditing("username")}
+                                    onSubmitEditing={onSubmitEditing("generalFeedback")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
@@ -224,9 +227,10 @@ export default class Feedback extends Component {
                                         styles.input,
                                         styles.marginBottomXxLarge,
                                     ]}
+                                    placeholder="Name"
                                     value={username}
                                     onChangeText={username => this.setState({ username })}
-                                    onSubmitEditing={onSubmitEditing("email")}
+                                    onSubmitEditing={onSubmitEditing("username")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
@@ -237,6 +241,7 @@ export default class Feedback extends Component {
                                         styles.input,
                                         styles.marginBottomXLarge,
                                     ]}
+                                    placeholder="Email"
                                     value={email}
                                     onChangeText={email => this.setState({ email })}
                                 />

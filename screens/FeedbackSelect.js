@@ -65,6 +65,7 @@ export default class FeedbackSelect extends Component {
                                         styles.searchInput,
                                         styles.marginBottomMedium,
                                     ]}
+                                    placeholder="Search"
                                     value={input}
                                     onChangeText={input => this.setState({ input })}
                                 />

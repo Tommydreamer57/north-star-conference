@@ -15,7 +15,7 @@ import { Icon } from 'expo';
 
 import { Window, SIZES } from '../styles/styles';
 
-const iconPrefix = Platform.OS === "ios" ?
+export const iconPrefix = Platform.OS === "ios" ?
     "ios-"
     :
     "md-";

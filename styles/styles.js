@@ -61,6 +61,10 @@ export const SIZES = {
 };
 
 export default StyleSheet.create({
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     view: {
         backgroundColor: COLORS.white,
         paddingTop: SIZES.xxLarge,
@@ -193,11 +197,6 @@ export default StyleSheet.create({
     },
     speakerButtonArrow: {
         fontSize: SIZES.mSmall,
-        fontWeight: 'bold',
-        color: COLORS.darkGray,
-    },
-    deleteNotification: {
-        fontSize: SIZES.large,
         fontWeight: 'bold',
         color: COLORS.darkGray,
     },

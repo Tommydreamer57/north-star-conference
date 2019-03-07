@@ -9,9 +9,13 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
+import { Icon } from 'expo';
+
 import { StorageConsumer } from '../storage/StorageProvider';
 
-import styles from '../styles/styles';
+import styles, { COLORS, SIZES } from '../styles/styles';
+
+import { iconPrefix } from './Home';
 
 import createNavigationOptions from '../navigation/navigation-options';
 
@@ -50,6 +54,7 @@ export default class AllSpeakers extends Component {
                                     styles.searchInput,
                                     styles.marginBottomXxLarge,
                                 ]}
+                                placeholder="Search"
                                 value={input}
                                 onChangeText={input => this.setState({ input })}
                             />
@@ -68,9 +73,11 @@ export default class AllSpeakers extends Component {
                                         <Text style={[
                                             styles.speakerButtonText,
                                         ]} >{name}</Text>
-                                        <Text style={[
-                                            styles.speakerButtonArrow,
-                                        ]}>></Text>
+                                        <Icon.Ionicons
+                                            name={iconPrefix + "arrow-forward"}
+                                            size={SIZES.large}
+                                            color={COLORS.darkGray}
+                                        />
                                     </TouchableOpacity>
                                 ) : null}
                             />

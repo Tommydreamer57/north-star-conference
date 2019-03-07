@@ -73,6 +73,7 @@ export default class AllSessions extends Component {
                     <TextInput
                         clearButtonMode="always"
                         style={styles.searchInput}
+                        placeholder="Search"
                         value={input}
                         onChangeText={input => this.setState({ input })}
                     />

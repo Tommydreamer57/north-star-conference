@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     Platform,
+    Alert,
 } from 'react-native';
 
 import { Icon } from 'expo';
@@ -122,7 +123,7 @@ export default function Home({
                                                 Linking.canOpenURL(url) ?
                                                     Linking.openURL(url)
                                                     :
-                                                    console.log(`Cannot open url: ${url}`)}
+                                                    alert.alert(`Cannot open url: ${url}`)}
                                 >
                                     <Icon.Ionicons
                                         name={iconPrefix + icon}

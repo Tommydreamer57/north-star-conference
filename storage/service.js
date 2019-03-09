@@ -1,8 +1,11 @@
 import {
     AsyncStorage,
+    Alert,
 } from 'react-native';
 
 import axios from 'axios';
+
+import { SMS } from 'expo';
 
 export const validKeys = {
     breakouts: "breakouts",
@@ -18,6 +21,16 @@ export const refetchSessionsEachDay = async () => {
     if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
         return fetchSessions();
     } else return false;
+}
+
+export const sendMessage = async () => {
+  const isAvailable = await SMS.isAvailableAsync();
+
+  if (isAvailable) {
+    SMS.sendSMSAsync('3856257516', 'I need help');
+  } else {
+    Alert.alert("Message cannot be sent, we did not receive permission from you when you installed the app, If you need assistance please text 3856257516");
+}
 }
 
 export const fetchSessions = async () => {
@@ -105,6 +118,7 @@ export const fetchSessions = async () => {
             breakouts,
             schedule,
             speakers,
+            notifications,
             date,
         };
     } catch (err) {

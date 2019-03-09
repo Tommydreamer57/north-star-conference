@@ -37,7 +37,7 @@ export default function Notifications() {
                                 ]} >
                                     <Text style={[
                                         styles.h3,
-                                    ]} >All clear!</Text>
+                                    ]} >No New Notifications!</Text>
                                 </View>
                             )}
                             renderItem={({

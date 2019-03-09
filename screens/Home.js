@@ -15,6 +15,8 @@ import { Icon } from 'expo';
 
 import { Window, SIZES } from '../styles/styles';
 
+import { sendMessage } from '../storage/service';
+
 export const iconPrefix = Platform.OS === "ios" ?
     "ios-"
     :
@@ -110,12 +112,17 @@ export default function Home({
                                     key={j}
                                     style={styles.touchable}
                                     onPress={to ?
+
                                         () => navigate(to)
                                         :
-                                        () => Linking.canOpenURL(url) ?
-                                            Linking.openURL(url)
+                                        Platform.OS === 'android' && url.match(/sms/) ?
+                                            sendMessage
                                             :
-                                            console.log(`Cannot open url: ${url}`)}
+                                            () =>
+                                                Linking.canOpenURL(url) ?
+                                                    Linking.openURL(url)
+                                                    :
+                                                    console.log(`Cannot open url: ${url}`)}
                                 >
                                     <Icon.Ionicons
                                         name={iconPrefix + icon}

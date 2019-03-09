@@ -24,13 +24,13 @@ export const refetchSessionsEachDay = async () => {
 }
 
 export const sendMessage = async () => {
-  const isAvailable = await SMS.isAvailableAsync();
+    const isAvailable = await SMS.isAvailableAsync();
 
-  if (isAvailable) {
-    SMS.sendSMSAsync('3856257516', 'I need help');
-  } else {
-    Alert.alert("Message cannot be sent, we did not receive permission from you when you installed the app, If you need assistance please text 3856257516");
-}
+    if (isAvailable) {
+        SMS.sendSMSAsync('3856257516', 'I need help');
+    } else {
+        Alert.alert("Message cannot be sent, we did not receive permission from you when you installed the app, If you need assistance please text 3856257516");
+    }
 }
 
 export const fetchSessions = async () => {

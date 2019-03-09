@@ -6,8 +6,6 @@ import React, {
 import OneSignal from 'react-native-onesignal';
 
 import {
-    log,
-    getItem,
     getItems,
     submitReview,
     refetchSessionsEachDay,
@@ -15,7 +13,6 @@ import {
 } from './service';
 
 import {
-    Alert,
     AsyncStorage,
 } from 'react-native';
 
@@ -78,7 +75,9 @@ export default class StorageProvider extends Component {
     async _fetchData() {
         await refetchSessionsEachDay();
 
-        const [schedule, breakouts, keynotes, speakers, notifications] = await getItems("schedule", "breakouts", "keynotes", "speakers", "notifications");
+        let [ schedule, breakouts, keynotes, speakers, notifications ] = await getItems("schedule", "breakouts", "keynotes", "speakers", "notifications");
+
+        if(!notifications) notifications = [];
 
         const scheduleArray = transformSchedule(schedule);
 

@@ -23,7 +23,7 @@
 
 /* Begin PBXFileReference section */
 		2C1548D9E4CB1AEFA5CCAE6D /* Pods-north-star-conference.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-north-star-conference.debug.xcconfig"; path = "Pods/Target Support Files/Pods-north-star-conference/Pods-north-star-conference.debug.xcconfig"; sourceTree = "<group>"; };
-		970C101222310C9A00FB09BB /* north-star-conference.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "north-star-conference.entitlements"; sourceTree = "<group>"; };
+		974865C722331E900019E581 /* north-star-conference.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "north-star-conference.entitlements"; sourceTree = "<group>"; };
 		A47FE4D7F70906B7DC8CE39B /* Pods-north-star-conference.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-north-star-conference.release.xcconfig"; path = "Pods/Target Support Files/Pods-north-star-conference/Pods-north-star-conference.release.xcconfig"; sourceTree = "<group>"; };
 		B501732A1DC01252003445D9 /* EXShell.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EXShell.plist; sourceTree = "<group>"; };
 		B56386411DB9693800A0598C /* north-star-conference.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "north-star-conference.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,7 +92,7 @@
 		B56386431DB9693800A0598C /* north-star-conference */ = {
 			isa = PBXGroup;
 			children = (
-				970C101222310C9A00FB09BB /* north-star-conference.entitlements */,
+				974865C722331E900019E581 /* north-star-conference.entitlements */,
 				B56386471DB9693800A0598C /* AppDelegate.h */,
 				B56386481DB9693800A0598C /* AppDelegate.m */,
 				B56386501DB9693800A0598C /* Assets.xcassets */,
@@ -405,11 +405,10 @@
 				CODE_SIGN_ENTITLEMENTS = "north-star-conference/north-star-conference.entitlements";
 				DEVELOPMENT_TEAM = 7CZ2U45JKJ;
 				INFOPLIST_FILE = "$(SRCROOT)/north-star-conference/Supporting/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.northstarlds.northstarconf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -421,11 +420,10 @@
 				CODE_SIGN_ENTITLEMENTS = "north-star-conference/north-star-conference.entitlements";
 				DEVELOPMENT_TEAM = 7CZ2U45JKJ;
 				INFOPLIST_FILE = "$(SRCROOT)/north-star-conference/Supporting/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.northstarlds.northstarconf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

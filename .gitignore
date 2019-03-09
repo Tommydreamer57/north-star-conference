@@ -7,6 +7,7 @@ npm-debug.*
 *.mobileprovision
 .ios/Pods/*
 
+.DS_Store
 # Xcode
 
 ios/.DS_Store
@@ -14,6 +15,7 @@ ios/.DS_Store
 build/
 
 ios/Pods/
+ios/.DS_Store
 
 *.pbxuser
 

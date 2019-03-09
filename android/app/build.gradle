@@ -23,7 +23,7 @@ android {
     applicationId 'com.northstarlds.northstarconf'
     targetSdkVersion 26
     versionCode 1
-    versionName '1.0.0'
+    versionName '3.0.0'
     ndk {
       abiFilters 'armeabi-v7a', 'x86'
     }

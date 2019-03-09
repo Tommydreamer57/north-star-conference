@@ -25,14 +25,18 @@ export const fetchSessions = async () => {
 
         const sessionPromise = axios.get('https://northstarconferenceadmin.herokuapp.com/api/sessions');
 
+        const notificationsPromise = AsyncStorage.getItem(validKeys.notifications);
+
         const schedulePromise = AsyncStorage.getItem(validKeys.schedule);
 
         const [
             { data },
             existingSessions,
+            notifications = [],
         ] = await Promise.all([
             sessionPromise,
             schedulePromise,
+            notificationsPromise,
         ]);
 
         const keynotes = (data || [])
@@ -91,6 +95,7 @@ export const fetchSessions = async () => {
             [validKeys.schedule, JSON.stringify(schedule)],
             [validKeys.speakers, JSON.stringify(speakers)],
             [validKeys.date, JSON.stringify(date)],
+            [validKeys.notifications, JSON.stringify(notifications)]
         ]);
 
         return {
@@ -137,23 +142,23 @@ export const getItems = (...keys) => {
 }
 
 export const handleReceivedNotification = async notification => {
-  try {
-    const { body, title, notificationID } = notification.payload;
-    const result = await AsyncStorage.getItem(validKeys.notifications);
-
-    const previousNotifications = JSON.parse(result) || [];
-    const allNotifications = [{body, title, notificationID}].concat(previousNotifications);
-
     try {
-      await AsyncStorage.setItem(validKeys.notifications, JSON.stringify(allNotifications));
+        const { body, title, notificationID } = notification.payload;
+        const result = await AsyncStorage.getItem(validKeys.notifications);
 
-      return allNotifications;
+        const previousNotifications = JSON.parse(result) || [];
+        const allNotifications = [{ body, title, notificationID }].concat(previousNotifications);
+
+        try {
+            await AsyncStorage.setItem(validKeys.notifications, JSON.stringify(allNotifications));
+
+            return allNotifications;
+        } catch (err) {
+            console.error('Error setting notifications: ', err);
+        }
     } catch (err) {
-      console.error('Error setting notifications: ', err);
+        console.error('Error getting notifications: ', err);
     }
-  } catch (err) {
-    console.error('Error getting notifications: ', err);
-  }
 }
 
 export const submitReview = async review => {

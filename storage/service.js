@@ -32,7 +32,7 @@ export const fetchSessions = async () => {
         const [
             { data },
             existingSessions,
-            notifications = [],
+            existingNotifications,
         ] = await Promise.all([
             sessionPromise,
             schedulePromise,
@@ -88,6 +88,8 @@ export const fetchSessions = async () => {
         }), {});
 
         const date = `${Date.now()}`;
+
+        const notifications = existingNotifications || [];
 
         await AsyncStorage.multiSet([
             [validKeys.breakouts, JSON.stringify(breakouts)],

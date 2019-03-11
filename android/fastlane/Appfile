@@ -1,0 +1,2 @@
+json_key_file("../certs/api-4844239259160298117-435193-76f3a4cea263.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.northstarlds.northstarconf") # e.g. com.krausefx.app

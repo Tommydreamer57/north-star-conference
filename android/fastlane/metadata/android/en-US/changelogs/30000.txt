@@ -1,0 +1,1 @@
+Fixed some bugs, new app for 2019 conf

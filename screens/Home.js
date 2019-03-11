@@ -123,7 +123,7 @@ export default function Home({
                                                 Linking.canOpenURL(url) ?
                                                     Linking.openURL(url)
                                                     :
-                                                    alert.alert(`Cannot open url: ${url}`)}
+                                                    Alert.alert(`Cannot open url: ${url}`)}
                                 >
                                     <Icon.Ionicons
                                         name={iconPrefix + icon}

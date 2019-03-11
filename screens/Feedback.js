@@ -31,8 +31,8 @@ export default class Feedback extends Component {
         dislikeFeedback: "",
         rating: 5,
         generalFeedback: "",
-        email: "",
-        username: "",
+        userEmail: "",
+        userName: "",
     };
 
     onSubmitEditing = ref => () => {
@@ -74,8 +74,8 @@ export default class Feedback extends Component {
                 dislikeFeedback,
                 rating,
                 generalFeedback,
-                email,
-                username,
+                userEmail,
+                userName,
             },
             props: {
                 navigation,
@@ -180,7 +180,7 @@ export default class Feedback extends Component {
                                     onChangeText={likeFeedback => this.setState({
                                         likeFeedback: likeFeedback.replace(/\n/, ''),
                                     })}
-                                    onSubmitEditing={onSubmitEditing("likeFeedback")}
+                                    onSubmitEditing={onSubmitEditing("dislikeFeedback")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
@@ -198,7 +198,7 @@ export default class Feedback extends Component {
                                     onChangeText={dislikeFeedback => this.setState({
                                         dislikeFeedback: dislikeFeedback.replace(/\n/, ''),
                                     })}
-                                    onSubmitEditing={onSubmitEditing("dislikeFeedback")}
+                                    onSubmitEditing={onSubmitEditing("generalFeedback")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
@@ -216,34 +216,34 @@ export default class Feedback extends Component {
                                     onChangeText={generalFeedback => this.setState({
                                         generalFeedback: generalFeedback.replace(/\n/, ''),
                                     })}
-                                    onSubmitEditing={onSubmitEditing("generalFeedback")}
+                                    onSubmitEditing={onSubmitEditing("userName")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
                                 ]} >Your Name</Text>
                                 <TextInput
-                                    ref={el => this.username = el}
+                                    ref={el => this.userName = el}
                                     style={[
                                         styles.input,
                                         styles.marginBottomXxLarge,
                                     ]}
                                     placeholder="Name"
-                                    value={username}
-                                    onChangeText={username => this.setState({ username })}
-                                    onSubmitEditing={onSubmitEditing("username")}
+                                    value={userName}
+                                    onChangeText={userName => this.setState({ userName })}
+                                    onSubmitEditing={onSubmitEditing("userEmail")}
                                 />
                                 <Text style={[
                                     styles.feedbackLabel,
                                 ]} >Your Email</Text>
                                 <TextInput
-                                    ref={el => this.email = el}
+                                    ref={el => this.userEmail = el}
                                     style={[
                                         styles.input,
                                         styles.marginBottomXLarge,
                                     ]}
                                     placeholder="Email"
-                                    value={email}
-                                    onChangeText={email => this.setState({ email })}
+                                    value={userEmail}
+                                    onChangeText={userEmail => this.setState({ userEmail })}
                                 />
                                 <TouchableOpacity
                                     style={[

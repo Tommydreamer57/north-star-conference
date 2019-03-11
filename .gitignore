@@ -7,6 +7,7 @@ npm-debug.*
 *.mobileprovision
 .ios/Pods/*
 
+android/app/star/
 .DS_Store
 # Xcode
 certs/**

@@ -7,11 +7,12 @@ npm-debug.*
 *.mobileprovision
 .ios/Pods/*
 
+android/app/star/
 .DS_Store
 # Xcode
-
-ios/.DS_Store
-
+certs/**
+android/app/north-star-conf.keystore
+android/app/north-star-conf.keystore
 build/
 
 ios/Pods/

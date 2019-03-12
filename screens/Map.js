@@ -23,9 +23,10 @@ export default function Map() {
                 <Image
                     source={require('../assets/Map.png')}
                     style={{
-                        width: Window.width * 0.9,
-                        height: Window.width * 0.9,
+                        width: Window.width * .9,
+                        height: Window.height * .9,
                     }}
+                    resizeMode="contain"
                 />
             </View>
         </ScrollView>

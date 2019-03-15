@@ -4,9 +4,6 @@ import android.os.Bundle;
 
 import com.facebook.react.ReactPackage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import expo.core.interfaces.Package;
@@ -22,12 +19,7 @@ public class MainActivity extends DetachActivity {
 
   @Override
   public String developmentUrl() {
-    return DetachBuildConstants.DEVELOPMENT_URL;
-  }
-
-  @Override
-  public List<String> sdkVersions() {
-    return new ArrayList<>(Arrays.asList("31.0.0"));
+    return "DetachBuildConstants.DEVELOPMENT_URL";
   }
 
   @Override
@@ -37,8 +29,7 @@ public class MainActivity extends DetachActivity {
 
   @Override
   public List<Package> expoPackages() {
-    // Here you can add your own packages.
-    return super.expoPackages();
+    return ((MainApplication) getApplication()).getExpoPackages();
   }
 
   @Override

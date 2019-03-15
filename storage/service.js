@@ -18,7 +18,7 @@ export const validKeys = {
 
 export const refetchSessionsEachDay = async () => {
     const fetchDate = await getItem("date");
-    if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 24)) {
+    if (Date.now() > (+fetchDate || 0) + (1000 * 60 * 60 * 6)) {
         return fetchSessions();
     } else return false;
 }
